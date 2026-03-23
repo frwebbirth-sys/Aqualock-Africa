@@ -579,17 +579,20 @@ function injectJobIntoContent(fileContent, jobObj) {
   const jobCode = jobObjToCode(jobObj);
 
   // Normalise line endings so the search works regardless of CRLF vs LF
-  fileContent = fileContent.replace(/\r\n/g, '\n');
+  fileContent = fileContent.replace(/\r\n/g, '\n').replace(/^\uFEFF/, '');
 
-  // Find the jobs array — look for: const jobs = [
-  const marker = 'const jobs = [';
-  const idx = fileContent.indexOf(marker);
-  if (idx === -1) throw new Error('Could not find "const jobs = [" in portfolio.html. Make sure that exact text exists in the file.');
+  // Find the jobs array — use regex to handle any whitespace variations
+  const markerRegex = /const\s+jobs\s*=\s*\[/;
+  const markerMatch = markerRegex.exec(fileContent);
+  if (!markerMatch) throw new Error('Could not find "const jobs = [" in portfolio.html. Make sure that exact text exists in the file.');
+  const idx = markerMatch.index;
+  const markerEnd = idx + markerMatch[0].length;
+
 
   // Find the closing ] of the jobs array.
   // Track both array and object depth, and skip string contents,
   // so that ] characters inside photo URL arrays don't confuse the scanner.
-  const arrayOpenIdx = idx + marker.length - 1; // position of the opening [
+  const arrayOpenIdx = markerEnd - 1; // position of the opening [
   let arrDepth = 0, objDepth = 0, closeIdx = -1;
   let inStr = false, strChar = '';
   for (let i = arrayOpenIdx; i < fileContent.length; i++) {
@@ -608,7 +611,7 @@ function injectJobIntoContent(fileContent, jobObj) {
   if (closeIdx === -1) throw new Error('Could not find closing ] of jobs array in portfolio.html.');
 
   // Check if there are existing entries (need a comma before new entry)
-  const arrayContent = fileContent.slice(idx + marker.length, closeIdx).trim();
+  const arrayContent = fileContent.slice(markerEnd, closeIdx).trim();
   const needsComma   = arrayContent.length > 0 && !arrayContent.endsWith(',');
 
   const insertion = (needsComma ? ',\n' : '\n') + jobCode + '\n';
