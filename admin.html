@@ -18,389 +18,195 @@
 html { scroll-behavior: smooth; }
 body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
-/* ════════════════════════════════
-   LOGIN SCREEN
-════════════════════════════════ */
-#loginScreen {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--dark);
-  padding: 2rem;
-}
-.login-box {
-  background: #fff; border-radius: 20px;
-  padding: 3rem 2.8rem; width: 100%; max-width: 400px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.35);
-}
+/* LOGIN */
+#loginScreen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--dark); padding: 2rem; }
+.login-box { background: #fff; border-radius: 20px; padding: 3rem 2.8rem; width: 100%; max-width: 400px; box-shadow: 0 32px 80px rgba(0,0,0,0.35); }
 .login-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--blue-deep); margin-bottom: 0.3rem; }
 .login-logo span { color: var(--blue); }
 .login-sub { font-size: 0.78rem; color: var(--gray); margin-bottom: 2.2rem; }
 .form-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 0.45rem; }
-.form-input {
-  width: 100%; padding: 0.8rem 1rem;
-  border: 1.5px solid var(--gray-line); border-radius: 8px;
-  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--dark);
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-  margin-bottom: 1.2rem; background: #fff;
-}
+.form-input { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--gray-line); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--dark); outline: none; transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 1.2rem; background: #fff; }
 .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,0.1); }
-.form-textarea {
-  width: 100%; padding: 0.8rem 1rem;
-  border: 1.5px solid var(--gray-line); border-radius: 8px;
-  font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark);
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-  resize: vertical; min-height: 100px; background: #fff;
-}
+.form-textarea { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--gray-line); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark); outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; min-height: 100px; background: #fff; }
 .form-textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,0.1); }
-.btn-primary {
-  width: 100%; padding: 0.9rem;
-  background: var(--blue); color: #fff;
-  font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  border: none; border-radius: 8px; cursor: pointer;
-  transition: background 0.25s, transform 0.2s;
-}
+.btn-primary { width: 100%; padding: 0.9rem; background: var(--blue); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; }
 .btn-primary:hover { background: var(--blue-deep); transform: translateY(-1px); }
 .login-error { font-size: 0.82rem; color: var(--red); margin-top: 0.8rem; text-align: center; display: none; }
 .login-error.show { display: block; }
 
-/* ════════════════════════════════
-   ADMIN SHELL
-════════════════════════════════ */
+/* ADMIN SHELL */
 #adminShell { display: none; }
-
-/* Sidebar */
-.sidebar {
-  position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar);
-  background: var(--dark); display: flex; flex-direction: column;
-  z-index: 100; box-shadow: 4px 0 24px rgba(0,0,0,0.2);
-}
+.sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar); background: var(--dark); display: flex; flex-direction: column; z-index: 100; box-shadow: 4px 0 24px rgba(0,0,0,0.2); }
 .sidebar-logo { padding: 1.8rem 1.6rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .sidebar-logo-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
 .sidebar-logo-text span { color: #90CAF9; }
-.sidebar-badge {
-  display: inline-block; margin-top: 0.5rem;
-  font-size: 0.57rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--gold); padding: 0.2rem 0.6rem;
-  border: 1px solid rgba(201,168,76,0.35); border-radius: 100px;
-}
+.sidebar-badge { display: inline-block; margin-top: 0.5rem; font-size: 0.57rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); padding: 0.2rem 0.6rem; border: 1px solid rgba(201,168,76,0.35); border-radius: 100px; }
 .sidebar-nav { padding: 1.2rem 0.8rem; flex: 1; }
-.nav-item {
-  display: flex; align-items: center; gap: 0.7rem;
-  padding: 0.72rem 0.9rem; border-radius: 8px; cursor: pointer;
-  font-size: 0.84rem; font-weight: 500; color: rgba(255,255,255,0.5);
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 0.15rem; border: none; background: none;
-  width: 100%; text-align: left;
-}
+.nav-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.72rem 0.9rem; border-radius: 8px; cursor: pointer; font-size: 0.84rem; font-weight: 500; color: rgba(255,255,255,0.5); transition: background 0.2s, color 0.2s; margin-bottom: 0.15rem; border: none; background: none; width: 100%; text-align: left; }
 .nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); }
 .nav-item.active { background: rgba(21,101,192,0.28); color: #fff; font-weight: 600; }
-.nav-count {
-  margin-left: auto; background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.45); font-size: 0.64rem; font-weight: 600;
-  padding: 0.1rem 0.5rem; border-radius: 100px; min-width: 22px; text-align: center;
-}
+.nav-count { margin-left: auto; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); font-size: 0.64rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 100px; min-width: 22px; text-align: center; }
 .nav-item.active .nav-count { background: rgba(21,101,192,0.45); color: #90CAF9; }
+
+/* GitHub status dot in sidebar */
+.gh-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 0.6rem; padding: 0 0.9rem; }
+.gh-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gray); flex-shrink: 0; }
+.gh-dot.connected { background: #4caf50; }
+.gh-dot.error { background: var(--red); }
+
 .sidebar-footer { padding: 1rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.08); }
-.logout-btn {
-  display: flex; align-items: center; gap: 0.6rem;
-  width: 100%; padding: 0.6rem 0.8rem;
-  background: none; border: none; cursor: pointer;
-  color: rgba(255,255,255,0.38); font-size: 0.8rem; font-weight: 500;
-  border-radius: 6px; transition: color 0.2s, background 0.2s;
-}
+.logout-btn { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.6rem 0.8rem; background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.38); font-size: 0.8rem; font-weight: 500; border-radius: 6px; transition: color 0.2s, background 0.2s; }
 .logout-btn:hover { color: #ff6b6b; background: rgba(198,40,40,0.12); }
-
-/* Main area */
 .admin-main { margin-left: var(--sidebar); padding: 2.5rem 2.8rem; min-height: 100vh; }
-
-/* Tab panels */
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
-
-/* Page header */
-.page-hdr {
-  display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-  margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--gray-line);
-}
+.page-hdr { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--gray-line); }
 .page-hdr-text h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--blue-deep); }
 .page-hdr-text p { font-size: 0.84rem; color: var(--gray); margin-top: 0.25rem; }
-.btn-add {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.72rem 1.5rem; background: var(--blue); color: #fff;
-  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
-  border: none; border-radius: 8px; cursor: pointer;
-  transition: background 0.25s, transform 0.2s; white-space: nowrap;
-}
+.btn-add { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; background: var(--blue); color: #fff; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; white-space: nowrap; }
 .btn-add:hover { background: var(--blue-deep); transform: translateY(-1px); }
 
-/* Job cards grid */
+/* Job cards */
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
-.job-card {
-  background: #fff; border: 1px solid var(--gray-line); border-radius: 14px;
-  overflow: hidden; transition: box-shadow 0.25s, transform 0.2s;
-}
+.job-card { background: #fff; border: 1px solid var(--gray-line); border-radius: 14px; overflow: hidden; transition: box-shadow 0.25s, transform 0.2s; }
 .job-card:hover { box-shadow: 0 8px 28px rgba(21,101,192,0.1); transform: translateY(-2px); }
 .card-thumb { width: 100%; height: 150px; object-fit: cover; display: block; background: var(--blue-light); }
 .card-thumb-placeholder { width: 100%; height: 150px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 2.5rem; }
 .card-body { padding: 1.1rem 1.3rem 1.3rem; }
 .card-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem; }
-.card-desc { font-size: 0.8rem; line-height: 1.65; color: var(--gray); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.8rem; }
+.card-desc { font-size: 0.8rem; line-height: 1.65; color: var(--gray); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.8rem; }
 .card-photo-count { font-size: 0.7rem; color: var(--blue); font-weight: 600; margin-bottom: 0.9rem; }
 .card-actions { display: flex; gap: 0.5rem; }
-.btn-edit {
-  flex: 1; padding: 0.5rem; background: var(--blue-light); color: var(--blue);
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;
-}
+.btn-edit { flex: 1; padding: 0.5rem; background: var(--blue-light); color: var(--blue); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
 .btn-edit:hover { background: #bbdefb; }
-.btn-delete {
-  padding: 0.5rem 0.8rem; background: var(--red-light); color: var(--red);
-  font-size: 0.72rem; font-weight: 600;
-  border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;
-}
+.btn-delete { padding: 0.5rem 0.8rem; background: var(--red-light); color: var(--red); font-size: 0.72rem; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
 .btn-delete:hover { background: #ffcdd2; }
-
-/* Empty state */
-.empty-state {
-  text-align: center; padding: 5rem 2rem;
-  border: 2px dashed var(--gray-line); border-radius: 16px;
-}
+.empty-state { text-align: center; padding: 5rem 2rem; border: 2px dashed var(--gray-line); border-radius: 16px; }
 .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
 .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gray); margin-bottom: 0.5rem; }
 .empty-state p { font-size: 0.85rem; color: var(--gray); opacity: 0.7; }
 
-/* ════════════════════════════════
-   MODAL / FORM
-════════════════════════════════ */
-.modal-backdrop {
-  position: fixed; inset: 0; background: rgba(10,20,40,0.7);
-  backdrop-filter: blur(5px); z-index: 500;
-  display: flex; align-items: flex-start; justify-content: center;
-  padding: 2rem 1rem; overflow-y: auto;
-  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-}
+/* MODAL */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(10,20,40,0.7); backdrop-filter: blur(5px); z-index: 500; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
 .modal-backdrop.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: #fff; border-radius: 20px; width: 100%; max-width: 680px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
-  transform: translateY(20px) scale(0.97); opacity: 0;
-  transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1), opacity 0.3s ease;
-  margin: auto;
-}
+.modal { background: #fff; border-radius: 20px; width: 100%; max-width: 680px; box-shadow: 0 32px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); opacity: 0; transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1), opacity 0.3s ease; margin: auto; }
 .modal-backdrop.open .modal { transform: translateY(0) scale(1); opacity: 1; }
-.modal-hdr {
-  padding: 1.8rem 2rem 1.4rem;
-  border-bottom: 1px solid var(--gray-line);
-  display: flex; align-items: center; justify-content: space-between;
-}
+.modal-hdr { padding: 1.8rem 2rem 1.4rem; border-bottom: 1px solid var(--gray-line); display: flex; align-items: center; justify-content: space-between; }
 .modal-hdr h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--blue-deep); }
-.modal-close {
-  width: 36px; height: 36px; border-radius: 50%; background: var(--off-white);
-  border: 1px solid var(--gray-line); display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--gray); transition: background 0.2s, transform 0.2s;
-}
+.modal-close { width: 36px; height: 36px; border-radius: 50%; background: var(--off-white); border: 1px solid var(--gray-line); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--gray); transition: background 0.2s, transform 0.2s; }
 .modal-close:hover { background: var(--blue-light); color: var(--blue); transform: rotate(90deg); }
 .modal-body { padding: 1.8rem 2rem; }
 .form-group { margin-bottom: 1.4rem; }
 .form-group .form-label { margin-bottom: 0.45rem; }
 
-/* ── DRAG & DROP ZONE ── */
-.drop-zone {
-  border: 2px dashed var(--gray-line);
-  border-radius: 12px;
-  padding: 2.2rem 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.25s, background 0.25s;
-  margin-bottom: 1rem;
-  position: relative;
-}
-.drop-zone:hover, .drop-zone.drag-over {
-  border-color: var(--blue);
-  background: var(--blue-light);
-}
+/* Drop zone */
+.drop-zone { border: 2px dashed var(--gray-line); border-radius: 12px; padding: 2.2rem 1.5rem; text-align: center; cursor: pointer; transition: border-color 0.25s, background 0.25s; margin-bottom: 1rem; position: relative; }
+.drop-zone:hover, .drop-zone.drag-over { border-color: var(--blue); background: var(--blue-light); }
 .drop-zone.drag-over { background: #dbeeff; }
-.drop-zone input[type="file"] {
-  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-}
+.drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .drop-icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
 .drop-title { font-size: 0.92rem; font-weight: 600; color: var(--blue); margin-bottom: 0.25rem; }
 .drop-sub { font-size: 0.77rem; color: var(--gray); line-height: 1.5; }
 .drop-sub span { color: var(--blue); text-decoration: underline; }
+.photo-or-divider { display: flex; align-items: center; gap: 0.8rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin: 1rem 0; }
+.photo-or-divider::before, .photo-or-divider::after { content: ''; flex: 1; height: 1px; background: var(--gray-line); }
 
-/* Divider between drop zone and URL section */
-.photo-or-divider {
-  display: flex; align-items: center; gap: 0.8rem;
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--gray); margin: 1rem 0;
-}
-.photo-or-divider::before, .photo-or-divider::after {
-  content: ''; flex: 1; height: 1px; background: var(--gray-line);
-}
-
-/* Photo URL list — now sortable */
-.photo-list {
-  display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.8rem;
-}
-.photo-row {
-  display: flex; gap: 0.5rem; align-items: center;
-  background: var(--off-white); border: 1px solid var(--gray-line);
-  border-radius: 8px; padding: 0.45rem 0.6rem;
-  cursor: default;
-  transition: box-shadow 0.2s, background 0.2s;
-}
-.photo-row.dragging-row {
-  opacity: 0.45; box-shadow: 0 4px 16px rgba(21,101,192,0.2);
-}
-.photo-row.drag-over-row {
-  border-color: var(--blue); background: var(--blue-light);
-}
-.drag-handle {
-  cursor: grab; color: var(--gray); flex-shrink: 0; padding: 0 2px;
-  display: flex; align-items: center;
-  user-select: none;
-}
+/* Photo rows */
+.photo-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.8rem; }
+.photo-row { display: flex; gap: 0.5rem; align-items: center; background: var(--off-white); border: 1px solid var(--gray-line); border-radius: 8px; padding: 0.45rem 0.6rem; transition: box-shadow 0.2s, background 0.2s; }
+.photo-row.dragging-row { opacity: 0.45; }
+.photo-row.drag-over-row { border-color: var(--blue); background: var(--blue-light); }
+.drag-handle { cursor: grab; color: var(--gray); flex-shrink: 0; padding: 0 2px; display: flex; align-items: center; user-select: none; }
 .drag-handle:active { cursor: grabbing; }
-.photo-preview {
-  width: 44px; height: 44px; border-radius: 6px;
-  object-fit: cover; border: 1px solid var(--gray-line);
-  flex-shrink: 0; background: var(--off-white);
-  display: none;
-}
+.photo-preview { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; border: 1px solid var(--gray-line); flex-shrink: 0; background: var(--off-white); display: none; }
 .photo-preview.loaded { display: block; }
 .photo-row .form-input { margin-bottom: 0; flex: 1; font-size: 0.83rem; padding: 0.55rem 0.75rem; }
-.btn-remove-photo {
-  width: 30px; height: 30px; border-radius: 6px;
-  background: var(--red-light); color: var(--red);
-  border: none; cursor: pointer; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; line-height: 1; transition: background 0.2s;
-}
+.btn-remove-photo { width: 30px; height: 30px; border-radius: 6px; background: var(--red-light); color: var(--red); border: none; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; transition: background 0.2s; }
 .btn-remove-photo:hover { background: #ffcdd2; }
-.btn-add-photo {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.5rem 1rem; background: var(--blue-light); color: var(--blue);
-  font-size: 0.74rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;
-}
+.btn-add-photo { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; background: var(--blue-light); color: var(--blue); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
 .btn-add-photo:hover { background: #bbdefb; }
 .photo-hint { font-size: 0.75rem; color: var(--gray); margin-top: 0.4rem; line-height: 1.5; }
-
-/* Upload progress row */
-.upload-progress {
-  display: flex; align-items: center; gap: 0.7rem;
-  padding: 0.5rem 0.6rem;
-  background: var(--blue-light); border: 1px solid rgba(21,101,192,0.2);
-  border-radius: 8px; font-size: 0.8rem; color: var(--blue);
-}
-.progress-bar-wrap {
-  flex: 1; height: 4px; background: rgba(21,101,192,0.15); border-radius: 2px; overflow: hidden;
-}
+.upload-progress { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0.6rem; background: var(--blue-light); border: 1px solid rgba(21,101,192,0.2); border-radius: 8px; font-size: 0.8rem; color: var(--blue); }
+.progress-bar-wrap { flex: 1; height: 4px; background: rgba(21,101,192,0.15); border-radius: 2px; overflow: hidden; }
 .progress-bar { height: 100%; background: var(--blue); border-radius: 2px; transition: width 0.3s; }
 
 /* Modal footer */
-.modal-footer {
-  padding: 1.2rem 2rem 1.8rem;
-  display: flex; gap: 0.8rem; justify-content: flex-end;
-  border-top: 1px solid var(--gray-line);
-}
-.btn-cancel {
-  padding: 0.7rem 1.6rem; background: var(--off-white); color: var(--gray);
-  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
-  border: 1px solid var(--gray-line); border-radius: 8px; cursor: pointer; transition: background 0.2s;
-}
+.modal-footer { padding: 1.2rem 2rem 1.8rem; display: flex; gap: 0.8rem; justify-content: flex-end; border-top: 1px solid var(--gray-line); flex-wrap: wrap; }
+.btn-cancel { padding: 0.7rem 1.6rem; background: var(--off-white); color: var(--gray); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: 1px solid var(--gray-line); border-radius: 8px; cursor: pointer; transition: background 0.2s; }
 .btn-cancel:hover { background: #e8eef5; }
-.btn-save {
-  padding: 0.7rem 2rem; background: var(--blue); color: #fff;
-  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
-  border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s;
-}
+.btn-save { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 2rem; background: var(--blue); color: #fff; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; }
 .btn-save:hover { background: var(--blue-deep); transform: translateY(-1px); }
+.btn-save:disabled { background: #90a4ae; cursor: not-allowed; transform: none; }
 
-/* Toast notification */
-.toast {
-  position: fixed; bottom: 2rem; right: 2rem;
-  padding: 0.9rem 1.5rem; border-radius: 10px;
-  font-size: 0.85rem; font-weight: 500; color: #fff;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  transform: translateY(20px); opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  z-index: 999; pointer-events: none;
-}
+/* Publish status in modal footer */
+.publish-status { font-size: 0.78rem; color: var(--gray); display: flex; align-items: center; gap: 0.4rem; margin-right: auto; }
+.publish-status.pushing { color: var(--blue); }
+.publish-status.success { color: var(--green); }
+.publish-status.error   { color: var(--red); }
+
+/* Toast */
+.toast { position: fixed; bottom: 2rem; right: 2rem; padding: 0.9rem 1.5rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateY(20px); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 999; pointer-events: none; max-width: 380px; line-height: 1.5; }
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast.success { background: var(--green); }
 .toast.error   { background: var(--red); }
 .toast.info    { background: var(--blue); }
 
-/* Delete confirm */
-.confirm-backdrop {
-  position: fixed; inset: 0; background: rgba(10,20,40,0.65);
-  backdrop-filter: blur(4px); z-index: 600;
-  display: flex; align-items: center; justify-content: center; padding: 2rem;
-  opacity: 0; pointer-events: none; transition: opacity 0.25s;
-}
+/* Confirm */
+.confirm-backdrop { position: fixed; inset: 0; background: rgba(10,20,40,0.65); backdrop-filter: blur(4px); z-index: 600; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
 .confirm-backdrop.open { opacity: 1; pointer-events: all; }
-.confirm-box {
-  background: #fff; border-radius: 16px; padding: 2rem 2.2rem;
-  max-width: 380px; width: 100%;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
-  transform: scale(0.93); opacity: 0;
-  transition: transform 0.3s cubic-bezier(0.34,1.3,0.64,1), opacity 0.25s;
-}
+.confirm-box { background: #fff; border-radius: 16px; padding: 2rem 2.2rem; max-width: 380px; width: 100%; box-shadow: 0 24px 60px rgba(0,0,0,0.25); transform: scale(0.93); opacity: 0; transition: transform 0.3s cubic-bezier(0.34,1.3,0.64,1), opacity 0.25s; }
 .confirm-backdrop.open .confirm-box { transform: scale(1); opacity: 1; }
 .confirm-box h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--dark); margin-bottom: 0.6rem; }
 .confirm-box p { font-size: 0.87rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.5rem; }
 .confirm-btns { display: flex; gap: 0.7rem; justify-content: flex-end; }
-.btn-confirm-cancel { padding: 0.6rem 1.4rem; background: var(--off-white); color: var(--gray); font-size: 0.78rem; font-weight: 600; border: 1px solid var(--gray-line); border-radius: 7px; cursor: pointer; transition: background 0.2s; }
-.btn-confirm-cancel:hover { background: #e8eef5; }
-.btn-confirm-delete { padding: 0.6rem 1.4rem; background: var(--red); color: #fff; font-size: 0.78rem; font-weight: 600; border: none; border-radius: 7px; cursor: pointer; transition: background 0.2s; }
+.btn-confirm-cancel { padding: 0.6rem 1.4rem; background: var(--off-white); color: var(--gray); font-size: 0.78rem; font-weight: 600; border: 1px solid var(--gray-line); border-radius: 7px; cursor: pointer; }
+.btn-confirm-delete { padding: 0.6rem 1.4rem; background: var(--red); color: #fff; font-size: 0.78rem; font-weight: 600; border: none; border-radius: 7px; cursor: pointer; }
 .btn-confirm-delete:hover { background: #b71c1c; }
 
-/* Info banner */
-.info-banner {
-  background: var(--blue-light); border: 1px solid rgba(21,101,192,0.2);
-  border-radius: 10px; padding: 1rem 1.4rem;
-  font-size: 0.82rem; color: var(--blue-deep); line-height: 1.7;
-  margin-bottom: 2rem; display: flex; gap: 0.8rem; align-items: flex-start;
-}
-.info-banner svg { flex-shrink: 0; margin-top: 2px; }
+/* INFO BANNER */
+.info-banner { background: var(--blue-light); border: 1px solid rgba(21,101,192,0.2); border-radius: 10px; padding: 1rem 1.4rem; font-size: 0.82rem; color: var(--blue-deep); line-height: 1.7; margin-bottom: 2rem; display: flex; gap: 0.8rem; align-items: flex-start; }
+.info-banner.success-banner { background: var(--green-light); border-color: rgba(46,125,50,0.2); color: var(--green); }
+.info-banner.warn-banner { background: #fff8e1; border-color: rgba(201,168,76,0.35); color: #7a5f00; }
 
-/* How-to panel */
-.howto-box {
-  background: var(--dark); border-radius: 14px; padding: 1.8rem 2rem;
-  margin-top: 2rem;
-}
+/* SETTINGS TAB */
+.settings-section { background: #fff; border: 1px solid var(--gray-line); border-radius: 16px; padding: 2rem 2.2rem; margin-bottom: 1.5rem; }
+.settings-section h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue-deep); margin-bottom: 0.4rem; }
+.settings-section p { font-size: 0.83rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.4rem; }
+.settings-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.settings-row.single { grid-template-columns: 1fr; }
+.settings-field label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 0.4rem; }
+.settings-field input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--gray-line); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--dark); outline: none; transition: border-color 0.2s; background: var(--off-white); }
+.settings-field input:focus { border-color: var(--blue); background: #fff; }
+.settings-field input.token-input { font-family: monospace; font-size: 0.82rem; letter-spacing: 0.04em; }
+.btn-save-settings { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.8rem; background: var(--blue); color: #fff; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; }
+.btn-save-settings:hover { background: var(--blue-deep); transform: translateY(-1px); }
+.btn-test-gh { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.4rem; background: var(--off-white); color: var(--gray); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: 1px solid var(--gray-line); border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+.btn-test-gh:hover { background: #e8eef5; }
+.settings-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.gh-test-result { font-size: 0.8rem; padding: 0.6rem 1rem; border-radius: 7px; margin-top: 0.8rem; display: none; }
+.gh-test-result.ok  { display: block; background: var(--green-light); color: var(--green); }
+.gh-test-result.err { display: block; background: var(--red-light); color: var(--red); }
+
+/* How-to */
+.howto-box { background: var(--dark); border-radius: 14px; padding: 1.8rem 2rem; }
 .howto-box h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: #fff; margin-bottom: 1.2rem; }
 .howto-step { display: flex; gap: 1rem; margin-bottom: 1.1rem; align-items: flex-start; }
-.step-num {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: rgba(21,101,192,0.4); color: #90CAF9;
-  font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(21,101,192,0.4); color: #90CAF9; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
 .step-text { font-size: 0.83rem; color: rgba(255,255,255,0.6); line-height: 1.65; }
 .step-text strong { color: #fff; font-weight: 600; }
-.code-snippet {
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px; padding: 0.7rem 1rem; margin-top: 0.5rem;
-  font-family: monospace; font-size: 0.76rem; color: #90CAF9;
-  word-break: break-all; line-height: 1.6;
-}
+.code-snippet { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 0.7rem 1rem; margin-top: 0.5rem; font-family: monospace; font-size: 0.76rem; color: #90CAF9; word-break: break-all; line-height: 1.6; }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .sidebar { width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap; }
+  .sidebar { width: 100%; height: auto; position: relative; }
   .admin-main { margin-left: 0; padding: 1.5rem; }
   .cards-grid { grid-template-columns: 1fr; }
+  .settings-row { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════
-     LOGIN SCREEN
-════════════════════════════════ -->
+<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">Aqua<span>lock</span> Africa</div>
@@ -412,12 +218,8 @@ body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans',
   </div>
 </div>
 
-<!-- ════════════════════════════════
-     ADMIN SHELL
-════════════════════════════════ -->
+<!-- ADMIN SHELL -->
 <div id="adminShell">
-
-  <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-logo">
       <div class="sidebar-logo-text">Aqua<span>lock</span> Africa</div>
@@ -429,11 +231,19 @@ body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans',
         Previous Jobs
         <span class="nav-count" id="countJobs">0</span>
       </button>
+      <button class="nav-item" id="navSettings" onclick="switchTab('settings')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        GitHub Settings
+      </button>
       <button class="nav-item" id="navHelp" onclick="switchTab('help')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         How to Use
       </button>
     </nav>
+    <div id="ghStatusBar" class="gh-status">
+      <span class="gh-dot" id="ghDot"></span>
+      <span id="ghStatusText">GitHub not configured</span>
+    </div>
     <div class="sidebar-footer">
       <button class="logout-btn" onclick="doLogout()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -442,10 +252,9 @@ body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans',
     </div>
   </div>
 
-  <!-- Main Content -->
   <main class="admin-main">
 
-    <!-- ── JOBS TAB ── -->
+    <!-- JOBS TAB -->
     <div class="tab-panel active" id="tabJobs">
       <div class="page-hdr">
         <div class="page-hdr-text">
@@ -457,49 +266,93 @@ body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans',
           Add New Job
         </button>
       </div>
-
-      <div class="info-banner">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Jobs you add here are saved in your browser. To show them on your live portfolio page, click <strong>"Copy Code for portfolio.html"</strong> at the bottom of any job card and paste it into the <code>jobs</code> array in your <strong>portfolio.html</strong> file.
-      </div>
-
+      <div id="jobsBanner"></div>
       <div class="cards-grid" id="jobsGrid"></div>
     </div>
 
-    <!-- ── HELP TAB ── -->
-    <div class="tab-panel" id="tabHelp">
+    <!-- SETTINGS TAB -->
+    <div class="tab-panel" id="tabSettings">
       <div class="page-hdr">
         <div class="page-hdr-text">
-          <h1>How to Use</h1>
-          <p>A step-by-step guide to adding jobs to your portfolio</p>
+          <h1>GitHub Settings</h1>
+          <p>Connect to your GitHub repo so jobs save automatically to your live site</p>
         </div>
       </div>
+
+      <div class="settings-section">
+        <h3>Repository Details</h3>
+        <p>Enter your GitHub username, the name of your repository, and the path to your <code>portfolio.html</code> file inside that repo. These are saved in your browser.</p>
+        <div class="settings-row">
+          <div class="settings-field">
+            <label for="ghUsername">GitHub Username</label>
+            <input type="text" id="ghUsername" placeholder="e.g. johndoe"/>
+          </div>
+          <div class="settings-field">
+            <label for="ghRepo">Repository Name</label>
+            <input type="text" id="ghRepo" placeholder="e.g. aqualock-africa"/>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-field">
+            <label for="ghFilePath">File Path in Repo</label>
+            <input type="text" id="ghFilePath" placeholder="portfolio.html" value="portfolio.html"/>
+          </div>
+          <div class="settings-field">
+            <label for="ghBranch">Branch</label>
+            <input type="text" id="ghBranch" placeholder="main" value="main"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Personal Access Token</h3>
+        <p>Paste your GitHub Personal Access Token here. It needs <strong>Contents: Read and write</strong> permission on your repo. It is stored only in your browser and never sent anywhere except directly to the GitHub API over HTTPS.</p>
+        <div class="settings-row single">
+          <div class="settings-field">
+            <label for="ghToken">Personal Access Token</label>
+            <input type="password" id="ghToken" class="token-input" placeholder="github_pat_... or ghp_..."/>
+          </div>
+        </div>
+        <div id="ghTestResult" class="gh-test-result"></div>
+        <div class="settings-actions" style="margin-top:1rem">
+          <button class="btn-save-settings" onclick="saveGhSettings()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save Settings
+          </button>
+          <button class="btn-test-gh" onclick="testGhConnection()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Test Connection
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HELP TAB -->
+    <div class="tab-panel" id="tabHelp">
+      <div class="page-hdr">
+        <div class="page-hdr-text"><h1>How to Use</h1><p>Setup guide and instructions</p></div>
+      </div>
       <div class="howto-box">
-        <h3>Adding a New Job to Your Portfolio</h3>
+        <h3>One-Time Setup (GitHub Auto-Save)</h3>
         <div class="howto-step">
           <div class="step-num">1</div>
-          <div class="step-text">Go to <strong>Previous Jobs</strong> and click <strong>Add New Job</strong>. Fill in the title, description, and paste in your photo URLs (one per line).</div>
+          <div class="step-text">Go to <strong>GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens</strong> and create a new token with <strong>Contents: Read and write</strong> on your Aqualock repo only.</div>
         </div>
         <div class="howto-step">
           <div class="step-num">2</div>
-          <div class="step-text">For photo URLs — upload your photos to a free service like <strong>Imgur</strong>, <strong>Cloudinary</strong>, or your GitHub repo, then copy the direct image link (ending in .jpg, .png, etc.).</div>
+          <div class="step-text">Go to the <strong>GitHub Settings</strong> tab in this admin panel. Enter your GitHub username, repo name, file path (<code>portfolio.html</code>), branch (<code>main</code>), and paste your token.</div>
         </div>
         <div class="howto-step">
           <div class="step-num">3</div>
-          <div class="step-text">Click <strong>Save Job</strong>. The job will appear in the grid above.</div>
+          <div class="step-text">Click <strong>Test Connection</strong> to confirm everything works. You should see a green success message.</div>
         </div>
         <div class="howto-step">
           <div class="step-num">4</div>
-          <div class="step-text">On the job card, click <strong>"Copy Code"</strong>. This copies a JavaScript object for that job.</div>
+          <div class="step-text">From now on, when you <strong>Add New Job</strong> and click <strong>Save &amp; Publish</strong>, the job is automatically added to your <code>portfolio.html</code> on GitHub. GitHub Pages rebuilds and your site is live within ~30 seconds.</div>
         </div>
         <div class="howto-step">
           <div class="step-num">5</div>
-          <div class="step-text">Open <strong>portfolio.html</strong> in a text editor. Find the line that starts with <code>const jobs = [</code> and paste your copied code inside the array (after the last <code>}</code> and before the closing <code>]</code>). Add a comma before your pasted entry if there are existing jobs.</div>
-          <div class="code-snippet">const jobs = [<br>&nbsp;&nbsp;{ id: 1, title: 'Existing Job', ... },<br>&nbsp;&nbsp;<strong>← paste your new job here</strong><br>];</div>
-        </div>
-        <div class="howto-step">
-          <div class="step-num">6</div>
-          <div class="step-text">Save <strong>portfolio.html</strong> and push it to GitHub. Your new job will appear on the live site as a new hexagon in the honeycomb grid.</div>
+          <div class="step-text">If GitHub is not configured, saving a job still works — it saves to your browser and you can use the <strong>📋 Copy Code</strong> button to manually paste it into your file.</div>
         </div>
       </div>
     </div>
@@ -507,9 +360,7 @@ body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans',
   </main>
 </div>
 
-<!-- ════════════════════════════════
-     ADD / EDIT MODAL
-════════════════════════════════ -->
+<!-- JOB FORM MODAL -->
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeFormBackdrop(event)">
   <div class="modal">
     <div class="modal-hdr">
@@ -530,39 +381,37 @@ body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans',
       </div>
       <div class="form-group">
         <label class="form-label">Photos *</label>
-
-        <!-- Drag & drop zone -->
         <div class="drop-zone" id="dropZone">
           <input type="file" id="fileInput" accept="image/*" multiple/>
           <div class="drop-icon">🖼️</div>
           <div class="drop-title">Drag &amp; drop photos here</div>
           <div class="drop-sub">or <span>click to browse files</span> from your computer<br/>JPG, PNG, WEBP, GIF supported</div>
         </div>
-
         <div class="photo-or-divider">or add by URL</div>
-
         <div class="photo-list" id="photoList"></div>
         <button class="btn-add-photo" onclick="addPhotoRow()">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add URL
         </button>
-        <p class="photo-hint" style="margin-top:0.7rem">💡 Drag to reorder photos. The first photo is the large hero image in the panel.</p>
+        <p class="photo-hint" style="margin-top:0.7rem">💡 Drag rows to reorder. The first photo is the hero image.</p>
       </div>
     </div>
     <div class="modal-footer">
+      <span class="publish-status" id="publishStatus"></span>
       <button class="btn-cancel" onclick="closeForm()">Cancel</button>
-      <button class="btn-save" onclick="saveJob()">Save Job</button>
+      <button class="btn-save" id="btnSave" onclick="saveJob()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save &amp; Publish
+      </button>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════
-     DELETE CONFIRM
-════════════════════════════════ -->
+<!-- DELETE CONFIRM -->
 <div class="confirm-backdrop" id="confirmBackdrop">
   <div class="confirm-box">
     <h3>Delete this job?</h3>
-    <p>This will remove the job from your admin panel. It won't affect your live <strong>portfolio.html</strong> file unless you update that file separately.</p>
+    <p>This removes the job from your browser. To remove it from the live site, you'll also need to delete it from <strong>portfolio.html</strong> on GitHub.</p>
     <div class="confirm-btns">
       <button class="btn-confirm-cancel" onclick="closeConfirm()">Cancel</button>
       <button class="btn-confirm-delete" onclick="confirmDelete()">Delete</button>
@@ -570,24 +419,25 @@ body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans',
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* ════════════════════════════════
-   CONFIG — change this password
-════════════════════════════════ */
+/* ════════════════════════════════════════════
+   CONFIG
+════════════════════════════════════════════ */
 const ADMIN_PASSWORD = 'aqualock2025';
 const STORAGE_KEY    = 'aqualock_admin_jobs';
+const GH_SETTINGS_KEY = 'aqualock_gh_settings';
 
-/* ════════════════════════════════
+/* ════════════════════════════════════════════
    AUTH
-════════════════════════════════ */
+════════════════════════════════════════════ */
 function doLogin() {
-  const val = document.getElementById('pwInput').value;
-  if (val === ADMIN_PASSWORD) {
+  if (document.getElementById('pwInput').value === ADMIN_PASSWORD) {
     document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminShell').style.display = 'block';
+    document.getElementById('adminShell').style.display  = 'block';
+    loadGhSettingsToForm();
+    updateGhStatusBar();
     renderJobs();
   } else {
     document.getElementById('loginError').classList.add('show');
@@ -596,48 +446,242 @@ function doLogin() {
   }
 }
 function doLogout() {
-  document.getElementById('adminShell').style.display = 'none';
+  document.getElementById('adminShell').style.display  = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('pwInput').value = '';
   document.getElementById('loginError').classList.remove('show');
 }
 
-/* ════════════════════════════════
-   STORAGE
-════════════════════════════════ */
+/* ════════════════════════════════════════════
+   STORAGE — JOBS
+════════════════════════════════════════════ */
 function loadJobs() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
   catch { return []; }
 }
-function saveJobs(jobs) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs));
+function saveJobs(jobs) { localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs)); }
+
+/* ════════════════════════════════════════════
+   STORAGE — GITHUB SETTINGS
+════════════════════════════════════════════ */
+function loadGhSettings() {
+  try { return JSON.parse(localStorage.getItem(GH_SETTINGS_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveGhSettings() {
+  const s = {
+    username : document.getElementById('ghUsername').value.trim(),
+    repo     : document.getElementById('ghRepo').value.trim(),
+    filePath : document.getElementById('ghFilePath').value.trim() || 'portfolio.html',
+    branch   : document.getElementById('ghBranch').value.trim()   || 'main',
+    token    : document.getElementById('ghToken').value.trim(),
+  };
+  if (!s.username || !s.repo || !s.token) {
+    showToast('Please fill in username, repo, and token.', 'error'); return;
+  }
+  localStorage.setItem(GH_SETTINGS_KEY, JSON.stringify(s));
+  updateGhStatusBar();
+  showToast('GitHub settings saved!', 'success');
+}
+function loadGhSettingsToForm() {
+  const s = loadGhSettings();
+  document.getElementById('ghUsername').value = s.username || '';
+  document.getElementById('ghRepo').value     = s.repo     || '';
+  document.getElementById('ghFilePath').value = s.filePath || 'portfolio.html';
+  document.getElementById('ghBranch').value   = s.branch   || 'main';
+  document.getElementById('ghToken').value    = s.token    || '';
+}
+function isGhConfigured() {
+  const s = loadGhSettings();
+  return !!(s.username && s.repo && s.token);
+}
+function updateGhStatusBar() {
+  const dot  = document.getElementById('ghDot');
+  const text = document.getElementById('ghStatusText');
+  if (isGhConfigured()) {
+    const s = loadGhSettings();
+    dot.className  = 'gh-dot connected';
+    text.textContent = s.username + '/' + s.repo;
+  } else {
+    dot.className  = 'gh-dot';
+    text.textContent = 'GitHub not configured';
+  }
 }
 
-/* ════════════════════════════════
+/* ════════════════════════════════════════════
+   GITHUB API — TEST CONNECTION
+════════════════════════════════════════════ */
+async function testGhConnection() {
+  const s = loadGhSettings();
+  if (!s.username || !s.repo || !s.token) {
+    showTestResult('Please save your settings first.', false); return;
+  }
+  showTestResult('Testing connection...', null);
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${s.username}/${s.repo}/contents/${s.filePath}?ref=${s.branch}`,
+      { headers: { Authorization: `Bearer ${s.token}`, Accept: 'application/vnd.github+json' } }
+    );
+    if (res.ok) {
+      showTestResult('✅ Connected! Found ' + s.filePath + ' in your repo. Auto-save is ready.', true);
+      const dot = document.getElementById('ghDot');
+      dot.className = 'gh-dot connected';
+    } else {
+      const err = await res.json();
+      showTestResult('❌ Error ' + res.status + ': ' + (err.message || 'Unknown error'), false);
+      document.getElementById('ghDot').className = 'gh-dot error';
+    }
+  } catch (e) {
+    showTestResult('❌ Network error: ' + e.message, false);
+  }
+}
+function showTestResult(msg, ok) {
+  const el = document.getElementById('ghTestResult');
+  el.textContent = msg;
+  el.className   = 'gh-test-result ' + (ok === true ? 'ok' : ok === false ? 'err' : '');
+}
+
+/* ════════════════════════════════════════════
+   GITHUB API — READ & WRITE portfolio.html
+════════════════════════════════════════════ */
+async function fetchPortfolioFile() {
+  const s = loadGhSettings();
+  const res = await fetch(
+    `https://api.github.com/repos/${s.username}/${s.repo}/contents/${s.filePath}?ref=${s.branch}`,
+    { headers: { Authorization: `Bearer ${s.token}`, Accept: 'application/vnd.github+json' } }
+  );
+  if (!res.ok) throw new Error('Could not read ' + s.filePath + ' (HTTP ' + res.status + ')');
+  const data = await res.json();
+  const content = atob(data.content.replace(/\n/g, ''));
+  return { content, sha: data.sha };
+}
+
+async function pushPortfolioFile(content, sha, commitMsg) {
+  const s = loadGhSettings();
+  const encoded = btoa(unescape(encodeURIComponent(content)));
+  const res = await fetch(
+    `https://api.github.com/repos/${s.username}/${s.repo}/contents/${s.filePath}`,
+    {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${s.token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: commitMsg, content: encoded, sha, branch: s.branch })
+    }
+  );
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'Push failed (HTTP ' + res.status + ')');
+  }
+  return res.json();
+}
+
+/* Inject a new job object into the jobs array in the file content string */
+function injectJobIntoContent(fileContent, jobObj) {
+  const jobCode = jobObjToCode(jobObj);
+
+  // Find the jobs array — look for: const jobs = [
+  const marker = 'const jobs = [';
+  const idx = fileContent.indexOf(marker);
+  if (idx === -1) throw new Error('Could not find "const jobs = [" in portfolio.html. Make sure that exact text exists in the file.');
+
+  // Find the closing ] of the array
+  let depth = 0, closeIdx = -1;
+  for (let i = idx + marker.length - 1; i < fileContent.length; i++) {
+    if (fileContent[i] === '[') depth++;
+    else if (fileContent[i] === ']') { depth--; if (depth === 0) { closeIdx = i; break; } }
+  }
+  if (closeIdx === -1) throw new Error('Could not find closing ] of jobs array in portfolio.html.');
+
+  // Check if there are existing entries (need a comma before new entry)
+  const arrayContent = fileContent.slice(idx + marker.length, closeIdx).trim();
+  const needsComma   = arrayContent.length > 0 && !arrayContent.endsWith(',');
+
+  const insertion = (needsComma ? ',\n' : '\n') + jobCode + '\n';
+  return fileContent.slice(0, closeIdx) + insertion + fileContent.slice(closeIdx);
+}
+
+/* Update an existing job in the file */
+function updateJobInContent(fileContent, jobObj) {
+  // Remove old entry and inject updated one
+  const removed = removeJobFromContent(fileContent, jobObj.id);
+  return injectJobIntoContent(removed, jobObj);
+}
+
+/* Remove a job by id from the file (best-effort) */
+function removeJobFromContent(fileContent, jobId) {
+  // Find the id: N pattern inside the jobs array
+  const idPattern = new RegExp(`id:\\s*${jobId}[^}]*`, 's');
+  // We'll find the object boundaries by scanning for { id: jobId
+  const marker    = 'const jobs = [';
+  const arrStart  = fileContent.indexOf(marker);
+  if (arrStart === -1) return fileContent;
+
+  const searchStr = `id: ${jobId},`;
+  const altStr    = `id: ${jobId} `;
+  let pos = fileContent.indexOf(searchStr, arrStart);
+  if (pos === -1) pos = fileContent.indexOf(altStr, arrStart);
+  if (pos === -1) return fileContent; // not found, leave unchanged
+
+  // Walk back to find opening {
+  let objStart = pos;
+  while (objStart > arrStart && fileContent[objStart] !== '{') objStart--;
+
+  // Walk forward to find matching closing }
+  let depth = 0, objEnd = objStart;
+  for (let i = objStart; i < fileContent.length; i++) {
+    if (fileContent[i] === '{') depth++;
+    else if (fileContent[i] === '}') { depth--; if (depth === 0) { objEnd = i; break; } }
+  }
+
+  // Remove the object and any surrounding comma/whitespace
+  let before = fileContent.slice(0, objStart);
+  let after  = fileContent.slice(objEnd + 1);
+
+  // Clean up trailing comma before this entry or leading comma after
+  before = before.replace(/,\s*$/, '');
+  after  = after.replace(/^\s*,/, '');
+
+  return before + after;
+}
+
+function jobObjToCode(job) {
+  const photosStr = job.photos.map(p => `    '${p.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}'`).join(',\n');
+  return `  {\n    id: ${job.id},\n    title: '${job.title.replace(/'/g,"\\'")}',\n    description: '${job.description.replace(/'/g,"\\'")}',\n    photos: [\n${photosStr}\n    ]\n  }`;
+}
+
+/* ════════════════════════════════════════════
    TAB SWITCHING
-════════════════════════════════ */
+════════════════════════════════════════════ */
 function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-  document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  const name = tab.charAt(0).toUpperCase() + tab.slice(1);
+  document.getElementById('tab' + name).classList.add('active');
+  document.getElementById('nav' + name).classList.add('active');
 }
 
-/* ════════════════════════════════
-   RENDER JOB CARDS
-════════════════════════════════ */
+/* ════════════════════════════════════════════
+   RENDER JOBS
+════════════════════════════════════════════ */
 function renderJobs() {
   const jobs = loadJobs();
-  const grid = document.getElementById('jobsGrid');
   document.getElementById('countJobs').textContent = jobs.length;
+  const banner = document.getElementById('jobsBanner');
 
+  if (isGhConfigured()) {
+    banner.innerHTML = `<div class="info-banner success-banner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      GitHub connected — jobs will be saved automatically to your live site when you click <strong>Save &amp; Publish</strong>.
+    </div>`;
+  } else {
+    banner.innerHTML = `<div class="info-banner warn-banner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      GitHub not configured — jobs save to your browser only. Set up GitHub in the <strong>GitHub Settings</strong> tab to auto-publish.
+    </div>`;
+  }
+
+  const grid = document.getElementById('jobsGrid');
   if (jobs.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state" style="grid-column:1/-1">
-        <div class="empty-state-icon">🌿</div>
-        <h3>No jobs yet</h3>
-        <p>Click "Add New Job" to create your first portfolio entry.</p>
-      </div>`;
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">🌿</div><h3>No jobs yet</h3><p>Click "Add New Job" to create your first portfolio entry.</p></div>`;
     return;
   }
 
@@ -646,57 +690,48 @@ function renderJobs() {
       ? `<img class="card-thumb" src="${escHtml(job.photos[0])}" alt="${escHtml(job.title)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
          <div class="card-thumb-placeholder" style="display:none">🖼️</div>`
       : `<div class="card-thumb-placeholder">🖼️</div>`;
-    const photoCount = job.photos ? job.photos.length : 0;
-    return `
-      <div class="job-card">
-        ${thumb}
-        <div class="card-body">
-          <div class="card-title">${escHtml(job.title)}</div>
-          <div class="card-desc">${escHtml(job.description)}</div>
-          <div class="card-photo-count">📷 ${photoCount} photo${photoCount !== 1 ? 's' : ''}</div>
-          <div class="card-actions">
-            <button class="btn-edit" onclick="openForm(${job.id})">✏️ Edit</button>
-            <button class="btn-edit" style="background:#e8f5e9;color:#2e7d32" onclick="copyJobCode(${job.id})">📋 Copy Code</button>
-            <button class="btn-delete" onclick="askDelete(${job.id})">🗑</button>
-          </div>
+    const n = job.photos ? job.photos.length : 0;
+    return `<div class="job-card">${thumb}
+      <div class="card-body">
+        <div class="card-title">${escHtml(job.title)}</div>
+        <div class="card-desc">${escHtml(job.description)}</div>
+        <div class="card-photo-count">📷 ${n} photo${n !== 1 ? 's' : ''}</div>
+        <div class="card-actions">
+          <button class="btn-edit" onclick="openForm(${job.id})">✏️ Edit</button>
+          <button class="btn-edit" style="background:#e8f5e9;color:#2e7d32" onclick="copyJobCode(${job.id})">📋 Copy Code</button>
+          <button class="btn-delete" onclick="askDelete(${job.id})">🗑</button>
         </div>
-      </div>`;
+      </div></div>`;
   }).join('');
 }
 
-/* ════════════════════════════════
-   FORM — ADD / EDIT
-════════════════════════════════ */
+/* ════════════════════════════════════════════
+   FORM — OPEN / CLOSE
+════════════════════════════════════════════ */
 function openForm(id) {
   const jobs = loadJobs();
   const job  = id ? jobs.find(j => j.id === id) : null;
+  document.getElementById('modalTitle').textContent     = job ? 'Edit Job' : 'Add New Job';
+  document.getElementById('editId').value               = job ? job.id : '';
+  document.getElementById('fieldTitle').value           = job ? job.title : '';
+  document.getElementById('fieldDesc').value            = job ? job.description : '';
+  document.getElementById('publishStatus').textContent  = '';
+  document.getElementById('publishStatus').className    = 'publish-status';
+  document.getElementById('btnSave').disabled           = false;
 
-  document.getElementById('modalTitle').textContent = job ? 'Edit Job' : 'Add New Job';
-  document.getElementById('editId').value   = job ? job.id : '';
-  document.getElementById('fieldTitle').value = job ? job.title : '';
-  document.getElementById('fieldDesc').value  = job ? job.description : '';
-
-  // Build photo rows
   const photoList = document.getElementById('photoList');
   photoList.innerHTML = '';
   const photos = job && job.photos && job.photos.length > 0 ? job.photos : [];
   if (photos.length > 0) {
-    photos.forEach(url => {
-      const isBase64 = url.startsWith('data:');
-      addPhotoRow(url, isBase64);
-    });
+    photos.forEach(url => addPhotoRow(url, url.startsWith('data:')));
   } else {
-    addPhotoRow('', false); // one blank URL row to start
+    addPhotoRow('', false);
   }
 
   document.getElementById('modalBackdrop').classList.add('open');
   document.body.style.overflow = 'hidden';
-  setTimeout(() => {
-    document.getElementById('fieldTitle').focus();
-    initDropZone();
-  }, 300);
+  setTimeout(() => { document.getElementById('fieldTitle').focus(); initDropZone(); }, 300);
 }
-
 function closeForm() {
   document.getElementById('modalBackdrop').classList.remove('open');
   document.body.style.overflow = '';
@@ -705,14 +740,16 @@ function closeFormBackdrop(e) {
   if (e.target === document.getElementById('modalBackdrop')) closeForm();
 }
 
+/* ════════════════════════════════════════════
+   PHOTO ROWS
+════════════════════════════════════════════ */
 function addPhotoRow(url = '', isBase64 = false) {
   const row = document.createElement('div');
-  row.className = 'photo-row';
-  row.draggable = true;
-  row.dataset.src = url; // store actual src (may be base64 or URL)
-
-  const isLong = url.startsWith('data:'); // base64 data URI
-  const displayVal = isLong ? '' : url;   // don't show full base64 in input
+  row.className    = 'photo-row';
+  row.draggable    = true;
+  row.dataset.src  = url;
+  const isLong     = url.startsWith('data:');
+  const displayVal = isLong ? '' : url;
 
   row.innerHTML = `
     <div class="drag-handle" title="Drag to reorder">
@@ -725,25 +762,21 @@ function addPhotoRow(url = '', isBase64 = false) {
       ${isLong ? 'readonly style="color:var(--gray);font-size:0.78rem;background:#f8f8f8"' : ''}/>
     <button class="btn-remove-photo" onclick="removePhotoRow(this)" title="Remove">×</button>`;
 
-  // Live URL preview (only for non-base64 rows)
   if (!isLong) {
-    const input   = row.querySelector('input');
-    const preview = row.querySelector('.photo-preview');
+    const input = row.querySelector('input');
+    const prev  = row.querySelector('.photo-preview');
     input.addEventListener('input', () => {
       row.dataset.src = input.value;
-      preview.src = input.value;
-      preview.onload  = () => preview.classList.add('loaded');
-      preview.onerror = () => preview.classList.remove('loaded');
+      prev.src = input.value;
+      prev.onload  = () => prev.classList.add('loaded');
+      prev.onerror = () => prev.classList.remove('loaded');
     });
   }
-
-  // Row drag events for reordering
   row.addEventListener('dragstart', onRowDragStart);
   row.addEventListener('dragover',  onRowDragOver);
   row.addEventListener('dragleave', onRowDragLeave);
   row.addEventListener('drop',      onRowDrop);
   row.addEventListener('dragend',   onRowDragEnd);
-
   document.getElementById('photoList').appendChild(row);
 }
 
@@ -752,124 +785,77 @@ function removePhotoRow(btn) {
   if (list.children.length > 1) {
     btn.closest('.photo-row').remove();
   } else {
-    // Allow removing last row — just clear it
     const row = btn.closest('.photo-row');
     row.querySelector('input').value = '';
     row.dataset.src = '';
-    const preview = row.querySelector('.photo-preview');
-    preview.src = '';
-    preview.classList.remove('loaded');
+    const p = row.querySelector('.photo-preview');
+    p.src = ''; p.classList.remove('loaded');
     showToast('Photo cleared.', 'info');
   }
 }
 
-/* ════════════════════════════════
-   FILE DRAG & DROP — onto zone
-════════════════════════════════ */
+/* ════════════════════════════════════════════
+   FILE DROP ZONE
+════════════════════════════════════════════ */
 function initDropZone() {
   const zone  = document.getElementById('dropZone');
   const input = document.getElementById('fileInput');
   if (!zone || !input) return;
-
-  // Click-to-browse handled by the <input type="file"> overlay
-  input.addEventListener('change', () => handleFiles(input.files));
-
+  // Re-attach cleanly
+  const newInput = input.cloneNode(true);
+  input.replaceWith(newInput);
+  newInput.addEventListener('change', () => handleFiles(newInput.files));
   zone.addEventListener('dragenter', e => { e.preventDefault(); zone.classList.add('drag-over'); });
   zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag-over'); });
   zone.addEventListener('dragleave', e => { if (!zone.contains(e.relatedTarget)) zone.classList.remove('drag-over'); });
   zone.addEventListener('drop', e => {
-    e.preventDefault();
-    zone.classList.remove('drag-over');
-    const files = e.dataTransfer.files;
-    if (files.length) handleFiles(files);
+    e.preventDefault(); zone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
   });
 }
 
 function handleFiles(files) {
-  // Remove blank placeholder rows first
   const list = document.getElementById('photoList');
-  Array.from(list.querySelectorAll('.photo-row')).forEach(row => {
-    if (!row.dataset.src || row.dataset.src.trim() === '') row.remove();
-  });
-
-  Array.from(files).forEach((file, idx) => {
+  Array.from(list.querySelectorAll('.photo-row')).forEach(r => { if (!r.dataset.src || !r.dataset.src.trim()) r.remove(); });
+  Array.from(files).forEach(file => {
     if (!file.type.startsWith('image/')) return;
-
-    // Show progress row
     const progressRow = document.createElement('div');
     progressRow.className = 'upload-progress';
-    progressRow.innerHTML = `
-      <span>📤 Uploading ${escHtml(file.name)}...</span>
-      <div class="progress-bar-wrap"><div class="progress-bar" style="width:0%"></div></div>`;
+    progressRow.innerHTML = `<span>📤 ${escHtml(file.name)}</span><div class="progress-bar-wrap"><div class="progress-bar" style="width:0%"></div></div>`;
     list.appendChild(progressRow);
-    const bar = progressRow.querySelector('.progress-bar');
-
+    const bar    = progressRow.querySelector('.progress-bar');
     const reader = new FileReader();
-    reader.onprogress = e => {
-      if (e.lengthComputable) bar.style.width = Math.round(e.loaded / e.total * 100) + '%';
-    };
-    reader.onload = () => {
-      bar.style.width = '100%';
-      setTimeout(() => {
-        progressRow.remove();
-        addPhotoRow(reader.result, true);
-      }, 300);
-    };
+    reader.onprogress = e => { if (e.lengthComputable) bar.style.width = Math.round(e.loaded / e.total * 100) + '%'; };
+    reader.onload = () => { bar.style.width = '100%'; setTimeout(() => { progressRow.remove(); addPhotoRow(reader.result, true); }, 300); };
     reader.readAsDataURL(file);
   });
 }
 
-/* ════════════════════════════════
-   ROW DRAG — reorder photos
-════════════════════════════════ */
+/* ════════════════════════════════════════════
+   ROW DRAG — REORDER
+════════════════════════════════════════════ */
 let dragSrcRow = null;
-
-function onRowDragStart(e) {
-  dragSrcRow = this;
-  this.classList.add('dragging-row');
-  e.dataTransfer.effectAllowed = 'move';
-}
-function onRowDragOver(e) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  if (this !== dragSrcRow) this.classList.add('drag-over-row');
-}
-function onRowDragLeave() {
-  this.classList.remove('drag-over-row');
-}
+function onRowDragStart(e) { dragSrcRow = this; this.classList.add('dragging-row'); e.dataTransfer.effectAllowed = 'move'; }
+function onRowDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (this !== dragSrcRow) this.classList.add('drag-over-row'); }
+function onRowDragLeave() { this.classList.remove('drag-over-row'); }
 function onRowDrop(e) {
-  e.preventDefault();
-  this.classList.remove('drag-over-row');
+  e.preventDefault(); this.classList.remove('drag-over-row');
   if (this === dragSrcRow) return;
   const list = document.getElementById('photoList');
   const rows = Array.from(list.querySelectorAll('.photo-row'));
-  const srcIdx  = rows.indexOf(dragSrcRow);
-  const destIdx = rows.indexOf(this);
-  if (srcIdx < destIdx) {
-    list.insertBefore(dragSrcRow, this.nextSibling);
-  } else {
-    list.insertBefore(dragSrcRow, this);
-  }
+  if (rows.indexOf(dragSrcRow) < rows.indexOf(this)) list.insertBefore(dragSrcRow, this.nextSibling);
+  else list.insertBefore(dragSrcRow, this);
 }
-function onRowDragEnd() {
-  this.classList.remove('dragging-row');
-  document.querySelectorAll('.photo-row').forEach(r => r.classList.remove('drag-over-row'));
-  dragSrcRow = null;
-}
+function onRowDragEnd() { this.classList.remove('dragging-row'); document.querySelectorAll('.photo-row').forEach(r => r.classList.remove('drag-over-row')); dragSrcRow = null; }
 
-function saveJob() {
-  const title = document.getElementById('fieldTitle').value.trim();
-  const desc  = document.getElementById('fieldDesc').value.trim();
-
-  // Collect photos — read from dataset.src (handles both URL and base64 uploads)
+/* ════════════════════════════════════════════
+   SAVE JOB — LOCAL + GITHUB PUSH
+════════════════════════════════════════════ */
+async function saveJob() {
+  const title  = document.getElementById('fieldTitle').value.trim();
+  const desc   = document.getElementById('fieldDesc').value.trim();
   const photos = Array.from(document.querySelectorAll('#photoList .photo-row'))
-    .map(row => {
-      const src = row.dataset.src && row.dataset.src.trim();
-      if (src) return src;
-      // fallback: read URL input value
-      const inp = row.querySelector('.photo-url-input');
-      return inp ? inp.value.trim() : '';
-    })
+    .map(row => (row.dataset.src && row.dataset.src.trim()) || (row.querySelector('.photo-url-input') ? row.querySelector('.photo-url-input').value.trim() : ''))
     .filter(u => u.length > 0);
 
   if (!title)         { showToast('Please enter a job title.', 'error'); return; }
@@ -878,100 +864,106 @@ function saveJob() {
 
   const jobs   = loadJobs();
   const editId = document.getElementById('editId').value;
+  let job;
 
   if (editId) {
-    // Update existing
     const idx = jobs.findIndex(j => j.id === parseInt(editId));
-    if (idx !== -1) {
-      jobs[idx] = { ...jobs[idx], title, description: desc, photos };
-      showToast('Job updated successfully!', 'success');
-    }
+    if (idx !== -1) { jobs[idx] = { ...jobs[idx], title, description: desc, photos }; job = jobs[idx]; }
   } else {
-    // Create new — generate unique id
     const newId = jobs.length > 0 ? Math.max(...jobs.map(j => j.id)) + 1 : 1;
-    jobs.push({ id: newId, title, description: desc, photos });
-    showToast('Job added successfully!', 'success');
+    job = { id: newId, title, description: desc, photos };
+    jobs.push(job);
   }
 
+  // Save to localStorage immediately
   saveJobs(jobs);
   renderJobs();
-  closeForm();
+
+  // If GitHub is configured — push to repo
+  if (isGhConfigured()) {
+    const btn    = document.getElementById('btnSave');
+    const status = document.getElementById('publishStatus');
+    btn.disabled = true;
+    setPublishStatus('pushing', '⏳ Publishing to GitHub...');
+    try {
+      const { content, sha } = await fetchPortfolioFile();
+      let updated;
+      if (editId) {
+        updated = updateJobInContent(content, job);
+      } else {
+        updated = injectJobIntoContent(content, job);
+      }
+      await pushPortfolioFile(updated, sha, `Admin: ${editId ? 'update' : 'add'} job "${title}"`);
+      setPublishStatus('success', '✅ Published! Your site will update in ~30 seconds.');
+      showToast('Job published to GitHub successfully!', 'success');
+      setTimeout(closeForm, 2200);
+    } catch (err) {
+      setPublishStatus('error', '❌ GitHub error: ' + err.message);
+      showToast('Saved locally but GitHub push failed. Check Settings.', 'error');
+      btn.disabled = false;
+    }
+  } else {
+    showToast((editId ? 'Job updated' : 'Job added') + ' locally. Set up GitHub to auto-publish.', 'info');
+    closeForm();
+  }
 }
 
-/* ════════════════════════════════
-   COPY CODE
-════════════════════════════════ */
+function setPublishStatus(type, msg) {
+  const el = document.getElementById('publishStatus');
+  el.textContent = msg;
+  el.className   = 'publish-status ' + type;
+}
+
+/* ════════════════════════════════════════════
+   COPY CODE (fallback)
+════════════════════════════════════════════ */
 function copyJobCode(id) {
-  const jobs = loadJobs();
-  const job  = jobs.find(j => j.id === id);
+  const job = loadJobs().find(j => j.id === id);
   if (!job) return;
-
-  const photosStr = job.photos.map(p => `    '${p}'`).join(',\n');
-  const code = `  {
-    id: ${job.id},
-    title: '${job.title.replace(/'/g, "\\'")}',
-    description: '${job.description.replace(/'/g, "\\'")}',
-    photos: [
-${photosStr}
-    ]
-  }`;
-
+  const code = jobObjToCode(job);
   navigator.clipboard.writeText(code).then(() => {
     showToast('Code copied! Paste it into the jobs array in portfolio.html', 'success');
   }).catch(() => {
-    // Fallback for older browsers
     const ta = document.createElement('textarea');
-    ta.value = code;
-    ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select(); document.execCommand('copy');
+    ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
     document.body.removeChild(ta);
-    showToast('Code copied! Paste it into the jobs array in portfolio.html', 'success');
+    showToast('Code copied!', 'success');
   });
 }
 
-/* ════════════════════════════════
+/* ════════════════════════════════════════════
    DELETE
-════════════════════════════════ */
+════════════════════════════════════════════ */
 let deleteTargetId = null;
-function askDelete(id) {
-  deleteTargetId = id;
-  document.getElementById('confirmBackdrop').classList.add('open');
-}
-function closeConfirm() {
-  deleteTargetId = null;
-  document.getElementById('confirmBackdrop').classList.remove('open');
-}
+function askDelete(id) { deleteTargetId = id; document.getElementById('confirmBackdrop').classList.add('open'); }
+function closeConfirm() { deleteTargetId = null; document.getElementById('confirmBackdrop').classList.remove('open'); }
 function confirmDelete() {
   if (!deleteTargetId) return;
-  const jobs = loadJobs().filter(j => j.id !== deleteTargetId);
-  saveJobs(jobs);
-  renderJobs();
-  closeConfirm();
-  showToast('Job deleted from admin panel.', 'info');
+  saveJobs(loadJobs().filter(j => j.id !== deleteTargetId));
+  renderJobs(); closeConfirm();
+  showToast('Job deleted from browser. Remove it from portfolio.html on GitHub to take it off the live site.', 'info');
 }
 
-/* ════════════════════════════════
+/* ════════════════════════════════════════════
    TOAST
-════════════════════════════════ */
+════════════════════════════════════════════ */
 let toastTimer;
 function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast ${type} show`;
+  t.textContent = msg; t.className = `toast ${type} show`;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3800);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 4500);
 }
 
-/* ════════════════════════════════
+/* ════════════════════════════════════════════
    UTILS
-════════════════════════════════ */
+════════════════════════════════════════════ */
 function escHtml(str) {
   if (!str) return '';
   return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-/* Keyboard shortcuts */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeForm(); closeConfirm(); }
   if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') doLogin();
