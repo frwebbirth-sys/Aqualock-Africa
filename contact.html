@@ -8,36 +8,13 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --blue: #1565C0;
-  --blue-mid: #1976D2;
-  --blue-light: #E3F2FD;
-  --blue-deep: #0D47A1;
-  --gold: #C9A84C;
-  --white: #ffffff;
-  --off-white: #F4F7FB;
-  --gray-line: #E0E9F4;
-  --gray: #607080;
-  --dark: #0F1A2A;
+  --blue: #1565C0; --blue-mid: #1976D2; --blue-light: #E3F2FD; --blue-deep: #0D47A1;
+  --gold: #C9A84C; --white: #ffffff; --off-white: #F4F7FB;
+  --gray-line: #E0E9F4; --gray: #607080; --dark: #0F1A2A;
 }
 html { scroll-behavior: smooth; }
-body {
-  background: var(--white);
-  color: var(--dark);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  overflow-x: hidden;
-}
-
-/* ─── NAV ─── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 80px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 5rem;
-  background: #ffffff;
-  border-bottom: 1px solid #dce6f0;
-  box-shadow: 0 1px 12px rgba(13,71,161,0.06);
-}
+body { background: var(--white); color: var(--dark); font-family: 'DM Sans', sans-serif; font-weight: 400; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 5rem; background: #ffffff; border-bottom: 1px solid #dce6f0; box-shadow: 0 1px 12px rgba(13,71,161,0.06); }
 .nav-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
 .nav-logo img { height: 44px; width: auto; object-fit: contain; display: block; }
 .nav-logo-name { display: flex; flex-direction: column; line-height: 1; }
@@ -46,69 +23,26 @@ nav {
 .nav-divider { width: 1px; height: 32px; background: var(--gray-line); margin: 0 2.4rem; flex-shrink: 0; }
 .nav-centre { display: flex; align-items: center; flex: 1; }
 .nav-links { display: flex; gap: 0.2rem; list-style: none; }
-.nav-links a {
-  position: relative; display: inline-block;
-  font-size: 0.77rem; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase;
-  text-decoration: none; color: var(--gray); padding: 0.45rem 0.9rem; border-radius: 6px;
-  transition: color 0.2s, background 0.2s;
-}
+.nav-links a { position: relative; display: inline-block; font-size: 0.77rem; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; text-decoration: none; color: var(--gray); padding: 0.45rem 0.9rem; border-radius: 6px; transition: color 0.2s, background 0.2s; }
 .nav-links a:hover { color: var(--blue); background: var(--blue-light); }
 .nav-links a.active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
-.nav-links a.active::after {
-  content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
-  width: 18px; height: 2px; background: var(--blue); border-radius: 2px;
-}
-.nav-right { display: flex; align-items: center; gap: 0.9rem; }
-.nav-phone { display: flex; align-items: center; gap: 0.5rem; font-size: 0.77rem; font-weight: 500; color: var(--gray); text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s; }
-.nav-phone:hover { color: var(--blue); }
-.nav-cta {
-  padding: 0.6rem 1.5rem; background: var(--blue); color: #fff;
-  font-size: 0.74rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
-  border: none; border-radius: 6px; cursor: pointer;
-  box-shadow: 0 2px 10px rgba(21,101,192,0.25);
-  transition: background 0.25s, box-shadow 0.25s, transform 0.2s; white-space: nowrap;
-}
-.nav-cta:hover { background: var(--blue-deep); box-shadow: 0 4px 16px rgba(21,101,192,0.35); transform: translateY(-1px); }
+.nav-links a.active::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 18px; height: 2px; background: var(--blue); border-radius: 2px; }
+.nav-right { display: flex; align-items: center; gap: 0.6rem; }
 .nav-social { display: flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; }
-.nav-social a {
-  width: 32px; height: 32px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gray); text-decoration: none; transition: color 0.2s, background 0.2s;
-}
+.nav-social a { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gray); text-decoration: none; transition: color 0.2s, background 0.2s; }
 .nav-social a:hover { color: var(--blue); background: var(--blue-light); }
-.nav-social-divider { width: 1px; height: 24px; background: var(--gray-line); margin: 0 0.4rem; }
-
-/* Hamburger */
-.nav-hamburger {
-  display: none; flex-direction: column; justify-content: center; align-items: center;
-  width: 40px; height: 40px; gap: 5px;
-  background: none; border: none; cursor: pointer; padding: 4px;
-  border-radius: 8px; transition: background 0.2s;
-}
+.nav-hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; transition: background 0.2s; }
 .nav-hamburger:hover { background: var(--blue-light); }
 .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
 .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* Mobile menu */
-.mobile-menu {
-  display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 199;
-  background: #fff; border-bottom: 1px solid var(--gray-line);
-  box-shadow: 0 8px 24px rgba(13,71,161,0.1);
-  padding: 1.5rem; flex-direction: column; gap: 0.4rem;
-}
+.mobile-menu { display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 199; background: #fff; border-bottom: 1px solid var(--gray-line); box-shadow: 0 8px 24px rgba(13,71,161,0.1); padding: 1.5rem; flex-direction: column; gap: 0.4rem; }
 .mobile-menu.open { display: flex; }
-.mobile-menu a {
-  font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-  text-decoration: none; color: var(--gray); padding: 0.75rem 1rem; border-radius: 8px;
-  transition: color 0.2s, background 0.2s;
-}
+.mobile-menu a { font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--gray); padding: 0.75rem 1rem; border-radius: 8px; transition: color 0.2s, background 0.2s; }
 .mobile-menu a:hover, .mobile-menu a.active { color: var(--blue); background: var(--blue-light); }
 .mobile-menu-social { display: flex; gap: 0.5rem; padding: 0.75rem 1rem 0.25rem; }
 .mobile-menu-social a { width: 36px; height: 36px; border-radius: 8px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 0; letter-spacing: 0; text-transform: none; }
-
-/* Footer */
 footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .footer-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 3rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .footer-brand { max-width: 300px; }
@@ -129,15 +63,8 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .foot-legal { display: flex; gap: 1.5rem; }
 .foot-legal a { font-size: 0.76rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
 .foot-legal a:hover { color: rgba(255,255,255,0.7); }
-
-/* ─── PAGE HERO ─── */
 .page-hero { position: relative; margin-top: 80px; height: 420px; overflow: hidden; }
-.page-hero-bg {
-  position: absolute; inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=2000&q=85');
-  background-size: cover; background-position: center 40%;
-  animation: zoomOut 12s ease forwards;
-}
+.page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=2000&q=85'); background-size: cover; background-position: center 40%; animation: zoomOut 12s ease forwards; }
 @keyframes zoomOut { from { transform: scale(1.05); } to { transform: scale(1); } }
 .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(110deg, rgba(13,71,161,0.88) 0%, rgba(13,71,161,0.6) 50%, rgba(13,71,161,0.2) 100%); }
 .page-hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 140px; background: linear-gradient(to bottom, transparent, #fff); }
@@ -147,23 +74,15 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .page-hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 900; line-height: 1.08; color: #fff; opacity: 0; animation: up 0.75s 0.22s ease forwards; }
 .page-hero-title em { font-style: italic; color: #90CAF9; }
 .page-hero-sub { margin-top: 1.2rem; font-size: 1rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.78); max-width: 500px; opacity: 0; animation: up 0.75s 0.36s ease forwards; }
-
-/* ─── SECTION LABEL ─── */
 .s-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--blue); display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
 .s-label::before { content: ''; width: 28px; height: 1.5px; background: var(--blue); display: block; }
-
-/* ─── TRUST STRIP ─── */
 .trust-strip { background: var(--off-white); border-top: 1px solid var(--gray-line); border-bottom: 1px solid var(--gray-line); padding: 2.8rem 5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
 .trust-item { display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 180px; }
 .trust-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .trust-item h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--blue); margin-bottom: 0.15rem; }
 .trust-item p { font-size: 0.78rem; color: var(--gray); line-height: 1.4; }
 .trust-divider { width: 1px; height: 48px; background: var(--gray-line); flex-shrink: 0; }
-
-/* ─── CONTACT LAYOUT ─── */
 .contact-section { padding: 5rem 5rem 6rem; display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
-
-/* Info panel */
 .contact-info h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3vw, 2.7rem); font-weight: 700; color: var(--blue); line-height: 1.15; margin-bottom: 1rem; }
 .contact-info > p { font-size: 0.97rem; line-height: 1.85; color: var(--gray); margin-bottom: 2.8rem; max-width: 420px; }
 .info-cards { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.8rem; }
@@ -176,8 +95,6 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .info-card-value { font-size: 0.97rem; font-weight: 500; color: var(--dark); line-height: 1.5; }
 .info-card-value a { color: var(--dark); text-decoration: none; transition: color 0.2s; }
 .info-card-value a:hover { color: var(--blue); }
-
-/* Hours block */
 .hours-block { background: var(--blue-deep); border-radius: 16px; padding: 1.8rem 2rem; }
 .hours-block h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
 .hours-block h4::before { content: ''; display: block; width: 20px; height: 1.5px; background: var(--gold); }
@@ -186,8 +103,6 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .hours-day { color: rgba(255,255,255,0.65); }
 .hours-time { color: #fff; font-weight: 500; }
 .hours-time.closed { color: rgba(255,255,255,0.35); font-style: italic; }
-
-/* Form panel */
 .contact-form-wrap { background: var(--off-white); border: 1px solid var(--gray-line); border-radius: 20px; padding: 3rem 3rem 3.4rem; position: sticky; top: 104px; }
 .form-head { margin-bottom: 2rem; }
 .form-head h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--blue); margin-bottom: 0.5rem; }
@@ -196,35 +111,20 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 .form-group.full { grid-column: 1 / -1; }
 .form-group label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
-.form-group input, .form-group select, .form-group textarea {
-  width: 100%; padding: 0.75rem 1rem;
-  background: #fff; border: 1.5px solid var(--gray-line); border-radius: 8px;
-  font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark);
-  transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none;
-}
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem 1rem; background: #fff; border: 1.5px solid var(--gray-line); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark); transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; }
 .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23607080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer; }
 .form-group textarea { resize: vertical; min-height: 120px; }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,0.1); }
 .form-group input::placeholder, .form-group textarea::placeholder { color: #aab5c0; }
 .form-note { font-size: 0.78rem; color: var(--gray); line-height: 1.6; margin-bottom: 1.4rem; display: flex; align-items: flex-start; gap: 0.5rem; }
 .form-note svg { flex-shrink: 0; margin-top: 2px; }
-.btn-submit {
-  width: 100%; padding: 1rem; background: var(--blue); color: #fff;
-  font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  border: none; border-radius: 8px; cursor: pointer;
-  box-shadow: 0 4px 16px rgba(21,101,192,0.28);
-  transition: background 0.25s, box-shadow 0.25s, transform 0.2s;
-  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-}
+.btn-submit { width: 100%; padding: 1rem; background: var(--blue); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 16px rgba(21,101,192,0.28); transition: background 0.25s, box-shadow 0.25s, transform 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
 .btn-submit:hover { background: var(--blue-deep); box-shadow: 0 6px 22px rgba(21,101,192,0.38); transform: translateY(-2px); }
 .form-success { display: none; flex-direction: column; align-items: center; text-align: center; padding: 2rem 0 1rem; gap: 1rem; }
 .form-success.show { display: flex; }
 .success-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--blue-light); display: flex; align-items: center; justify-content: center; }
 .form-success h4 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--blue); }
 .form-success p { font-size: 0.93rem; color: var(--gray); line-height: 1.7; max-width: 300px; }
-
-/* ─── MAP SECTION ─── */
 .map-section { padding: 0 5rem 6rem; }
 .map-hdr { text-align: center; max-width: 520px; margin: 0 auto 3rem; }
 .map-hdr h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: 0.7rem; }
@@ -233,8 +133,6 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .map-hdr .s-label::after { content: ''; width: 28px; height: 1.5px; background: var(--blue); display: block; }
 .map-frame { width: 100%; height: 420px; border-radius: 20px; overflow: hidden; border: 1px solid var(--gray-line); box-shadow: 0 8px 32px rgba(21,101,192,0.1); }
 .map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
-
-/* ─── ANIMATIONS ─── */
 @keyframes up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.in { opacity: 1; transform: none; }
@@ -243,15 +141,10 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .rs.in > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.1s; }
 .rs.in > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.2s; }
 .rs.in > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.3s; }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 1024px) {
-  .contact-section { grid-template-columns: 1fr; gap: 3rem; }
-  .contact-form-wrap { position: static; }
-}
+@media (max-width: 1024px) { .contact-section { grid-template-columns: 1fr; gap: 3rem; } .contact-form-wrap { position: static; } }
 @media (max-width: 960px) {
   nav { padding: 0 1.5rem; height: 70px; }
-  .nav-links, .nav-cta, .nav-divider, .nav-phone, .nav-logo-name span, .nav-social { display: none; }
+  .nav-links, .nav-cta, .nav-divider, .nav-logo-name span, .nav-social { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { top: 70px; }
   .page-hero { margin-top: 70px; height: 360px; }
@@ -280,41 +173,37 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 </head>
 <body>
 
-<!-- ── NAV ── -->
 <nav>
   <a class="nav-logo" href="index.html">
     <img src="images/aqualock_logo_transparent.png" alt="Aqualock Africa Logo"/>
-    <div class="nav-logo-name">
-      <strong>Aqualock Africa</strong>
-      <span>Turf &amp; Landscape Specialists</span>
-    </div>
+    <div class="nav-logo-name"><strong>Aqualock Africa</strong><span>Turf &amp; Landscape Specialists</span></div>
   </a>
   <div class="nav-centre">
     <div class="nav-divider"></div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="portfolio.html">Previous Jobs</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
   </div>
   <div class="nav-right">
     <div class="nav-social">
-      <a href="#" aria-label="Instagram" title="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-      <a href="#" aria-label="Facebook" title="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-      <a href="#" aria-label="LinkedIn" title="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-      <a href="#" aria-label="Twitter / X" title="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-      <a href="#" aria-label="YouTube" title="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      <a href="#" aria-label="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
     </div>
-    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
-
-<!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
   <a href="services.html">Services</a>
+  <a href="products.html">Products</a>
+  <a href="portfolio.html">Previous Jobs</a>
   <a href="contact.html" class="active">Contact</a>
   <div class="mobile-menu-social">
     <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
@@ -325,108 +214,60 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   </div>
 </div>
 
-<!-- ── PAGE HERO ── -->
 <section class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-fade"></div>
   <div class="page-hero-content">
     <div class="page-eyebrow">Get In Touch</div>
-    <h1 class="page-hero-title">
-      Let's Talk About<br><em>Your Project</em>
-    </h1>
-    <p class="page-hero-sub">
-      Whether you need a quote, expert advice, or just want to explore your options — our team is ready to help.
-    </p>
+    <h1 class="page-hero-title">Let's Talk About<br><em>Your Project</em></h1>
+    <p class="page-hero-sub">Whether you need a quote, expert advice, or just want to explore your options — our team is ready to help.</p>
   </div>
 </section>
 
-<!-- ── TRUST STRIP ── -->
 <div class="trust-strip rs">
   <div class="trust-item">
-    <div class="trust-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-    </div>
-    <div>
-      <h4>Free Consultation</h4>
-      <p>No-obligation on-site assessment</p>
-    </div>
+    <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <div><h4>Free Consultation</h4><p>No-obligation on-site assessment</p></div>
   </div>
   <div class="trust-divider"></div>
   <div class="trust-item">
-    <div class="trust-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    </div>
-    <div>
-      <h4>Fast Response</h4>
-      <p>We reply within one business day</p>
-    </div>
+    <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+    <div><h4>Fast Response</h4><p>We reply within one business day</p></div>
   </div>
   <div class="trust-divider"></div>
   <div class="trust-item">
-    <div class="trust-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    </div>
-    <div>
-      <h4>Expert Team</h4>
-      <p>Certified turf management professionals</p>
-    </div>
+    <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <div><h4>Expert Team</h4><p>Certified turf management professionals</p></div>
   </div>
   <div class="trust-divider"></div>
   <div class="trust-item">
-    <div class="trust-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-    </div>
-    <div>
-      <h4>Trusted Quality</h4>
-      <p>Premium materials &amp; proven results</p>
-    </div>
+    <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div><h4>Trusted Quality</h4><p>Premium materials &amp; proven results</p></div>
   </div>
 </div>
 
-<!-- ── MAIN CONTACT SECTION ── -->
 <section class="contact-section">
-  <!-- Left: contact info -->
   <div class="contact-info reveal">
     <div class="s-label">Contact Information</div>
     <h2>We're Here to<br>Help You Succeed</h2>
     <p>Reach out through any of the channels below, or fill in the form and we'll come back to you promptly with the information you need.</p>
     <div class="info-cards">
       <div class="info-card">
-        <div class="info-card-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.97-1.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <div>
-          <div class="info-card-label">Phone</div>
-          <div class="info-card-value"><a href="tel:+27000000000">+27 (0) 00 000 0000</a></div>
-        </div>
+        <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.97-1.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div><div class="info-card-label">Phone</div><div class="info-card-value"><a href="tel:+27000000000">+27 (0) 00 000 0000</a></div></div>
       </div>
       <div class="info-card">
-        <div class="info-card-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div>
-          <div class="info-card-label">Email</div>
-          <div class="info-card-value"><a href="mailto:info@aqualockafrica.co.za">info@aqualockafrica.co.za</a></div>
-        </div>
+        <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="info-card-label">Email</div><div class="info-card-value"><a href="mailto:info@aqualockafrica.co.za">info@aqualockafrica.co.za</a></div></div>
       </div>
       <div class="info-card">
-        <div class="info-card-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div>
-          <div class="info-card-label">Service Area</div>
-          <div class="info-card-value">Western Cape &amp; surrounding regions,<br>South Africa</div>
-        </div>
+        <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="info-card-label">Service Area</div><div class="info-card-value">Western Cape &amp; surrounding regions,<br>South Africa</div></div>
       </div>
       <div class="info-card">
-        <div class="info-card-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        </div>
-        <div>
-          <div class="info-card-label">WhatsApp</div>
-          <div class="info-card-value"><a href="https://wa.me/27000000000">Message us on WhatsApp</a></div>
-        </div>
+        <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <div><div class="info-card-label">WhatsApp</div><div class="info-card-value"><a href="https://wa.me/27000000000">Message us on WhatsApp</a></div></div>
       </div>
     </div>
     <div class="hours-block">
@@ -437,8 +278,6 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
       <div class="hours-row"><span class="hours-day">Public Holidays</span><span class="hours-time closed">Closed</span></div>
     </div>
   </div>
-
-  <!-- Right: contact form -->
   <div class="contact-form-wrap reveal">
     <div class="form-head">
       <div class="s-label">Send a Message</div>
@@ -447,22 +286,10 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
     </div>
     <div id="contactForm">
       <div class="form-grid">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" placeholder="e.g. John"/>
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" placeholder="e.g. Smith"/>
-        </div>
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" placeholder="you@example.com"/>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" placeholder="+27 00 000 0000"/>
-        </div>
+        <div class="form-group"><label for="firstName">First Name</label><input type="text" id="firstName" placeholder="e.g. John"/></div>
+        <div class="form-group"><label for="lastName">Last Name</label><input type="text" id="lastName" placeholder="e.g. Smith"/></div>
+        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" placeholder="you@example.com"/></div>
+        <div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone" placeholder="+27 00 000 0000"/></div>
         <div class="form-group full">
           <label for="service">Service of Interest</label>
           <select id="service">
@@ -474,10 +301,7 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
             <option>General Enquiry</option>
           </select>
         </div>
-        <div class="form-group full">
-          <label for="message">Your Message</label>
-          <textarea id="message" placeholder="Tell us about your project — size, location, timeline, and any specific requirements…"></textarea>
-        </div>
+        <div class="form-group full"><label for="message">Your Message</label><textarea id="message" placeholder="Tell us about your project — size, location, timeline, and any specific requirements…"></textarea></div>
       </div>
       <div class="form-note">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#607080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -489,32 +313,23 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
       </button>
     </div>
     <div class="form-success" id="formSuccess">
-      <div class="success-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      </div>
+      <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
       <h4>Message Sent!</h4>
       <p>Thank you for reaching out. We'll get back to you within one business day.</p>
     </div>
   </div>
 </section>
 
-<!-- ── MAP SECTION ── -->
 <section class="map-section reveal">
   <div class="map-hdr">
     <div class="s-label">Find Us</div>
     <h2>Find Aqualock Africa</h2>
   </div>
   <div class="map-frame">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d18.6759939!3d-33.8775118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc51fcf6352a2d%3A0x9793661cf92f6fbe!2sAqualock%20Africa!5e0!3m2!1sen!2sza!4v1700000000000"
-      allowfullscreen="" loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="Aqualock Africa location map">
-    </iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d18.6759939!3d-33.8775118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc51fcf6352a2d%3A0x9793661cf92f6fbe!2sAqualock%20Africa!5e0!3m2!1sen!2sza!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Aqualock Africa location map"></iframe>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer>
   <div class="footer-main">
     <div class="footer-brand">
@@ -525,25 +340,24 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
       <div class="footer-links-label">Quick Links</div>
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
+      <a href="products.html">Products</a>
+      <a href="portfolio.html">Previous Jobs</a>
       <a href="contact.html">Contact Us</a>
     </div>
     <div class="footer-social">
       <div class="footer-social-label">Follow Us</div>
       <div class="footer-social-icons">
-        <a href="#" aria-label="Instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-        <a href="#" aria-label="Facebook" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-        <a href="#" aria-label="LinkedIn" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="#" aria-label="Twitter / X" title="Twitter / X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        <a href="#" aria-label="YouTube" title="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Twitter / X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="foot-copy">© 2024 Aqualock Africa. All rights reserved.</div>
-    <div class="foot-legal">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Use</a>
-    </div>
+    <div class="foot-copy">© 2025 Aqualock Africa. All rights reserved.</div>
+    <div class="foot-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
 
@@ -552,31 +366,20 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal, .rs').forEach(el => obs.observe(el));
-
 function submitForm() {
   const firstName = document.getElementById('firstName').value.trim();
   const email = document.getElementById('email').value.trim();
   const message = document.getElementById('message').value.trim();
-  if (!firstName || !email || !message) {
-    alert('Please fill in at least your name, email, and message.');
-    return;
-  }
+  if (!firstName || !email || !message) { alert('Please fill in at least your name, email, and message.'); return; }
   document.getElementById('contactForm').style.display = 'none';
   document.getElementById('formSuccess').classList.add('show');
 }
-
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-});
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
 mobileMenu.querySelectorAll('a[href]').forEach(a => {
   if (!a.closest('.mobile-menu-social')) {
-    a.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-    });
+    a.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); });
   }
 });
 </script>

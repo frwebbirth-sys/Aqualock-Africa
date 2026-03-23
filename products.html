@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Products — Aqualock Africa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #1565C0;
+  --blue-mid: #1976D2;
+  --blue-light: #E3F2FD;
+  --blue-deep: #0D47A1;
+  --green: #2E7D32;
+  --gold: #C9A84C;
+  --white: #ffffff;
+  --off-white: #F4F7FB;
+  --gray-line: #E0E9F4;
+  --gray: #607080;
+  --dark: #0F1A2A;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--dark);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 80px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #dce6f0;
+  box-shadow: 0 1px 12px rgba(13,71,161,0.06);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
+.nav-logo img { height: 44px; width: auto; object-fit: contain; display: block; }
+.nav-logo-name { display: flex; flex-direction: column; line-height: 1; }
+.nav-logo-name strong { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue-deep); letter-spacing: 0.02em; }
+.nav-logo-name span { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray); margin-top: 3px; }
+.nav-divider { width: 1px; height: 32px; background: var(--gray-line); margin: 0 2.4rem; flex-shrink: 0; }
+.nav-centre { display: flex; align-items: center; flex: 1; }
+.nav-links { display: flex; gap: 0.2rem; list-style: none; }
+.nav-links a {
+  position: relative; display: inline-block;
+  font-size: 0.77rem; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase;
+  text-decoration: none; color: var(--gray); padding: 0.45rem 0.9rem; border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover { color: var(--blue); background: var(--blue-light); }
+.nav-links a.active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
+.nav-links a.active::after {
+  content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+  width: 18px; height: 2px; background: var(--blue); border-radius: 2px;
+}
+.nav-right { display: flex; align-items: center; gap: 0.6rem; }
+.nav-social { display: flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; }
+.nav-social a {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray); text-decoration: none; transition: color 0.2s, background 0.2s;
+}
+.nav-social a:hover { color: var(--blue); background: var(--blue-light); }
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center; align-items: center;
+  width: 40px; height: 40px; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+  border-radius: 8px; transition: background 0.2s;
+}
+.nav-hamburger:hover { background: var(--blue-light); }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 199;
+  background: #fff; border-bottom: 1px solid var(--gray-line);
+  box-shadow: 0 8px 24px rgba(13,71,161,0.1);
+  padding: 1.5rem; flex-direction: column; gap: 0.4rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; color: var(--gray); padding: 0.75rem 1rem; border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+.mobile-menu a:hover, .mobile-menu a.active { color: var(--blue); background: var(--blue-light); }
+.mobile-menu-social { display: flex; gap: 0.5rem; padding: 0.75rem 1rem 0.25rem; }
+.mobile-menu-social a { width: 36px; height: 36px; border-radius: 8px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 0; letter-spacing: 0; text-transform: none; }
+
+/* ─── PAGE HERO ─── */
+.page-hero { position: relative; margin-top: 80px; height: 420px; overflow: hidden; }
+.page-hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2000&q=85');
+  background-size: cover; background-position: center 55%;
+  animation: zoomOut 12s ease forwards;
+}
+@keyframes zoomOut { from { transform: scale(1.05); } to { transform: scale(1); } }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(110deg, rgba(13,71,161,0.88) 0%, rgba(13,71,161,0.6) 50%, rgba(13,71,161,0.2) 100%); }
+.page-hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 140px; background: linear-gradient(to bottom, transparent, #fff); }
+.page-hero-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 6rem; max-width: 800px; }
+.page-eyebrow { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; opacity: 0; animation: up 0.7s 0.1s ease forwards; }
+.page-eyebrow::before { content: ''; width: 34px; height: 1.5px; background: var(--gold); display: block; }
+.page-hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 900; line-height: 1.08; color: #fff; opacity: 0; animation: up 0.75s 0.22s ease forwards; }
+.page-hero-title em { font-style: italic; color: #90CAF9; }
+.page-hero-sub { margin-top: 1.2rem; font-size: 1rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.78); max-width: 500px; opacity: 0; animation: up 0.75s 0.36s ease forwards; }
+
+/* ─── SECTION LABEL ─── */
+.s-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--blue); display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
+.s-label::before { content: ''; width: 28px; height: 1.5px; background: var(--blue); display: block; }
+
+/* ─── PRODUCTS SECTION ─── */
+.products-section { padding: 6rem 5rem 7rem; max-width: 1280px; margin: 0 auto; }
+.products-hdr { text-align: center; max-width: 620px; margin: 0 auto 5rem; }
+.products-hdr .s-label { justify-content: center; }
+.products-hdr .s-label::after { content: ''; width: 28px; height: 1.5px; background: var(--blue); display: block; }
+.products-hdr h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.9rem); font-weight: 700; color: var(--blue); line-height: 1.18; margin-bottom: 0.9rem; }
+.products-hdr p { font-size: 0.97rem; line-height: 1.8; color: var(--gray); }
+
+/* ─── PRODUCT CARD ─── */
+.product-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--gray-line);
+  box-shadow: 0 12px 48px rgba(13,71,161,0.08);
+  margin-bottom: 2.5rem;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  background: var(--white);
+}
+.product-card:hover { box-shadow: 0 28px 72px rgba(13,71,161,0.15); transform: translateY(-6px); }
+.product-card.reverse { direction: rtl; }
+.product-card.reverse > * { direction: ltr; }
+
+/* Image side */
+.product-img-wrap { position: relative; overflow: hidden; min-height: 460px; }
+.product-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.7s ease;
+}
+.product-card:hover .product-img-wrap img { transform: scale(1.05); }
+.product-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(13,71,161,0.22) 0%, transparent 60%);
+  pointer-events: none;
+}
+.product-img-badge {
+  position: absolute; top: 1.6rem; left: 1.6rem;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(21,101,192,0.12);
+  border-radius: 100px;
+  padding: 0.38rem 1rem;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--blue);
+}
+.product-card.reverse .product-img-badge { left: auto; right: 1.6rem; }
+
+/* Body side */
+.product-body {
+  padding: 4rem 4.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--white);
+  position: relative;
+}
+.product-body::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+  background: linear-gradient(to bottom, var(--blue), #42A5F5);
+  opacity: 0; transition: opacity 0.35s ease;
+}
+.product-card:hover .product-body::before { opacity: 1; }
+.product-card.reverse .product-body::before { left: auto; right: 0; background: linear-gradient(to bottom, #42A5F5, var(--blue)); }
+
+.product-num {
+  font-family: 'Playfair Display', serif; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.18em; color: var(--blue); background: var(--blue-light);
+  padding: 0.28rem 0.85rem; border-radius: 100px;
+  display: inline-block; margin-bottom: 1.6rem;
+  border: 1px solid rgba(21,101,192,0.15); width: fit-content;
+}
+.product-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: var(--blue-light); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.4rem; transition: background 0.35s;
+}
+.product-card:hover .product-icon { background: var(--blue); }
+.product-card:hover .product-icon svg * { stroke: #fff !important; }
+.product-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
+  font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: 1.2rem;
+}
+.product-description {
+  font-size: 0.97rem; line-height: 1.9; color: #4a5568;
+  max-width: 400px;
+}
+
+/* ─── FOOTER ─── */
+footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; margin-top: 2rem; }
+.footer-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 3rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.footer-brand { max-width: 300px; }
+.foot-logo-text { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: 0.04em; margin-bottom: 0.7rem; display: block; }
+.foot-logo-text span { color: #90CAF9; }
+.footer-tagline { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+.footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-links-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+.footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: #fff; }
+.footer-social { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.footer-social-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.footer-social-icons { display: flex; gap: 0.5rem; }
+.footer-social-icons a { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.65); text-decoration: none; transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s; }
+.footer-social-icons a:hover { background: var(--blue); border-color: var(--blue); color: #fff; transform: translateY(-3px); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.foot-copy { font-size: 0.76rem; color: rgba(255,255,255,0.35); }
+.foot-legal { display: flex; gap: 1.5rem; }
+.foot-legal a { font-size: 0.76rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+.foot-legal a:hover { color: rgba(255,255,255,0.7); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.stagger { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.stagger.in { opacity: 1; transform: none; }
+.stagger:nth-child(2).in { transition-delay: 0.15s; }
+.stagger:nth-child(3).in { transition-delay: 0.3s; }
+.stagger:nth-child(4).in { transition-delay: 0.45s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  nav { padding: 0 1.5rem; height: 70px; }
+  .nav-links, .nav-divider, .nav-logo-name span, .nav-social { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-menu { top: 70px; }
+  .page-hero { margin-top: 70px; height: 360px; }
+  .page-hero-content { padding: 0 2rem; }
+  .products-section { padding: 4rem 1.5rem 5rem; }
+  .product-card { grid-template-columns: 1fr; }
+  .product-card.reverse { direction: ltr; }
+  .product-img-wrap { min-height: 280px; }
+  .product-body { padding: 2.4rem 2rem; }
+  .product-body::before { top: 0; left: 0; right: 0; bottom: auto; width: auto; height: 3px; background: linear-gradient(to right, var(--blue), #42A5F5) !important; }
+  .product-card.reverse .product-body::before { right: auto; }
+  .product-img-badge { left: 1.2rem !important; right: auto !important; }
+  footer { padding: 3rem 1.5rem 2rem; }
+  .footer-main { flex-direction: column; align-items: center; text-align: center; }
+  .footer-social { align-items: center; }
+  .footer-bottom { flex-direction: column; align-items: center; }
+}
+@media (max-width: 600px) {
+  .page-hero { height: 300px; }
+  .page-hero-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+  .page-hero-sub { font-size: 0.9rem; }
+  .product-img-wrap { min-height: 220px; }
+  .product-body { padding: 2rem 1.5rem; }
+  .product-name { font-size: 1.5rem; }
+  .footer-social-icons { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="images/aqualock_logo_transparent.png" alt="Aqualock Africa Logo"/>
+    <div class="nav-logo-name">
+      <strong>Aqualock Africa</strong>
+      <span>Turf &amp; Landscape Specialists</span>
+    </div>
+  </a>
+  <div class="nav-centre">
+    <div class="nav-divider"></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="portfolio.html">Previous Jobs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="#" aria-label="Instagram" title="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" aria-label="Facebook" title="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn" title="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      <a href="#" aria-label="Twitter / X" title="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="#" aria-label="YouTube" title="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="products.html" class="active">Products</a>
+  <a href="portfolio.html">Previous Jobs</a>
+  <a href="contact.html">Contact</a>
+  <div class="mobile-menu-social">
+    <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+    <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    <a href="#" aria-label="Twitter / X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
+  </div>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-fade"></div>
+  <div class="page-hero-content">
+    <div class="page-eyebrow">Our Range</div>
+    <h1 class="page-hero-title">
+      Premium <em>Turf</em><br>Products
+    </h1>
+    <p class="page-hero-sub">
+      Carefully selected, expertly cultivated — our product range sets the standard for quality in Southern Africa.
+    </p>
+  </div>
+</section>
+
+<!-- ── PRODUCTS SECTION ── -->
+<section class="products-section">
+  <div class="products-hdr reveal">
+    <div class="s-label">Product Range</div>
+    <h2>Our Signature<br>Turf Varieties</h2>
+    <p>Each product in our range is chosen for its performance, resilience, and beauty across South Africa's diverse climate conditions.</p>
+  </div>
+
+  <!-- Product 1 -->
+  <div class="product-card stagger">
+    <div class="product-img-wrap">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85" alt="LM Berea Lawn Grass"/>
+      <div class="product-img-overlay"></div>
+      <span class="product-img-badge">Most Popular</span>
+    </div>
+    <div class="product-body">
+      <div class="product-num">PRODUCT 01</div>
+      <div class="product-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M3 20 C3 20 6 10 12 8 C18 6 21 10 21 10" stroke="#1565C0" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M6 20 C6 20 8 14 12 12 C16 10 18 14 18 14" stroke="#1565C0" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="12" y1="8" x2="12" y2="20" stroke="#1565C0" stroke-width="1.3" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <h2 class="product-name">LM Berea Lawn Grass</h2>
+      <p class="product-description">LM Berea is South Africa's most beloved lawn grass — and for good reason. This soft, dense, shade-tolerant variety thrives in the Western Cape's mild coastal climate, producing a lush, deep-green carpet that stays verdant year-round. Its medium blade width and fine texture make it ideal for residential gardens, school grounds, and low-traffic recreational areas. Requiring moderate watering and maintenance, LM Berea offers an excellent balance between beauty and practicality for homeowners who want a premium lawn without excessive upkeep.</p>
+    </div>
+  </div>
+
+  <!-- Product 2 (reversed) -->
+  <div class="product-card reverse stagger">
+    <div class="product-img-wrap">
+      <img src="https://images.unsplash.com/photo-1543351611-58f69d7c1781?w=1200&q=85" alt="Kikuyu Turf Grass"/>
+      <div class="product-img-overlay"></div>
+      <span class="product-img-badge">High Performance</span>
+    </div>
+    <div class="product-body">
+      <div class="product-num">PRODUCT 02</div>
+      <div class="product-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#1565C0" stroke-width="1.6"/>
+          <polyline points="8,12 11,15 16,9" stroke="#1565C0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="product-name">Kikuyu Turf Grass</h2>
+      <p class="product-description">Kikuyu is the workhorse of South African turf — a vigorous, fast-growing grass renowned for its exceptional durability and rapid self-repair. Ideal for high-traffic areas such as sports fields, golf course roughs, and active family gardens, Kikuyu establishes quickly and recovers from wear with remarkable speed. Its coarse, bright-green blades handle full sun exposure superbly and demonstrate impressive drought resistance once established. Chosen by groundskeepers at stadiums, schools, and municipal parks across the Western Cape, Kikuyu is the trusted choice where performance and resilience are non-negotiable.</p>
+    </div>
+  </div>
+
+  <!-- Product 3 -->
+  <div class="product-card stagger">
+    <div class="product-img-wrap">
+      <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200&q=85" alt="Bermuda / Cynodon Turf"/>
+      <div class="product-img-overlay"></div>
+      <span class="product-img-badge">Sports Grade</span>
+    </div>
+    <div class="product-body">
+      <div class="product-num">PRODUCT 03</div>
+      <div class="product-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="#1565C0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="product-name">Bermuda / Cynodon Turf</h2>
+      <p class="product-description">Bermuda grass (Cynodon dactylon) is the international gold standard for professional sports surfaces — used on cricket pitches, football fields, tennis courts, and golf fairways worldwide. Its incredibly fine, dense blade structure creates a tight, consistent playing surface that rolls true and withstands the most intense wear. Bermuda's deep root system gives it outstanding heat and drought tolerance, while its capacity for extremely close mowing makes it the preferred choice for surfaces that demand precision. When professional standards are required, Bermuda grass is the definitive solution.</p>
+    </div>
+  </div>
+
+  <!-- Product 4 (reversed) -->
+  <div class="product-card reverse stagger">
+    <div class="product-img-wrap">
+      <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&q=85" alt="Buffalo Grass"/>
+      <div class="product-img-overlay"></div>
+      <span class="product-img-badge">Water Wise</span>
+    </div>
+    <div class="product-body">
+      <div class="product-num">PRODUCT 04</div>
+      <div class="product-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3C9 3 5 7 5 13h14C19 7 15 3 12 3Z" stroke="#1565C0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="12" y1="13" x2="12" y2="20" stroke="#1565C0" stroke-width="1.4"/>
+          <circle cx="12" cy="21" r="1" fill="#1565C0"/>
+        </svg>
+      </div>
+      <h2 class="product-name">Buffalo Grass</h2>
+      <p class="product-description">Buffalo grass is nature's answer to the challenge of maintaining a beautiful lawn under water-scarce conditions. With one of the highest drought tolerances of any warm-season turfgrass, Buffalo thrives in South Africa's increasingly water-conscious landscaping environment. Its wide, soft blades form a dense mat that suppresses weeds naturally and remains attractively green even through extended dry spells with minimal irrigation. Particularly well-suited to coastal gardens, retirement estates, and commercial landscaping projects where water efficiency and low maintenance costs are priorities, Buffalo grass delivers lasting beauty without compromise.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <span class="foot-logo-text">Aqua<span>lock</span> Africa</span>
+      <p class="footer-tagline">Premium turf grass, lawn, and field specialists serving the Western Cape and beyond.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-links-label">Quick Links</div>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="products.html">Products</a>
+      <a href="portfolio.html">Previous Jobs</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-social">
+      <div class="footer-social-label">Follow Us</div>
+      <div class="footer-social-icons">
+        <a href="#" aria-label="Instagram" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="LinkedIn" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Twitter / X" title="Twitter / X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="#" aria-label="YouTube" title="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="foot-copy">© 2025 Aqualock Africa. All rights reserved.</div>
+    <div class="foot-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a[href]').forEach(a => {
+  if (!a.closest('.mobile-menu-social')) {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  }
+});
+</script>
+</body>
+</html>

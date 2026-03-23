@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Previous Jobs — Aqualock Africa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #1565C0; --blue-light: #E3F2FD; --blue-deep: #0D47A1;
+  --gold: #C9A84C; --white: #ffffff; --off-white: #F4F7FB;
+  --gray-line: #E0E9F4; --gray: #607080; --dark: #0F1A2A;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--dark); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+/* ── NAV ── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 5rem; background: #fff; border-bottom: 1px solid #dce6f0; box-shadow: 0 1px 12px rgba(13,71,161,0.06); }
+.nav-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
+.nav-logo img { height: 44px; width: auto; object-fit: contain; }
+.nav-logo-name { display: flex; flex-direction: column; line-height: 1; }
+.nav-logo-name strong { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue-deep); }
+.nav-logo-name span { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray); margin-top: 3px; }
+.nav-divider { width: 1px; height: 32px; background: var(--gray-line); margin: 0 2.4rem; }
+.nav-centre { display: flex; align-items: center; flex: 1; }
+.nav-links { display: flex; gap: 0.2rem; list-style: none; }
+.nav-links a { position: relative; font-size: 0.77rem; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; text-decoration: none; color: var(--gray); padding: 0.45rem 0.9rem; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+.nav-links a:hover { color: var(--blue); background: var(--blue-light); }
+.nav-links a.active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
+.nav-links a.active::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 18px; height: 2px; background: var(--blue); border-radius: 2px; }
+.nav-right { display: flex; align-items: center; gap: 0.6rem; }
+.nav-social { display: flex; align-items: center; gap: 0.25rem; margin-right: 0.5rem; }
+.nav-social a { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gray); text-decoration: none; transition: color 0.2s, background 0.2s; }
+.nav-social a:hover { color: var(--blue); background: var(--blue-light); }
+.nav-hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; gap: 5px; background: none; border: none; cursor: pointer; border-radius: 8px; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu { display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 299; background: #fff; border-bottom: 1px solid var(--gray-line); box-shadow: 0 8px 24px rgba(13,71,161,0.1); padding: 1.5rem; flex-direction: column; gap: 0.4rem; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--gray); padding: 0.75rem 1rem; border-radius: 8px; transition: color 0.2s, background 0.2s; }
+.mobile-menu a:hover, .mobile-menu a.active { color: var(--blue); background: var(--blue-light); }
+
+/* ── PAGE HERO ── */
+.page-hero { position: relative; margin-top: 80px; height: 420px; overflow: hidden; }
+.page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2000&q=85'); background-size: cover; background-position: center 55%; animation: zoomOut 12s ease forwards; }
+@keyframes zoomOut { from { transform: scale(1.05); } to { transform: scale(1); } }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(110deg, rgba(13,71,161,0.88) 0%, rgba(13,71,161,0.6) 50%, rgba(13,71,161,0.18) 100%); }
+.page-hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 160px; background: linear-gradient(to bottom, transparent, var(--dark)); }
+.page-hero-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 6rem; max-width: 800px; }
+.page-eyebrow { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards; }
+.page-eyebrow::before { content: ''; width: 34px; height: 1.5px; background: var(--gold); display: block; }
+.page-hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 900; line-height: 1.08; color: #fff; opacity: 0; animation: fadeUp 0.75s 0.22s ease forwards; }
+.page-hero-title em { font-style: italic; color: #90CAF9; }
+.page-hero-sub { margin-top: 1.2rem; font-size: 1rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.78); max-width: 500px; opacity: 0; animation: fadeUp 0.75s 0.36s ease forwards; }
+
+/* ── SECTION LABEL ── */
+.s-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
+.s-label::before { content: ''; width: 28px; height: 1.5px; display: block; }
+
+/* ── HONEYCOMB SECTION ── */
+.honeycomb-section { padding: 5rem 2rem 8rem; background: var(--dark); }
+.honeycomb-hdr { text-align: center; max-width: 580px; margin: 0 auto 4.5rem; }
+.honeycomb-hdr .s-label { justify-content: center; color: var(--gold); }
+.honeycomb-hdr .s-label::before { background: var(--gold); }
+.honeycomb-hdr .s-label::after { content: ''; width: 28px; height: 1.5px; background: var(--gold); display: block; }
+.honeycomb-hdr h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.9rem); font-weight: 700; color: #fff; line-height: 1.18; margin-bottom: 0.9rem; }
+.honeycomb-hdr p { font-size: 0.97rem; line-height: 1.8; color: rgba(255,255,255,0.48); }
+
+/* ── HONEYCOMB GRID ── */
+.honeycomb-container { position: relative; margin: 0 auto; }
+
+/* ── HEX CELL (small state) ── */
+.hex-cell {
+  position: absolute;
+  cursor: pointer;
+  /* w/h/left/top set by JS */
+  transition: opacity 0.5s ease, transform 0.52s cubic-bezier(0.34,1.45,0.64,1);
+  opacity: 0;
+  transform: scale(0.7);
+  z-index: 1;
+}
+.hex-cell.visible { opacity: 1; transform: scale(1); }
+.hex-cell:hover { z-index: 5; }
+
+/* Outer wrapper that scales on hover — contains both outline and clipped shape */
+.hex-shape {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.34,1.5,0.64,1), filter 0.35s ease;
+}
+.hex-cell:hover .hex-shape {
+  transform: scale(1.1) translateY(-5px);
+  filter: drop-shadow(0 14px 28px rgba(21,101,192,0.55));
+}
+
+/* Inner clipped area — clips the image and bg */
+.hex-inner {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  overflow: hidden;
+}
+
+/* Light blue background of the hex */
+.hex-bg {
+  position: absolute;
+  inset: 0;
+  background: #1e4d8c;
+}
+
+/* Hex outline — slightly larger clipped div sitting behind hex-shape */
+.hex-outline {
+  position: absolute;
+  inset: -3px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: #7ab3e8;
+  z-index: 0;
+  transition: background 0.3s ease;
+}
+.hex-cell:hover .hex-outline { background: var(--gold); }
+
+/* The circle inside the hex — positioned by JS, perfectly centred */
+.hex-circle {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.hex-circle-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.hex-cell:hover .hex-circle-photo { transform: scale(1.06); }
+
+/* Gold ring around the circle — also positioned by JS */
+.hex-circle-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid rgba(201,168,76,0);
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+}
+.hex-cell:hover .hex-circle-ring { border-color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════
+   EXPANDED JOB PANEL
+   Slides in from the right as an overlay
+═══════════════════════════════════════════════════ */
+.job-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,14,28,0.72);
+  backdrop-filter: blur(6px);
+  z-index: 400;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s ease;
+}
+.job-panel-backdrop.open { opacity: 1; pointer-events: all; }
+
+.job-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(680px, 100vw);
+  background: var(--dark);
+  z-index: 401;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.job-panel-backdrop.open .job-panel { transform: translateX(0); }
+
+/* Panel close button */
+.panel-close {
+  position: absolute;
+  top: 1.4rem; left: 1.4rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  transition: background 0.2s, transform 0.25s, color 0.2s;
+  z-index: 10;
+}
+.panel-close:hover { background: rgba(255,255,255,0.14); color: #fff; transform: rotate(90deg); }
+
+/* panel collage removed — replaced by photo grid */
+
+/* ── PANEL CONTENT ── */
+.panel-header {
+  padding: 2.2rem 2.2rem 1.4rem;
+  padding-top: 4.5rem; /* clear the close button */
+}
+
+.panel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700; color: #fff;
+  line-height: 1.12; margin-bottom: 0.85rem;
+}
+
+.panel-desc {
+  font-size: 0.93rem; line-height: 1.85;
+  color: rgba(255,255,255,0.58);
+  max-width: 560px;
+}
+
+/* ── PHOTO GRID — handles any number of photos ── */
+.panel-photo-grid {
+  padding: 0 2.2rem 2.8rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+/* First photo always spans full width */
+.panel-photo-grid .grid-photo.first {
+  grid-column: 1 / -1;
+  height: 300px;
+}
+.grid-photo {
+  overflow: hidden;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+.grid-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.grid-photo:hover img { transform: scale(1.05); }
+
+@media (max-width: 520px) {
+  .panel-photo-grid { grid-template-columns: 1fr; padding: 0 1.2rem 2rem; }
+  .panel-photo-grid .grid-photo:first-child { height: 220px; }
+  .grid-photo { height: 160px; }
+  .panel-header { padding: 1.6rem 1.2rem 1.2rem; padding-top: 4rem; }
+}
+
+/* ── FULLSCREEN PHOTO VIEWER ── */
+.photo-viewer {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.95);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.photo-viewer.open { opacity: 1; pointer-events: all; }
+.photo-viewer img {
+  max-width: 90vw; max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  transform: scale(0.9);
+  transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1);
+}
+.photo-viewer.open img { transform: scale(1); }
+.photo-viewer-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff;
+  transition: background 0.2s;
+}
+.photo-viewer-close:hover { background: rgba(255,255,255,0.2); }
+
+/* ── FOOTER ── */
+footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
+.footer-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 3rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.footer-brand { max-width: 300px; }
+.foot-logo-text { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: 0.04em; margin-bottom: 0.7rem; display: block; }
+.foot-logo-text span { color: #90CAF9; }
+.footer-tagline { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+.footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-links-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+.footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: #fff; }
+.footer-social { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.footer-social-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.footer-social-icons { display: flex; gap: 0.5rem; }
+.footer-social-icons a { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.65); text-decoration: none; transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s; }
+.footer-social-icons a:hover { background: var(--blue); border-color: var(--blue); color: #fff; transform: translateY(-3px); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.foot-copy { font-size: 0.76rem; color: rgba(255,255,255,0.35); }
+.foot-legal { display: flex; gap: 1.5rem; }
+.foot-legal a { font-size: 0.76rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+.foot-legal a:hover { color: rgba(255,255,255,0.7); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 0 1.5rem; height: 70px; }
+  .nav-links, .nav-divider, .nav-logo-name span, .nav-social { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-menu { top: 70px; }
+  .page-hero { margin-top: 70px; height: 340px; }
+  .page-hero-content { padding: 0 2rem; }
+  .honeycomb-section { padding: 3rem 0.5rem 5rem; }
+  .panel-collage { height: 260px; }
+  .panel-content { padding: 1.8rem 1.4rem 2.4rem; }
+  footer { padding: 3rem 1.5rem 2rem; }
+  .footer-main { flex-direction: column; align-items: center; text-align: center; }
+  .footer-social { align-items: center; }
+  .footer-bottom { flex-direction: column; align-items: center; }
+}
+@media (max-width: 600px) {
+  .page-hero { height: 280px; }
+  .page-hero-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+  .panel-stats { grid-template-columns: 1fr 1fr 1fr; }
+  .footer-social-icons { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="images/aqualock_logo_transparent.png" alt="Aqualock Africa Logo"/>
+    <div class="nav-logo-name"><strong>Aqualock Africa</strong><span>Turf &amp; Landscape Specialists</span></div>
+  </a>
+  <div class="nav-centre">
+    <div class="nav-divider"></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="portfolio.html" class="active">Previous Jobs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      <a href="#" aria-label="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </div>
+    <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="services.html">Services</a>
+  <a href="products.html">Products</a><a href="portfolio.html" class="active">Previous Jobs</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-fade"></div>
+  <div class="page-hero-content">
+    <div class="page-eyebrow">Our Portfolio</div>
+    <h1 class="page-hero-title">Previous <em>Jobs &amp;</em><br>Completed Work</h1>
+    <p class="page-hero-sub">Click any hexagon to open the full job profile with photos, description, and project details.</p>
+  </div>
+</section>
+
+<!-- ── HONEYCOMB ── -->
+<section class="honeycomb-section">
+  <div class="honeycomb-hdr reveal">
+    <div class="s-label">Project Gallery</div>
+    <h2>Every Project,<br>A Transformation</h2>
+    <p>Each hexagon holds a photo collage of the job. Click to explore.</p>
+  </div>
+  <div class="honeycomb-container" id="honeycombContainer"></div>
+</section>
+
+<!-- ── JOB PANEL (slide-in) ── -->
+<div class="job-panel-backdrop" id="jobPanelBackdrop" onclick="closePanelBackdrop(event)">
+  <div class="job-panel" id="jobPanel">
+    <button class="panel-close" onclick="closePanel()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <!-- Title + description -->
+    <div class="panel-header">
+      <h2 class="panel-title" id="panelTitle"></h2>
+      <p class="panel-desc" id="panelDesc"></p>
+    </div>
+    <!-- Photo grid — any number of photos -->
+    <div class="panel-photo-grid" id="panelPhotoGrid"></div>
+  </div>
+</div>
+
+<!-- ── FULLSCREEN PHOTO VIEWER ── -->
+<div class="photo-viewer" id="photoViewer" onclick="closeViewer()">
+  <img id="viewerImg" src="" alt=""/>
+  <button class="photo-viewer-close" onclick="closeViewer()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <span class="foot-logo-text">Aqua<span>lock</span> Africa</span>
+      <p class="footer-tagline">Premium turf grass, lawn, and field specialists serving the Western Cape and beyond.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-links-label">Quick Links</div>
+      <a href="index.html">Home</a><a href="services.html">Services</a>
+      <a href="products.html">Products</a><a href="portfolio.html">Previous Jobs</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-social">
+      <div class="footer-social-label">Follow Us</div>
+      <div class="footer-social-icons">
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Twitter / X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="foot-copy">© 2025 Aqualock Africa. All rights reserved.</div>
+    <div class="foot-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════
+   JOB DATA — each job has multiple photos for the collage
+══════════════════════════════════════════════ */
+const jobs = [
+  {
+    id: 1, title: 'Newlands Cricket Ground', category: 'Sports Field',
+    location: 'Cape Town, Western Cape', year: '2023',
+    tags: ['Bermuda Grass', 'Sports Certified', 'Full Renovation'],
+    description: 'A complete overhaul of the outfield and square at this iconic Cape Town venue. The project involved deep scarification, laser levelling, drainage installation, and the laying of certified Bermuda sports turf. The entire playing surface was renovated and handed over tournament-ready within six weeks.',
+    stats: [{ n: '2.4 ha', l: 'Total Area' }, { n: '6 wks', l: 'Duration' }, { n: '100%', l: 'Match Ready' }],
+    photos: [
+      'https://images.unsplash.com/photo-1543351611-58f69d7c1781?w=900&q=80',
+      'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=600&q=80',
+      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    ]
+  },
+  {
+    id: 2, title: 'Constantia Private Estate', category: 'Residential Lawn',
+    location: 'Constantia, Cape Town', year: '2023',
+    tags: ['LM Berea', 'Irrigation System', 'Landscaping'],
+    description: 'Full lawn replacement and landscaping design for a premium private estate in Constantia. We removed the existing lawn, amended the soil profile, installed a smart drip-irrigation system, and laid premium LM Berea throughout the garden terraces.',
+    stats: [{ n: '1 800 m²', l: 'Lawn Area' }, { n: '3 wks', l: 'Duration' }, { n: '5★', l: 'Client Rating' }],
+    photos: [
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80',
+      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80',
+      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=80',
+      'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80',
+    ]
+  },
+  {
+    id: 3, title: 'Stellenbosch Rugby Club', category: 'Field Repair',
+    location: 'Stellenbosch, Western Cape', year: '2022',
+    tags: ['Kikuyu Turf', 'Field Repairs', 'Drainage'],
+    description: 'Emergency field repairs and full-season maintenance contract for a premier rugby club. Extensive divot repair, pitch re-levelling, and drainage channel installation were carried out during the off-season. Kikuyu overseeding was performed across worn high-traffic corridors.',
+    stats: [{ n: '8 200 m²', l: 'Field Size' }, { n: '4 wks', l: 'Repair Phase' }, { n: '12 mo', l: 'Maintenance' }],
+    photos: [
+      'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=900&q=80',
+      'https://images.unsplash.com/photo-1543351611-58f69d7c1781?w=600&q=80',
+      'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80',
+      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=80',
+    ]
+  }];
+
+/* ══════════════════════════════════════════════
+   HONEYCOMB BUILDER
+   Pointy-top hexagons, 3-2-3-2 pattern, seamless.
+   W = flat-to-flat width, H = W * 2/√3 (tip-to-tip)
+   Vertical step = H * 0.75, odd rows offset W/2
+══════════════════════════════════════════════ */
+function buildHoneycomb() {
+  const container = document.getElementById('honeycombContainer');
+  container.innerHTML = '';
+
+  const vw = window.innerWidth;
+  const maxW = Math.min(vw - 32, 860);
+  let W = Math.floor(maxW / 3);
+  W = Math.max(W, 80);
+
+  const H      = W * (2 / Math.sqrt(3));  // tip-to-tip height
+  const stepY  = H * 0.75;                // vertical center-to-center
+  const pattern = [3, 2];
+
+  // Count rows needed for all jobs
+  let totalRows = 0, counted = 0;
+  while (counted < jobs.length) { counted += pattern[totalRows % 2]; totalRows++; }
+
+  const cW = 3 * W;
+  const cH = totalRows * stepY + H * 0.25;
+  container.style.width  = cW + 'px';
+  container.style.height = Math.ceil(cH) + 'px';
+
+  let ji = 0;
+  for (let row = 0; row < totalRows && ji < jobs.length; row++) {
+    const cols     = pattern[row % 2];
+    const isOffset = row % 2 === 1;
+    // x center of first cell: 3-col → W/2, 2-col (offset) → W
+    const x0 = isOffset ? W : W / 2;
+    const cy = H / 2 + row * stepY;
+
+    for (let col = 0; col < cols && ji < jobs.length; col++) {
+      const job  = jobs[ji];
+      const cx   = x0 + col * W;
+      const left = cx - W / 2;
+      const top  = cy - H / 2;
+      const delay = (row * 0.09 + col * 0.055).toFixed(2);
+
+      // Circle diameter = W (inscribed in pointy-top hex, touching both flat sides)
+      // Centre it: left = (W - W) / 2 = 0, top = (H - W) / 2
+      const circleDiam = W;
+      const circleLeft = 0;                    // (W - W)/2 = 0, fills full width
+      const circleTop  = (H - circleDiam) / 2; // vertically centred in the hex
+
+      // Ring is 6px larger, offset by 3px each side
+      const ringSize = circleDiam + 6;
+      const ringLeft = circleLeft - 3;
+      const ringTop  = circleTop  - 3;
+
+      // 4-quadrant collage photos
+      const circleHTML = job.photos.slice(0, 4).map((src, i) =>
+        `<img class="hex-circle-photo" src="${src}" alt="" loading="lazy"
+              style="grid-area:${i < 2 ? 1 : 2}/${i % 2 + 1}/${i < 2 ? 2 : 3}/${i % 2 + 2}"/>`
+      ).join('');
+
+      const cell = document.createElement('div');
+      cell.className = 'hex-cell';
+      cell.dataset.id = job.id;
+      cell.style.cssText = `width:${W}px;height:${H}px;left:${left}px;top:${top}px;transition-delay:${delay}s`;
+      cell.innerHTML = `
+        <div class="hex-shape">
+          <div class="hex-outline"></div>
+          <div class="hex-inner">
+            <div class="hex-bg"></div>
+            <div class="hex-circle" style="width:${circleDiam}px;height:${circleDiam}px;top:${circleTop}px;left:${circleLeft}px;">
+              ${circleHTML}
+            </div>
+            <div class="hex-circle-ring" style="width:${ringSize}px;height:${ringSize}px;top:${ringTop}px;left:${ringLeft}px;"></div>
+          </div>
+        </div>`;
+      cell.addEventListener('click', () => openPanel(job.id));
+      container.appendChild(cell);
+      ji++;
+    }
+  }
+
+  // Scroll-triggered entrance
+  const cells = container.querySelectorAll('.hex-cell');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.04 });
+  cells.forEach(c => obs.observe(c));
+}
+
+buildHoneycomb();
+let rTimer;
+window.addEventListener('resize', () => { clearTimeout(rTimer); rTimer = setTimeout(buildHoneycomb, 200); });
+
+/* ══════════════════════════════════════════════
+   PANEL OPEN / CLOSE
+══════════════════════════════════════════════ */
+function openPanel(id) {
+  const job = jobs.find(j => j.id === id);
+  if (!job) return;
+
+  // Title + description
+  document.getElementById('panelTitle').textContent = job.title;
+  document.getElementById('panelDesc').textContent  = job.description;
+
+  // Build photo grid — all photos, first one spans full width
+  const grid = document.getElementById('panelPhotoGrid');
+  grid.innerHTML = job.photos.map((src, i) =>
+    `<div class="grid-photo${i === 0 ? ' first' : ''}" onclick="openViewer('${src}')">
+       <img src="${src}" alt="${job.title} photo ${i + 1}" loading="lazy"/>
+     </div>`
+  ).join('');
+
+  document.getElementById('jobPanelBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePanel() {
+  document.getElementById('jobPanelBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closePanelBackdrop(e) {
+  if (e.target === document.getElementById('jobPanelBackdrop')) closePanel();
+}
+
+/* ── FULLSCREEN VIEWER ── */
+function openViewer(src) {
+  document.getElementById('viewerImg').src = src;
+  document.getElementById('photoViewer').classList.add('open');
+}
+function closeViewer() {
+  document.getElementById('photoViewer').classList.remove('open');
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closePanel(); closeViewer(); }
+});
+
+/* ── SCROLL REVEAL ── */
+const revObs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+/* ── NAV ── */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+mobileMenu.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }));
+</script>
+</body>
+</html>
