@@ -855,92 +855,58 @@ async function fetchJobs(showToast = true) {
   }
 }
 
+
 /* ════════════════════════════════════════
-   PUBLISH
+   PUBLISH NEW JOB
 ════════════════════════════════════════ */
 async function publish() {
-  const cfg   = getCfg();
   const title = el('fTitle').value.trim();
   const desc  = el('fDesc').value.trim();
 
-  if (!cfg.token) { toast('bad', 'No Token',        'Save your GitHub token in Settings.'); return; }
-  if (!cfg.repo)  { toast('bad', 'No Repository',   'Save your repository path in Settings.'); return; }
-  if (!title)     { toast('bad', 'Title Required',   'Please enter a project title.'); return; }
-  if (!desc)      { toast('bad', 'Description Required', 'Please add a description.'); return; }
-  if (!imageFiles.length) { toast('bad', 'No Photos', 'Drop at least one photo onto the upload zone.'); return; }
-  if (!_fileSha)  { toast('tip', 'Load first', 'Click "Load from GitHub" before publishing.'); return; }
+  if (!title) { toast('bad','Title required','Enter a project title.'); return; }
+  if (!desc)  { toast('bad','Description required','Provide a description.'); return; }
+  if (!imageFiles.length) { toast('bad','No images','Add at least one photo.'); return; }
 
   const btn = el('publishBtn');
-  btn.classList.add('loading'); btn.disabled = true;
-
-  const progWrap = el('uploadProgress');
-  const progBar  = el('progBar');
-  const progLbl  = el('uploadLabel');
-  progWrap.style.display = 'flex';
+  btn.disabled = true; btn.classList.add('loading');
 
   try {
-    /* ── 1. Upload images ── */
-    const folder    = (cfg.imgDir || 'images/portfolio').replace(/\/$/, '');
-    const photoUrls = [];
+    const cfg = getCfg();
+    const imgUrls = [];
+    el('uploadProgress').style.display = 'flex';
+    const progBar = el('progBar');
 
-    for (let i = 0; i < imageFiles.length; i++) {
-      progLbl.textContent = `Uploading photo ${i + 1} of ${imageFiles.length}…`;
-      progBar.style.width = `${(i / imageFiles.length) * 68}%`;
-      const url = await uploadImage(imageFiles[i], folder);
-      photoUrls.push(url);
+    for (let i=0;i<imageFiles.length;i++) {
+      const url = await uploadImage(imageFiles[i], cfg.imgDir);
+      imgUrls.push(url);
+      progBar.style.width = `${Math.round(((i+1)/imageFiles.length)*100)}%`;
     }
 
-    progBar.style.width = '72%';
-    progLbl.textContent = 'Updating portfolio.html…';
+    // Fetch current file to update
+    const data = await ghRequest('GET', cfg.file);
+    const html = atob(data.content.replace(/\n/g, ''));
+    const match = html.match(/const jobs\s*=\s*(\[[\s\S]*?\]);/);
+    let jobs = match ? JSON.parse(match[1].replace(/\/\/[^\n]*/g,'').replace(/,(\s*[}\]])/g,'$1')) : [];
 
-    /* ── 2. Re-fetch latest HTML ── */
-    const fileData = await ghRequest('GET', cfg.file);
-    const html     = atob(fileData.content.replace(/\n/g, ''));
-    const sha      = fileData.sha;
+    const newJob = { id: _nextId++, title, description: desc, images: imgUrls, date: new Date().toISOString() };
+    jobs.push(newJob);
 
-    /* ── 3. Build + inject ── */
-    const job = {
-      id: _nextId,
-      title,
-      category: 'Project',
-      location: 'Western Cape',
-      year: new Date().getFullYear().toString(),
-      tags: [],
-      description: desc,
-      stats: [],
-      photos: photoUrls,
-    };
+    const newHtml = html.replace(/const jobs\s*=\s*\[[\s\S]*?\];/, `const jobs = ${JSON.stringify(jobs,null,2)};`);
+    await ghRequest('PUT', cfg.file, { message: `Add project: ${title}`, content: btoa(newHtml), sha: data.sha });
 
-    const newHtml = injectJob(html, buildLiteral(job));
-    if (!newHtml) throw new Error('Could not locate the jobs array in portfolio.html.');
-
-    progBar.style.width = '88%';
-    progLbl.textContent = 'Committing to GitHub…';
-
-    /* ── 4. Commit ── */
-    const encoded = btoa(unescape(encodeURIComponent(newHtml)));
-    await ghRequest('PUT', cfg.file, {
-      message: `Add portfolio job: ${title}`,
-      content: encoded,
-      sha,
-    });
-
-    progBar.style.width = '100%';
-    toast('ok', 'Published! 🎉', `"${title}" is now live on your portfolio.`, 7000);
-
-    /* ── Reset form ── */
+    toast('ok','Published',`Project "${title}" added successfully.`);
     el('fTitle').value = '';
-    el('fDesc').value  = '';
+    el('fDesc').value = '';
     imageFiles = [];
     renderGrid();
-    setTimeout(() => fetchJobs(false), 600);
+    fetchJobs(false);
 
   } catch(err) {
-    toast('bad', 'Publish Failed', err.message, 8000);
-    console.error(err);
+    toast('bad','Publish failed', err.message);
   } finally {
-    btn.classList.remove('loading'); btn.disabled = false;
-    setTimeout(() => { progWrap.style.display = 'none'; progBar.style.width = '0%'; }, 1800);
+    btn.disabled = false; btn.classList.remove('loading');
+    el('uploadProgress').style.display = 'none';
+    el('progBar').style.width = '0%';
   }
 }
 
@@ -982,6 +948,8 @@ function injectJob(html, literal) {
   const comma  = before.length > 0 ? ',' : '';
   return html.slice(0, close) + comma + literal + '\n' + html.slice(close);
 }
+
+
 
 /* ════════════════════════════════════════
    INIT
