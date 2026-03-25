@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Previous Jobs â Aqualock Africa</title>
+<title>Previous Jobs Ã¢ÂÂ Aqualock Africa</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,7 +15,7 @@
 html { scroll-behavior: smooth; }
 body { background: var(--white); color: var(--dark); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
 
-/* ââ NAV ââ */
+/* Ã¢ÂÂÃ¢ÂÂ NAV Ã¢ÂÂÃ¢ÂÂ */
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 5rem; background: #fff; border-bottom: 1px solid #dce6f0; box-shadow: 0 1px 12px rgba(13,71,161,0.06); }
 .nav-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
 .nav-logo img { height: 44px; width: auto; object-fit: contain; }
@@ -43,7 +43,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 .mobile-menu a { font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--gray); padding: 0.75rem 1rem; border-radius: 8px; transition: color 0.2s, background 0.2s; }
 .mobile-menu a:hover, .mobile-menu a.active { color: var(--blue); background: var(--blue-light); }
 
-/* ââ PAGE HERO ââ */
+/* Ã¢ÂÂÃ¢ÂÂ PAGE HERO Ã¢ÂÂÃ¢ÂÂ */
 .page-hero { position: relative; margin-top: 80px; height: 420px; overflow: hidden; }
 .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=2000&q=85'); background-size: cover; background-position: center 55%; animation: zoomOut 12s ease forwards; }
 @keyframes zoomOut { from { transform: scale(1.05); } to { transform: scale(1); } }
@@ -56,11 +56,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 .page-hero-title em { font-style: italic; color: #90CAF9; }
 .page-hero-sub { margin-top: 1.2rem; font-size: 1rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.78); max-width: 500px; opacity: 0; animation: fadeUp 0.75s 0.36s ease forwards; }
 
-/* ââ SECTION LABEL ââ */
+/* Ã¢ÂÂÃ¢ÂÂ SECTION LABEL Ã¢ÂÂÃ¢ÂÂ */
 .s-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
 .s-label::before { content: ''; width: 28px; height: 1.5px; display: block; }
 
-/* ââ HONEYCOMB SECTION ââ */
+/* Ã¢ÂÂÃ¢ÂÂ HONEYCOMB SECTION Ã¢ÂÂÃ¢ÂÂ */
 .honeycomb-section { padding: 5rem 2rem 8rem; background: var(--dark); }
 .honeycomb-hdr { text-align: center; max-width: 580px; margin: 0 auto 4.5rem; }
 .honeycomb-hdr .s-label { justify-content: center; color: var(--gold); }
@@ -69,10 +69,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 .honeycomb-hdr h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.9rem); font-weight: 700; color: #fff; line-height: 1.18; margin-bottom: 0.9rem; }
 .honeycomb-hdr p { font-size: 0.97rem; line-height: 1.8; color: rgba(255,255,255,0.48); }
 
-/* ââ HONEYCOMB GRID ââ */
+/* Ã¢ÂÂÃ¢ÂÂ HONEYCOMB GRID Ã¢ÂÂÃ¢ÂÂ */
 .honeycomb-container { position: relative; margin: 0 auto; }
 
-/* ââ HEX CELL (small state) ââ */
+/* Ã¢ÂÂÃ¢ÂÂ HEX CELL (small state) Ã¢ÂÂÃ¢ÂÂ */
 .hex-cell {
   position: absolute;
   cursor: pointer;
@@ -85,7 +85,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 .hex-cell.visible { opacity: 1; transform: scale(1); }
 .hex-cell:hover { z-index: 5; }
 
-/* Outer wrapper that scales on hover â contains both outline and clipped shape */
+/* Outer wrapper that scales on hover Ã¢ÂÂ contains both outline and clipped shape */
 .hex-shape {
   width: 100%;
   height: 100%;
@@ -97,7 +97,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
   filter: drop-shadow(0 14px 28px rgba(21,101,192,0.55));
 }
 
-/* Inner clipped area â clips the image and bg */
+/* Inner clipped area Ã¢ÂÂ clips the image and bg */
 .hex-inner {
   position: absolute;
   inset: 0;
@@ -112,7 +112,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
   background: #1e4d8c;
 }
 
-/* Hex outline â slightly larger clipped div sitting behind hex-shape */
+/* Hex outline Ã¢ÂÂ slightly larger clipped div sitting behind hex-shape */
 .hex-outline {
   position: absolute;
   inset: -3px;
@@ -123,7 +123,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 }
 .hex-cell:hover .hex-outline { background: var(--gold); }
 
-/* The circle inside the hex â positioned by JS, perfectly centred */
+/* The circle inside the hex Ã¢ÂÂ positioned by JS, perfectly centred */
 .hex-circle {
   position: absolute;
   border-radius: 50%;
@@ -141,7 +141,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 }
 .hex-cell:hover .hex-circle-photo { transform: scale(1.06); }
 
-/* Gold ring around the circle â also positioned by JS */
+/* Gold ring around the circle Ã¢ÂÂ also positioned by JS */
 .hex-circle-ring {
   position: absolute;
   border-radius: 50%;
@@ -151,10 +151,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 }
 .hex-cell:hover .hex-circle-ring { border-color: var(--gold); }
 
-/* âââââââââââââââââââââââââââââââââââââââââââââââââââ
+/* Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
    EXPANDED JOB PANEL
    Slides in from the right as an overlay
-âââââââââââââââââââââââââââââââââââââââââââââââââââ */
+Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
 .job-panel-backdrop {
   position: fixed;
   inset: 0;
@@ -197,9 +197,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 }
 .panel-close:hover { background: rgba(255,255,255,0.14); color: #fff; transform: rotate(90deg); }
 
-/* panel collage removed â replaced by photo grid */
+/* panel collage removed Ã¢ÂÂ replaced by photo grid */
 
-/* ââ PANEL CONTENT ââ */
+/* Ã¢ÂÂÃ¢ÂÂ PANEL CONTENT Ã¢ÂÂÃ¢ÂÂ */
 .panel-header {
   padding: 2.2rem 2.2rem 1.4rem;
   padding-top: 4.5rem; /* clear the close button */
@@ -218,7 +218,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
   max-width: 560px;
 }
 
-/* ââ PHOTO GRID â handles any number of photos ââ */
+/* Ã¢ÂÂÃ¢ÂÂ PHOTO GRID Ã¢ÂÂ handles any number of photos Ã¢ÂÂÃ¢ÂÂ */
 .panel-photo-grid {
   padding: 0 2.2rem 2.8rem;
   display: grid;
@@ -251,7 +251,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
   .panel-header { padding: 1.6rem 1.2rem 1.2rem; padding-top: 4rem; }
 }
 
-/* ââ FULLSCREEN PHOTO VIEWER ââ */
+/* Ã¢ÂÂÃ¢ÂÂ FULLSCREEN PHOTO VIEWER Ã¢ÂÂÃ¢ÂÂ */
 .photo-viewer {
   position: fixed; inset: 0; z-index: 600;
   background: rgba(0,0,0,0.95);
@@ -278,7 +278,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 }
 .photo-viewer-close:hover { background: rgba(255,255,255,0.2); }
 
-/* ââ FOOTER ââ */
+/* Ã¢ÂÂÃ¢ÂÂ FOOTER Ã¢ÂÂÃ¢ÂÂ */
 footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .footer-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 3rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .footer-brand { max-width: 300px; }
@@ -300,12 +300,12 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 .foot-legal a { font-size: 0.76rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
 .foot-legal a:hover { color: rgba(255,255,255,0.7); }
 
-/* ââ ANIMATIONS ââ */
+/* Ã¢ÂÂÃ¢ÂÂ ANIMATIONS Ã¢ÂÂÃ¢ÂÂ */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
-/* ââ RESPONSIVE ââ */
+/* Ã¢ÂÂÃ¢ÂÂ RESPONSIVE Ã¢ÂÂÃ¢ÂÂ */
 @media (max-width: 960px) {
   nav { padding: 0 1.5rem; height: 70px; }
   .nav-links, .nav-divider, .nav-logo-name span, .nav-social { display: none; }
@@ -331,7 +331,7 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 </head>
 <body>
 
-<!-- ââ NAV ââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂ NAV Ã¢ÂÂÃ¢ÂÂ -->
 <nav>
   <a class="nav-logo" href="index.html">
     <img src="images/aqualock_logo_transparent.png" alt="Aqualock Africa Logo"/>
@@ -363,7 +363,7 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   <a href="contact.html">Contact</a>
 </div>
 
-<!-- ââ PAGE HERO ââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂ PAGE HERO Ã¢ÂÂÃ¢ÂÂ -->
 <section class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-overlay"></div>
@@ -375,7 +375,7 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   </div>
 </section>
 
-<!-- ââ HONEYCOMB ââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂ HONEYCOMB Ã¢ÂÂÃ¢ÂÂ -->
 <section class="honeycomb-section">
   <div class="honeycomb-hdr reveal">
     <div class="s-label">Project Gallery</div>
@@ -385,7 +385,7 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   <div class="honeycomb-container" id="honeycombContainer"></div>
 </section>
 
-<!-- ââ JOB PANEL (slide-in) ââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂ JOB PANEL (slide-in) Ã¢ÂÂÃ¢ÂÂ -->
 <div class="job-panel-backdrop" id="jobPanelBackdrop" onclick="closePanelBackdrop(event)">
   <div class="job-panel" id="jobPanel">
     <button class="panel-close" onclick="closePanel()" aria-label="Close">
@@ -396,12 +396,12 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
       <h2 class="panel-title" id="panelTitle"></h2>
       <p class="panel-desc" id="panelDesc"></p>
     </div>
-    <!-- Photo grid â any number of photos -->
+    <!-- Photo grid Ã¢ÂÂ any number of photos -->
     <div class="panel-photo-grid" id="panelPhotoGrid"></div>
   </div>
 </div>
 
-<!-- ââ FULLSCREEN PHOTO VIEWER ââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂ FULLSCREEN PHOTO VIEWER Ã¢ÂÂÃ¢ÂÂ -->
 <div class="photo-viewer" id="photoViewer" onclick="closeViewer()">
   <img id="viewerImg" src="" alt=""/>
   <button class="photo-viewer-close" onclick="closeViewer()">
@@ -409,7 +409,7 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   </button>
 </div>
 
-<!-- ââ FOOTER ââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂ FOOTER Ã¢ÂÂÃ¢ÂÂ -->
 <footer>
   <div class="footer-main">
     <div class="footer-brand">
@@ -434,23 +434,34 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="foot-copy">Â© 2025 Aqualock Africa. All rights reserved.</div>
+    <div class="foot-copy">ÃÂ© 2025 Aqualock Africa. All rights reserved.</div>
     <div class="foot-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
 
 <script>
-/* ââââââââââââââââââââââââââââââââââââââââââââââ
-   JOB DATA â each job has multiple photos for the collage
-ââââââââââââââââââââââââââââââââââââââââââââââ */
-const jobs = [];
+/* Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+   JOB DATA Ã¢ÂÂ each job has multiple photos for the collage
+Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
+const jobs = [
+  {
+    id: 1, title: 'dfgnb', category: 'Project',
+    location: 'Western Cape', year: '2026',
+    tags: [],
+    description: 'dfggfdsdgngfgd',
+    stats: [],
+    photos: [
+      'https://raw.githubusercontent.com/frwebbirth-sys/Aqualock-Africa/main/images/1774433452164-aqualock-logo-transparent.png',
+    ]
+  }
+];
 
-/* ââââââââââââââââââââââââââââââââââââââââââââââ
+/* Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
    HONEYCOMB BUILDER
    Pointy-top hexagons, 3-2-3-2 pattern, seamless.
-   W = flat-to-flat width, H = W * 2/â3 (tip-to-tip)
+   W = flat-to-flat width, H = W * 2/Ã¢ÂÂ3 (tip-to-tip)
    Vertical step = H * 0.75, odd rows offset W/2
-ââââââââââââââââââââââââââââââââââââââââââââââ */
+Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
 function buildHoneycomb() {
   const container = document.getElementById('honeycombContainer');
   container.innerHTML = '';
@@ -477,7 +488,7 @@ function buildHoneycomb() {
   for (let row = 0; row < totalRows && ji < jobs.length; row++) {
     const cols     = pattern[row % 2];
     const isOffset = row % 2 === 1;
-    // x center of first cell: 3-col â W/2, 2-col (offset) â W
+    // x center of first cell: 3-col Ã¢ÂÂ W/2, 2-col (offset) Ã¢ÂÂ W
     const x0 = isOffset ? W : W / 2;
     const cy = H / 2 + row * stepY;
 
@@ -538,9 +549,9 @@ buildHoneycomb();
 let rTimer;
 window.addEventListener('resize', () => { clearTimeout(rTimer); rTimer = setTimeout(buildHoneycomb, 200); });
 
-/* ââââââââââââââââââââââââââââââââââââââââââââââ
+/* Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
    PANEL OPEN / CLOSE
-ââââââââââââââââââââââââââââââââââââââââââââââ */
+Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
 function openPanel(id) {
   const job = jobs.find(j => j.id === id);
   if (!job) return;
@@ -549,7 +560,7 @@ function openPanel(id) {
   document.getElementById('panelTitle').textContent = job.title;
   document.getElementById('panelDesc').textContent  = job.description;
 
-  // Build photo grid â all photos, first one spans full width
+  // Build photo grid Ã¢ÂÂ all photos, first one spans full width
   const grid = document.getElementById('panelPhotoGrid');
   grid.innerHTML = job.photos.map((src, i) =>
     `<div class="grid-photo${i === 0 ? ' first' : ''}" onclick="openViewer('${src}')">
@@ -569,7 +580,7 @@ function closePanelBackdrop(e) {
   if (e.target === document.getElementById('jobPanelBackdrop')) closePanel();
 }
 
-/* ââ FULLSCREEN VIEWER ââ */
+/* Ã¢ÂÂÃ¢ÂÂ FULLSCREEN VIEWER Ã¢ÂÂÃ¢ÂÂ */
 function openViewer(src) {
   document.getElementById('viewerImg').src = src;
   document.getElementById('photoViewer').classList.add('open');
@@ -578,16 +589,16 @@ function closeViewer() {
   document.getElementById('photoViewer').classList.remove('open');
 }
 
-/* ââ KEYBOARD ââ */
+/* Ã¢ÂÂÃ¢ÂÂ KEYBOARD Ã¢ÂÂÃ¢ÂÂ */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closePanel(); closeViewer(); }
 });
 
-/* ââ SCROLL REVEAL ââ */
+/* Ã¢ÂÂÃ¢ÂÂ SCROLL REVEAL Ã¢ÂÂÃ¢ÂÂ */
 const revObs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
-/* ââ NAV ââ */
+/* Ã¢ÂÂÃ¢ÂÂ NAV Ã¢ÂÂÃ¢ÂÂ */
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
