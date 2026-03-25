@@ -4,989 +4,991 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin — Aqualock Africa</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  --blue: #1565C0; --blue-light: #E3F2FD; --blue-deep: #0D47A1;
-  --gold: #C9A84C; --green: #2E7D32; --green-light: #E8F5E9;
-  --red: #C62828; --red-light: #FFEBEE;
-  --white: #fff; --off-white: #F4F7FB;
-  --gray-line: #E0E9F4; --gray: #607080; --dark: #0F1A2A;
-  --sidebar: 240px;
+  --ink:       #0b1220;
+  --ink2:      #15243a;
+  --ink3:      #1c2f48;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.13);
+  --gold:      #c9a84c;
+  --gold-dim:  rgba(201,168,76,0.15);
+  --gold-line: rgba(201,168,76,0.35);
+  --blue:      #1e6fc5;
+  --blue-glow: rgba(30,111,197,0.25);
+  --white:     #ffffff;
+  --muted:     rgba(255,255,255,0.38);
+  --muted2:    rgba(255,255,255,0.18);
+  --success:   #34d399;
+  --error:     #f87171;
+  --r:         14px;
+  --r-sm:      9px;
 }
+
 html { scroll-behavior: smooth; }
-body { background: var(--off-white); color: var(--dark); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
-/* LOGIN */
-#loginScreen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--dark); padding: 2rem; }
-.login-box { background: #fff; border-radius: 20px; padding: 3rem 2.8rem; width: 100%; max-width: 400px; box-shadow: 0 32px 80px rgba(0,0,0,0.35); }
-.login-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--blue-deep); margin-bottom: 0.3rem; }
-.login-logo span { color: var(--blue); }
-.login-sub { font-size: 0.78rem; color: var(--gray); margin-bottom: 2.2rem; }
-.form-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 0.45rem; }
-.form-input { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--gray-line); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--dark); outline: none; transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 1.2rem; background: #fff; }
-.form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,0.1); }
-.form-textarea { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--gray-line); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark); outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; min-height: 100px; background: #fff; }
-.form-textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(21,101,192,0.1); }
-.btn-primary { width: 100%; padding: 0.9rem; background: var(--blue); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; }
-.btn-primary:hover { background: var(--blue-deep); transform: translateY(-1px); }
-.login-error { font-size: 0.82rem; color: var(--red); margin-top: 0.8rem; text-align: center; display: none; }
-.login-error.show { display: block; }
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-/* ADMIN SHELL */
-#adminShell { display: none; }
-.sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar); background: var(--dark); display: flex; flex-direction: column; z-index: 100; box-shadow: 4px 0 24px rgba(0,0,0,0.2); }
-.sidebar-logo { padding: 1.8rem 1.6rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.sidebar-logo-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
-.sidebar-logo-text span { color: #90CAF9; }
-.sidebar-badge { display: inline-block; margin-top: 0.5rem; font-size: 0.57rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); padding: 0.2rem 0.6rem; border: 1px solid rgba(201,168,76,0.35); border-radius: 100px; }
-.sidebar-nav { padding: 1.2rem 0.8rem; flex: 1; }
-.nav-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.72rem 0.9rem; border-radius: 8px; cursor: pointer; font-size: 0.84rem; font-weight: 500; color: rgba(255,255,255,0.5); transition: background 0.2s, color 0.2s; margin-bottom: 0.15rem; border: none; background: none; width: 100%; text-align: left; }
-.nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); }
-.nav-item.active { background: rgba(21,101,192,0.28); color: #fff; font-weight: 600; }
-.nav-count { margin-left: auto; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); font-size: 0.64rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 100px; min-width: 22px; text-align: center; }
-.nav-item.active .nav-count { background: rgba(21,101,192,0.45); color: #90CAF9; }
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 10%, rgba(30,111,197,0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 85% 85%, rgba(201,168,76,0.09) 0%, transparent 60%);
+}
 
-/* GitHub status dot in sidebar */
-.gh-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 0.6rem; padding: 0 0.9rem; }
-.gh-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gray); flex-shrink: 0; }
-.gh-dot.connected { background: #4caf50; }
-.gh-dot.error { background: var(--red); }
+/* ════════════════════════
+   TOP BAR
+════════════════════════ */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem;
+  background: rgba(11,18,32,0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
 
-.sidebar-footer { padding: 1rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.08); }
-.logout-btn { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.6rem 0.8rem; background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.38); font-size: 0.8rem; font-weight: 500; border-radius: 6px; transition: color 0.2s, background 0.2s; }
-.logout-btn:hover { color: #ff6b6b; background: rgba(198,40,40,0.12); }
-.admin-main { margin-left: var(--sidebar); padding: 2.5rem 2.8rem; min-height: 100vh; }
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-.page-hdr { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--gray-line); }
-.page-hdr-text h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--blue-deep); }
-.page-hdr-text p { font-size: 0.84rem; color: var(--gray); margin-top: 0.25rem; }
-.btn-add { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.5rem; background: var(--blue); color: #fff; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; white-space: nowrap; }
-.btn-add:hover { background: var(--blue-deep); transform: translateY(-1px); }
+.brand { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
+.brand-mark {
+  width: 34px; height: 34px; border-radius: 9px;
+  background: linear-gradient(145deg, #1a5fa8, #1e6fc5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 12px rgba(30,111,197,0.4);
+}
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 600;
+  color: var(--white); letter-spacing: 0.02em;
+}
+.brand-name span { color: #7ab8f5; }
 
-/* Job cards */
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
-.job-card { background: #fff; border: 1px solid var(--gray-line); border-radius: 14px; overflow: hidden; transition: box-shadow 0.25s, transform 0.2s; }
-.job-card:hover { box-shadow: 0 8px 28px rgba(21,101,192,0.1); transform: translateY(-2px); }
-.card-thumb { width: 100%; height: 150px; object-fit: cover; display: block; background: var(--blue-light); }
-.card-thumb-placeholder { width: 100%; height: 150px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 2.5rem; }
-.card-body { padding: 1.1rem 1.3rem 1.3rem; }
-.card-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.35rem; }
-.card-desc { font-size: 0.8rem; line-height: 1.65; color: var(--gray); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.8rem; }
-.card-photo-count { font-size: 0.7rem; color: var(--blue); font-weight: 600; margin-bottom: 0.9rem; }
-.card-actions { display: flex; gap: 0.5rem; }
-.btn-edit { flex: 1; padding: 0.5rem; background: var(--blue-light); color: var(--blue); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-.btn-edit:hover { background: #bbdefb; }
-.btn-delete { padding: 0.5rem 0.8rem; background: var(--red-light); color: var(--red); font-size: 0.72rem; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-.btn-delete:hover { background: #ffcdd2; }
-.empty-state { text-align: center; padding: 5rem 2rem; border: 2px dashed var(--gray-line); border-radius: 16px; }
-.empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
-.empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gray); margin-bottom: 0.5rem; }
-.empty-state p { font-size: 0.85rem; color: var(--gray); opacity: 0.7; }
+.topbar-right { display: flex; align-items: center; gap: 0.75rem; }
 
-/* MODAL */
-.modal-backdrop { position: fixed; inset: 0; background: rgba(10,20,40,0.7); backdrop-filter: blur(5px); z-index: 500; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-.modal-backdrop.open { opacity: 1; pointer-events: all; }
-.modal { background: #fff; border-radius: 20px; width: 100%; max-width: 680px; box-shadow: 0 32px 80px rgba(0,0,0,0.3); transform: translateY(20px) scale(0.97); opacity: 0; transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1), opacity 0.3s ease; margin: auto; }
-.modal-backdrop.open .modal { transform: translateY(0) scale(1); opacity: 1; }
-.modal-hdr { padding: 1.8rem 2rem 1.4rem; border-bottom: 1px solid var(--gray-line); display: flex; align-items: center; justify-content: space-between; }
-.modal-hdr h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--blue-deep); }
-.modal-close { width: 36px; height: 36px; border-radius: 50%; background: var(--off-white); border: 1px solid var(--gray-line); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--gray); transition: background 0.2s, transform 0.2s; }
-.modal-close:hover { background: var(--blue-light); color: var(--blue); transform: rotate(90deg); }
-.modal-body { padding: 1.8rem 2rem; }
-.form-group { margin-bottom: 1.4rem; }
-.form-group .form-label { margin-bottom: 0.45rem; }
+.pill {
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.75rem; border-radius: 20px;
+}
+.pill-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-line); }
+.pill-status {
+  display: flex; align-items: center; gap: 0.4rem;
+  background: rgba(255,255,255,0.04); color: var(--muted);
+  border: 1px solid var(--border);
+  cursor: pointer; transition: background 0.2s;
+}
+.pill-status:hover { background: rgba(255,255,255,0.08); }
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--muted2); flex-shrink: 0;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.status-dot.ok  { background: var(--success); box-shadow: 0 0 0 3px rgba(52,211,153,0.2); }
+.status-dot.err { background: var(--error); }
 
-/* Drop zone */
-.drop-zone { border: 2px dashed var(--gray-line); border-radius: 12px; padding: 2.2rem 1.5rem; text-align: center; cursor: pointer; transition: border-color 0.25s, background 0.25s; margin-bottom: 1rem; position: relative; }
-.drop-zone:hover, .drop-zone.drag-over { border-color: var(--blue); background: var(--blue-light); }
-.drop-zone.drag-over { background: #dbeeff; }
-.drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.drop-icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
-.drop-title { font-size: 0.92rem; font-weight: 600; color: var(--blue); margin-bottom: 0.25rem; }
-.drop-sub { font-size: 0.77rem; color: var(--gray); line-height: 1.5; }
-.drop-sub span { color: var(--blue); text-decoration: underline; }
-.photo-or-divider { display: flex; align-items: center; gap: 0.8rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin: 1rem 0; }
-.photo-or-divider::before, .photo-or-divider::after { content: ''; flex: 1; height: 1px; background: var(--gray-line); }
+/* ════════════════════════
+   PAGE LAYOUT
+════════════════════════ */
+.page {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: calc(100vh - 64px);
+}
 
-/* Photo rows */
-.photo-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.8rem; }
-.photo-row { display: flex; gap: 0.5rem; align-items: center; background: var(--off-white); border: 1px solid var(--gray-line); border-radius: 8px; padding: 0.45rem 0.6rem; transition: box-shadow 0.2s, background 0.2s; }
-.photo-row.dragging-row { opacity: 0.45; }
-.photo-row.drag-over-row { border-color: var(--blue); background: var(--blue-light); }
-.drag-handle { cursor: grab; color: var(--gray); flex-shrink: 0; padding: 0 2px; display: flex; align-items: center; user-select: none; }
-.drag-handle:active { cursor: grabbing; }
-.photo-preview { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; border: 1px solid var(--gray-line); flex-shrink: 0; background: var(--off-white); display: none; }
-.photo-preview.loaded { display: block; }
-.photo-row .form-input { margin-bottom: 0; flex: 1; font-size: 0.83rem; padding: 0.55rem 0.75rem; }
-.btn-remove-photo { width: 30px; height: 30px; border-radius: 6px; background: var(--red-light); color: var(--red); border: none; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; transition: background 0.2s; }
-.btn-remove-photo:hover { background: #ffcdd2; }
-.btn-add-photo { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; background: var(--blue-light); color: var(--blue); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-.btn-add-photo:hover { background: #bbdefb; }
-.photo-hint { font-size: 0.75rem; color: var(--gray); margin-top: 0.4rem; line-height: 1.5; }
-.upload-progress { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0.6rem; background: var(--blue-light); border: 1px solid rgba(21,101,192,0.2); border-radius: 8px; font-size: 0.8rem; color: var(--blue); }
-.progress-bar-wrap { flex: 1; height: 4px; background: rgba(21,101,192,0.15); border-radius: 2px; overflow: hidden; }
-.progress-bar { height: 100%; background: var(--blue); border-radius: 2px; transition: width 0.3s; }
+/* ════════════════════════
+   SIDEBAR
+════════════════════════ */
+.sidebar {
+  border-right: 1px solid var(--border);
+  padding: 2.2rem 1.8rem;
+  display: flex; flex-direction: column; gap: 2.2rem;
+  position: sticky; top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
 
-/* Modal footer */
-.modal-footer { padding: 1.2rem 2rem 1.8rem; display: flex; gap: 0.8rem; justify-content: flex-end; border-top: 1px solid var(--gray-line); flex-wrap: wrap; }
-.btn-cancel { padding: 0.7rem 1.6rem; background: var(--off-white); color: var(--gray); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: 1px solid var(--gray-line); border-radius: 8px; cursor: pointer; transition: background 0.2s; }
-.btn-cancel:hover { background: #e8eef5; }
-.btn-save { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 2rem; background: var(--blue); color: #fff; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; }
-.btn-save:hover { background: var(--blue-deep); transform: translateY(-1px); }
-.btn-save:disabled { background: #90a4ae; cursor: not-allowed; transform: none; }
+.sidebar-section { display: flex; flex-direction: column; gap: 0.9rem; }
 
-/* Publish status in modal footer */
-.publish-status { font-size: 0.78rem; color: var(--gray); display: flex; align-items: center; gap: 0.4rem; margin-right: auto; }
-.publish-status.pushing { color: var(--blue); }
-.publish-status.success { color: var(--green); }
-.publish-status.error   { color: var(--red); }
+.sidebar-heading {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
 
-/* Toast */
-.toast { position: fixed; bottom: 2rem; right: 2rem; padding: 0.9rem 1.5rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateY(20px); opacity: 0; transition: transform 0.3s ease, opacity 0.3s ease; z-index: 999; pointer-events: none; max-width: 380px; line-height: 1.5; }
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast.success { background: var(--green); }
-.toast.error   { background: var(--red); }
-.toast.info    { background: var(--blue); }
+.s-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.s-field label {
+  font-size: 0.67rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+}
+.s-field input {
+  background: var(--ink3);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-sm);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  padding: 0.62rem 0.9rem;
+  outline: none; width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.s-field input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-glow);
+}
+.s-field input::placeholder { color: rgba(255,255,255,0.18); font-size: 0.77rem; }
+.s-field-hint { font-size: 0.65rem; color: var(--muted2); line-height: 1.55; }
 
-/* Confirm */
-.confirm-backdrop { position: fixed; inset: 0; background: rgba(10,20,40,0.65); backdrop-filter: blur(4px); z-index: 600; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
-.confirm-backdrop.open { opacity: 1; pointer-events: all; }
-.confirm-box { background: #fff; border-radius: 16px; padding: 2rem 2.2rem; max-width: 380px; width: 100%; box-shadow: 0 24px 60px rgba(0,0,0,0.25); transform: scale(0.93); opacity: 0; transition: transform 0.3s cubic-bezier(0.34,1.3,0.64,1), opacity 0.25s; }
-.confirm-backdrop.open .confirm-box { transform: scale(1); opacity: 1; }
-.confirm-box h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--dark); margin-bottom: 0.6rem; }
-.confirm-box p { font-size: 0.87rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.5rem; }
-.confirm-btns { display: flex; gap: 0.7rem; justify-content: flex-end; }
-.btn-confirm-cancel { padding: 0.6rem 1.4rem; background: var(--off-white); color: var(--gray); font-size: 0.78rem; font-weight: 600; border: 1px solid var(--gray-line); border-radius: 7px; cursor: pointer; }
-.btn-confirm-delete { padding: 0.6rem 1.4rem; background: var(--red); color: #fff; font-size: 0.78rem; font-weight: 600; border: none; border-radius: 7px; cursor: pointer; }
-.btn-confirm-delete:hover { background: #b71c1c; }
+.btn-save-settings {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%;
+  font-family: 'Outfit', sans-serif; font-size: 0.79rem; font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--gold); background: var(--gold-dim);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r-sm); padding: 0.62rem;
+  cursor: pointer; transition: background 0.2s, transform 0.15s;
+}
+.btn-save-settings:hover { background: rgba(201,168,76,0.25); transform: translateY(-1px); }
 
-/* INFO BANNER */
-.info-banner { background: var(--blue-light); border: 1px solid rgba(21,101,192,0.2); border-radius: 10px; padding: 1rem 1.4rem; font-size: 0.82rem; color: var(--blue-deep); line-height: 1.7; margin-bottom: 2rem; display: flex; gap: 0.8rem; align-items: flex-start; }
-.info-banner.success-banner { background: var(--green-light); border-color: rgba(46,125,50,0.2); color: var(--green); }
-.info-banner.warn-banner { background: #fff8e1; border-color: rgba(201,168,76,0.35); color: #7a5f00; }
+.divider-rule { height: 1px; background: var(--border); }
 
-/* SETTINGS TAB */
-.settings-section { background: #fff; border: 1px solid var(--gray-line); border-radius: 16px; padding: 2rem 2.2rem; margin-bottom: 1.5rem; }
-.settings-section h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue-deep); margin-bottom: 0.4rem; }
-.settings-section p { font-size: 0.83rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.4rem; }
-.settings-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-.settings-row.single { grid-template-columns: 1fr; }
-.settings-field label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 0.4rem; }
-.settings-field input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--gray-line); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--dark); outline: none; transition: border-color 0.2s; background: var(--off-white); }
-.settings-field input:focus { border-color: var(--blue); background: #fff; }
-.settings-field input.token-input { font-family: monospace; font-size: 0.82rem; letter-spacing: 0.04em; }
-.btn-save-settings { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.8rem; background: var(--blue); color: #fff; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; transition: background 0.25s, transform 0.2s; }
-.btn-save-settings:hover { background: var(--blue-deep); transform: translateY(-1px); }
-.btn-test-gh { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.4rem; background: var(--off-white); color: var(--gray); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; border: 1px solid var(--gray-line); border-radius: 8px; cursor: pointer; transition: background 0.2s; }
-.btn-test-gh:hover { background: #e8eef5; }
-.settings-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
-.gh-test-result { font-size: 0.8rem; padding: 0.6rem 1rem; border-radius: 7px; margin-top: 0.8rem; display: none; }
-.gh-test-result.ok  { display: block; background: var(--green-light); color: var(--green); }
-.gh-test-result.err { display: block; background: var(--red-light); color: var(--red); }
+.jobs-count-card {
+  background: var(--ink3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 0.9rem 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.jobs-count-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 700; line-height: 1;
+  color: var(--white);
+}
+.jobs-count-num span {
+  font-size: 0.7rem; font-weight: 400; color: var(--muted);
+  font-family: 'Outfit', sans-serif; display: block;
+  margin-top: 0.2rem; letter-spacing: 0.06em;
+}
+.jobs-count-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(30,111,197,0.15); border: 1px solid rgba(30,111,197,0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: #7ab8f5;
+}
 
-/* How-to */
-.howto-box { background: var(--dark); border-radius: 14px; padding: 1.8rem 2rem; }
-.howto-box h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: #fff; margin-bottom: 1.2rem; }
-.howto-step { display: flex; gap: 1rem; margin-bottom: 1.1rem; align-items: flex-start; }
-.step-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(21,101,192,0.4); color: #90CAF9; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-.step-text { font-size: 0.83rem; color: rgba(255,255,255,0.6); line-height: 1.65; }
-.step-text strong { color: #fff; font-weight: 600; }
-.code-snippet { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 0.7rem 1rem; margin-top: 0.5rem; font-family: monospace; font-size: 0.76rem; color: #90CAF9; word-break: break-all; line-height: 1.6; }
+.btn-fetch {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%;
+  font-family: 'Outfit', sans-serif; font-size: 0.77rem; font-weight: 500;
+  color: var(--muted); background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 0.56rem;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.btn-fetch:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+.btn-fetch:disabled { opacity: 0.4; cursor: not-allowed; }
 
-@media (max-width: 768px) {
-  .sidebar { width: 100%; height: auto; position: relative; }
-  .admin-main { margin-left: 0; padding: 1.5rem; }
-  .cards-grid { grid-template-columns: 1fr; }
-  .settings-row { grid-template-columns: 1fr; }
+.mini-job-list { display: flex; flex-direction: column; gap: 0.3rem; }
+.mini-job {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px; background: rgba(255,255,255,0.025);
+}
+.mini-job-num {
+  width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0;
+  background: rgba(30,111,197,0.18); border: 1px solid rgba(30,111,197,0.28);
+  font-size: 0.6rem; font-weight: 600; color: #7ab8f5;
+  display: flex; align-items: center; justify-content: center;
+}
+.mini-job-name {
+  font-size: 0.75rem; color: rgba(255,255,255,0.62);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ════════════════════════
+   MAIN
+════════════════════════ */
+.main {
+  padding: 3rem 3.5rem 6rem;
+  display: flex; flex-direction: column; gap: 2rem;
+}
+
+.main-header { margin-bottom: 0.2rem; }
+.main-eyebrow {
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.26em;
+  text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 0.55rem;
+}
+.main-eyebrow::before { content: ''; width: 24px; height: 1.5px; background: var(--gold); }
+.main-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
+  font-weight: 700; line-height: 1.08; color: var(--white);
+}
+.main-title em { font-style: italic; color: #7ab8f5; }
+.main-sub {
+  margin-top: 0.6rem; font-size: 0.86rem; line-height: 1.8;
+  color: var(--muted); max-width: 460px;
+}
+
+/* ── FORM CARD ── */
+.form-card {
+  background: var(--ink2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.form-block {
+  padding: 1.8rem 2.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.form-block:last-child { border-bottom: none; }
+
+.form-block-label {
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--muted2);
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.form-block-label::before { content: ''; width: 16px; height: 1px; background: var(--border2); }
+
+.field { display: flex; flex-direction: column; gap: 0.38rem; }
+.field label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+}
+.field input,
+.field textarea {
+  background: var(--ink3);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-sm);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif; font-size: 0.93rem;
+  padding: 0.85rem 1rem; outline: none; width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-glow);
+}
+.field input::placeholder,
+.field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.field textarea { resize: vertical; min-height: 120px; line-height: 1.7; }
+
+#fTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem; font-weight: 600;
+}
+
+/* ── DROP ZONE ── */
+.drop-zone {
+  border: 2px dashed var(--border2);
+  border-radius: var(--r);
+  padding: 2.2rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s;
+  position: relative;
+  background: rgba(255,255,255,0.012);
+}
+.drop-zone:hover,
+.drop-zone.dragover {
+  border-color: var(--blue);
+  background: var(--blue-glow);
+}
+.drop-zone.dragover { border-style: solid; }
+
+.drop-icon {
+  width: 50px; height: 50px; margin: 0 auto 1rem;
+  border-radius: 13px;
+  background: rgba(30,111,197,0.12);
+  border: 1px solid rgba(30,111,197,0.25);
+  display: flex; align-items: center; justify-content: center;
+  color: #7ab8f5;
+  transition: transform 0.25s;
+}
+.drop-zone:hover .drop-icon,
+.drop-zone.dragover .drop-icon { transform: translateY(-3px) scale(1.06); }
+
+.drop-title {
+  font-size: 0.9rem; font-weight: 500; color: rgba(255,255,255,0.72);
+  margin-bottom: 0.28rem;
+}
+.drop-sub { font-size: 0.73rem; color: var(--muted); }
+.drop-sub strong { color: #7ab8f5; }
+.drop-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+
+/* ── IMAGE GRID ── */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+}
+.img-thumb-wrap {
+  position: relative; border-radius: 10px; overflow: hidden;
+  aspect-ratio: 4/3; background: var(--ink3);
+  border: 1px solid var(--border);
+  animation: thumbIn 0.35s cubic-bezier(0.34,1.3,0.64,1) forwards;
+  cursor: grab;
+}
+.img-thumb-wrap:active { cursor: grabbing; }
+@keyframes thumbIn {
+  from { opacity:0; transform:scale(0.85); }
+  to   { opacity:1; transform:scale(1); }
+}
+.img-thumb-wrap img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; }
+.img-thumb-wrap:hover img { transform: scale(1.06); }
+.img-thumb-wrap.drag-over { outline: 2px solid var(--blue); }
+
+.img-thumb-wrap:first-child::after {
+  content: 'Hero';
+  position: absolute; top: 6px; left: 6px;
+  font-size: 0.56rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.18rem 0.48rem;
+  border-radius: 4px; background: var(--gold); color: var(--ink);
+}
+
+.img-remove {
+  position: absolute; top: 5px; right: 5px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0,0,0,0.65); border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+}
+.img-thumb-wrap:hover .img-remove { opacity: 1; }
+.img-remove:hover { background: rgba(248,113,113,0.75); }
+
+.drag-hint {
+  font-size: 0.67rem; color: var(--muted2);
+  margin-top: 0.6rem; text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+}
+
+/* ── SUBMIT ── */
+.submit-area {
+  padding: 1.5rem 2.2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.upload-progress {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.77rem; color: var(--muted);
+}
+.prog-bar-wrap {
+  width: 110px; height: 3px; border-radius: 2px;
+  background: var(--border); overflow: hidden;
+}
+.prog-bar {
+  height: 100%; background: var(--blue); border-radius: 2px;
+  transition: width 0.35s ease; width: 0%;
+}
+
+.btn-publish {
+  display: inline-flex; align-items: center; gap: 0.65rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 600;
+  letter-spacing: 0.04em; color: #fff;
+  background: linear-gradient(135deg, #0f4da0, var(--blue));
+  border: none; border-radius: 10px; padding: 0.82rem 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(30,111,197,0.45);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  position: relative; overflow: hidden;
+}
+.btn-publish::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  pointer-events: none;
+}
+.btn-publish:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(30,111,197,0.55); }
+.btn-publish:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-publish .spinner {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  animation: spin 0.65s linear infinite; display: none;
+}
+.btn-publish.loading .spinner { display: block; }
+.btn-publish.loading .btn-lbl { opacity: 0.7; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ════════════════════════
+   TOAST
+════════════════════════ */
+.toast-shelf {
+  position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 999;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  pointer-events: none;
+}
+.toast {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  background: var(--ink2); border: 1px solid var(--border2);
+  border-radius: 11px; padding: 0.82rem 1.05rem;
+  min-width: 250px; max-width: 340px;
+  box-shadow: 0 8px 36px rgba(0,0,0,0.55);
+  transform: translateX(110%); opacity: 0;
+  transition: transform 0.38s cubic-bezier(0.34,1.3,0.64,1), opacity 0.25s ease;
+  pointer-events: all;
+}
+.toast.show { transform: translateX(0); opacity: 1; }
+.toast-ico { font-size: 0.95rem; flex-shrink: 0; margin-top: 1px; }
+.toast-t { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.15rem; }
+.toast-m { font-size: 0.71rem; color: var(--muted); line-height: 1.5; }
+.toast.ok  { border-color: rgba(52,211,153,0.28); }
+.toast.ok  .toast-ico { color: var(--success); }
+.toast.bad { border-color: rgba(248,113,113,0.28); }
+.toast.bad .toast-ico { color: var(--error); }
+.toast.tip { border-color: rgba(30,111,197,0.35); }
+.toast.tip .toast-ico { color: #7ab8f5; }
+
+/* ════════════════════════
+   RESPONSIVE
+════════════════════════ */
+@media (max-width: 860px) {
+  .page { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 1.6rem 1.4rem; }
+  .main { padding: 2rem 1.4rem 5rem; }
+}
+@media (max-width: 520px) {
+  .topbar { padding: 0 1.1rem; }
+  .main { padding: 1.4rem 1rem 4rem; }
+  .form-block { padding: 1.3rem 1.1rem; }
+  .submit-area { flex-direction: column; align-items: stretch; padding: 1.2rem 1.1rem; }
+  .btn-publish { justify-content: center; }
 }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">Aqua<span>lock</span> Africa</div>
-    <div class="login-sub">Admin Panel — Enter your password to continue</div>
-    <label class="form-label" for="pwInput">Password</label>
-    <input class="form-input" type="password" id="pwInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') doLogin()"/>
-    <button class="btn-primary" onclick="doLogin()">Sign In</button>
-    <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
-  </div>
-</div>
-
-<!-- ADMIN SHELL -->
-<div id="adminShell">
-  <div class="sidebar">
-    <div class="sidebar-logo">
-      <div class="sidebar-logo-text">Aqua<span>lock</span> Africa</div>
-      <div class="sidebar-badge">Admin Panel</div>
-    </div>
-    <nav class="sidebar-nav">
-      <button class="nav-item active" id="navJobs" onclick="switchTab('jobs')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Previous Jobs
-        <span class="nav-count" id="countJobs">0</span>
-      </button>
-      <button class="nav-item" id="navSettings" onclick="switchTab('settings')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        GitHub Settings
-      </button>
-      <button class="nav-item" id="navHelp" onclick="switchTab('help')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        How to Use
-      </button>
-    </nav>
-    <div id="ghStatusBar" class="gh-status">
-      <span class="gh-dot" id="ghDot"></span>
-      <span id="ghStatusText">GitHub not configured</span>
-    </div>
-    <div class="sidebar-footer">
-      <button class="logout-btn" onclick="doLogout()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Log Out
-      </button>
+<!-- TOP BAR -->
+<nav class="topbar">
+  <a class="brand" href="portfolio.html">
+    <div class="brand-mark">🌿</div>
+    <div class="brand-name">Aqua<span>lock</span> Africa</div>
+  </a>
+  <div class="topbar-right">
+    <div class="pill pill-gold">Admin</div>
+    <div class="pill pill-status" id="statusPill" onclick="fetchJobs(true)">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusTxt">Not connected</span>
     </div>
   </div>
+</nav>
 
-  <main class="admin-main">
+<!-- PAGE -->
+<div class="page">
 
-    <!-- JOBS TAB -->
-    <div class="tab-panel active" id="tabJobs">
-      <div class="page-hdr">
-        <div class="page-hdr-text">
-          <h1>Previous Jobs</h1>
-          <p>Add and manage the jobs shown on your portfolio page</p>
-        </div>
-        <button class="btn-add" onclick="openForm()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add New Job
-        </button>
-      </div>
-      <div id="jobsBanner"></div>
-      <div class="cards-grid" id="jobsGrid"></div>
-    </div>
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
 
-    <!-- SETTINGS TAB -->
-    <div class="tab-panel" id="tabSettings">
-      <div class="page-hdr">
-        <div class="page-hdr-text">
-          <h1>GitHub Settings</h1>
-          <p>Connect to your GitHub repo so jobs save automatically to your live site</p>
-        </div>
+    <!-- Settings -->
+    <div class="sidebar-section">
+      <div class="sidebar-heading">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Configuration
       </div>
 
-      <div class="settings-section">
-        <h3>Repository Details</h3>
-        <p>Enter your GitHub username, the name of your repository, and the path to your <code>portfolio.html</code> file inside that repo. These are saved in your browser.</p>
-        <div class="settings-row">
-          <div class="settings-field">
-            <label for="ghUsername">GitHub Username</label>
-            <input type="text" id="ghUsername" placeholder="e.g. johndoe"/>
-          </div>
-          <div class="settings-field">
-            <label for="ghRepo">Repository Name</label>
-            <input type="text" id="ghRepo" placeholder="e.g. aqualock-africa"/>
-          </div>
-        </div>
-        <div class="settings-row">
-          <div class="settings-field">
-            <label for="ghFilePath">File Path in Repo</label>
-            <input type="text" id="ghFilePath" placeholder="portfolio.html" value="portfolio.html"/>
-          </div>
-          <div class="settings-field">
-            <label for="ghBranch">Branch</label>
-            <input type="text" id="ghBranch" placeholder="main" value="main"/>
-          </div>
-        </div>
+      <div class="s-field">
+        <label>GitHub Token</label>
+        <input type="password" id="cfgToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off"/>
+        <div class="s-field-hint">Fine-grained PAT · Contents: Read &amp; Write</div>
       </div>
 
-      <div class="settings-section">
-        <h3>Personal Access Token</h3>
-        <p>Paste your GitHub Personal Access Token here. It needs <strong>Contents: Read and write</strong> permission on your repo. It is stored only in your browser and never sent anywhere except directly to the GitHub API over HTTPS.</p>
-        <div class="settings-row single">
-          <div class="settings-field">
-            <label for="ghToken">Personal Access Token</label>
-            <input type="password" id="ghToken" class="token-input" placeholder="github_pat_... or ghp_..."/>
-          </div>
-        </div>
-        <div id="ghTestResult" class="gh-test-result"></div>
-        <div class="settings-actions" style="margin-top:1rem">
-          <button class="btn-save-settings" onclick="saveGhSettings()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            Save Settings
-          </button>
-          <button class="btn-test-gh" onclick="testGhConnection()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Test Connection
-          </button>
-        </div>
+      <div class="s-field">
+        <label>Repository</label>
+        <input type="text" id="cfgRepo" placeholder="owner/repo-name"/>
+        <div class="s-field-hint">e.g. frwebbirth-sys/Aqualock-Africa</div>
       </div>
-    </div>
 
-    <!-- HELP TAB -->
-    <div class="tab-panel" id="tabHelp">
-      <div class="page-hdr">
-        <div class="page-hdr-text"><h1>How to Use</h1><p>Setup guide and instructions</p></div>
+      <div class="s-field">
+        <label>Portfolio File Path</label>
+        <input type="text" id="cfgFile" placeholder="portfolio.html"/>
       </div>
-      <div class="howto-box">
-        <h3>One-Time Setup (GitHub Auto-Save)</h3>
-        <div class="howto-step">
-          <div class="step-num">1</div>
-          <div class="step-text">Go to <strong>GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens</strong> and create a new token with <strong>Contents: Read and write</strong> on your Aqualock repo only.</div>
-        </div>
-        <div class="howto-step">
-          <div class="step-num">2</div>
-          <div class="step-text">Go to the <strong>GitHub Settings</strong> tab in this admin panel. Enter your GitHub username, repo name, file path (<code>portfolio.html</code>), branch (<code>main</code>), and paste your token.</div>
-        </div>
-        <div class="howto-step">
-          <div class="step-num">3</div>
-          <div class="step-text">Click <strong>Test Connection</strong> to confirm everything works. You should see a green success message.</div>
-        </div>
-        <div class="howto-step">
-          <div class="step-num">4</div>
-          <div class="step-text">From now on, when you <strong>Add New Job</strong> and click <strong>Save &amp; Publish</strong>, the job is automatically added to your <code>portfolio.html</code> on GitHub. GitHub Pages rebuilds and your site is live within ~30 seconds.</div>
-        </div>
-        <div class="howto-step">
-          <div class="step-num">5</div>
-          <div class="step-text">If GitHub is not configured, saving a job still works — it saves to your browser and you can use the <strong>📋 Copy Code</strong> button to manually paste it into your file.</div>
-        </div>
+
+      <div class="s-field">
+        <label>Images Folder</label>
+        <input type="text" id="cfgImgDir" placeholder="images/portfolio"/>
+        <div class="s-field-hint">Where uploaded photos are stored in the repo.</div>
       </div>
-    </div>
 
-  </main>
-</div>
-
-<!-- JOB FORM MODAL -->
-<div class="modal-backdrop" id="modalBackdrop" onclick="closeFormBackdrop(event)">
-  <div class="modal">
-    <div class="modal-hdr">
-      <h2 id="modalTitle">Add New Job</h2>
-      <button class="modal-close" onclick="closeForm()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <button class="btn-save-settings" onclick="saveSettings()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save Settings
       </button>
     </div>
-    <div class="modal-body">
-      <input type="hidden" id="editId"/>
-      <div class="form-group">
-        <label class="form-label" for="fieldTitle">Job Title *</label>
-        <input class="form-input" type="text" id="fieldTitle" placeholder="e.g. Newlands Cricket Ground"/>
+
+    <!-- Repo status -->
+    <div class="sidebar-section">
+      <div class="sidebar-heading">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Repository
       </div>
-      <div class="form-group">
-        <label class="form-label" for="fieldDesc">Short Description *</label>
-        <textarea class="form-textarea" id="fieldDesc" placeholder="Describe the project — what was done, materials used, scope of work..."></textarea>
+
+      <div class="jobs-count-card">
+        <div class="jobs-count-num">
+          <span id="jobCountNum">—</span>
+          <span>jobs live</span>
+        </div>
+        <div class="jobs-count-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Photos *</label>
+
+      <button class="btn-fetch" id="fetchBtn" onclick="fetchJobs(true)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.03"/></svg>
+        Load from GitHub
+      </button>
+
+      <div class="mini-job-list" id="miniJobList"></div>
+    </div>
+
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+    <div class="main-header">
+      <div class="main-eyebrow">New Entry</div>
+      <h1 class="main-title">Add a <em>Project</em></h1>
+      <p class="main-sub">Enter a title, describe the work, and drop your photos. Everything else is handled automatically.</p>
+    </div>
+
+    <div class="form-card">
+
+      <!-- Title -->
+      <div class="form-block">
+        <div class="form-block-label">Project Title</div>
+        <div class="field">
+          <input type="text" id="fTitle" placeholder="e.g. Newlands Cricket Ground"/>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-block">
+        <div class="form-block-label">Description</div>
+        <div class="field">
+          <textarea id="fDesc" rows="5" placeholder="Describe the project — scope, work done, materials used, and the outcome…"></textarea>
+        </div>
+      </div>
+
+      <!-- Photos -->
+      <div class="form-block">
+        <div class="form-block-label">Photos</div>
+
         <div class="drop-zone" id="dropZone">
-          <input type="file" id="fileInput" accept="image/*" multiple/>
-          <div class="drop-icon">🖼️</div>
-          <div class="drop-title">Drag &amp; drop photos here</div>
-          <div class="drop-sub">or <span>click to browse files</span> from your computer<br/>JPG, PNG, WEBP, GIF supported</div>
+          <input type="file" class="drop-input" id="fileInput" accept="image/*" multiple/>
+          <div class="drop-icon">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <div class="drop-title">Drop images here or <strong style="color:#7ab8f5;">click to browse</strong></div>
+          <div class="drop-sub">JPG, PNG, WebP · Max 10 MB each · <strong>First image = hero photo</strong></div>
         </div>
-        <div class="photo-or-divider">or add by URL</div>
-        <div class="photo-list" id="photoList"></div>
-        <button class="btn-add-photo" onclick="addPhotoRow()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add URL
-        </button>
-        <p class="photo-hint" style="margin-top:0.7rem">💡 Drag rows to reorder. The first photo is the hero image.</p>
+
+        <div class="image-grid" id="imageGrid"></div>
+        <div class="drag-hint" id="dragHint" style="display:none;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>
+          Drag thumbnails to reorder — first image becomes the hero
+        </div>
       </div>
+
+      <!-- Submit -->
+      <div class="submit-area">
+        <div class="upload-progress" id="uploadProgress" style="display:none;">
+          <span id="uploadLabel">Uploading…</span>
+          <div class="prog-bar-wrap"><div class="prog-bar" id="progBar"></div></div>
+        </div>
+        <div style="flex:1"></div>
+        <button class="btn-publish" id="publishBtn" onclick="publish()">
+          <div class="spinner"></div>
+          <span class="btn-lbl">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" style="vertical-align:-3px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg>
+            Publish to GitHub
+          </span>
+        </button>
+      </div>
+
     </div>
-    <div class="modal-footer">
-      <span class="publish-status" id="publishStatus"></span>
-      <button class="btn-cancel" onclick="closeForm()">Cancel</button>
-      <button class="btn-save" id="btnSave" onclick="saveJob()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Save &amp; Publish
-      </button>
-    </div>
-  </div>
+  </main>
+
 </div>
 
-<!-- DELETE CONFIRM -->
-<div class="confirm-backdrop" id="confirmBackdrop">
-  <div class="confirm-box">
-    <h3>Delete this job?</h3>
-    <p>This removes the job from your browser. To remove it from the live site, you'll also need to delete it from <strong>portfolio.html</strong> on GitHub.</p>
-    <div class="confirm-btns">
-      <button class="btn-confirm-cancel" onclick="closeConfirm()">Cancel</button>
-      <button class="btn-confirm-delete" onclick="confirmDelete()">Delete</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
+<!-- TOASTS -->
+<div class="toast-shelf" id="toastShelf"></div>
 
 <script>
-/* ════════════════════════════════════════════
-   CONFIG
-════════════════════════════════════════════ */
-const ADMIN_PASSWORD = 'aqualock2025';
-const STORAGE_KEY    = 'aqualock_admin_jobs';
-const GH_SETTINGS_KEY = 'aqualock_gh_settings';
+/* ════════════════════════════════════════
+   SETTINGS — localStorage
+════════════════════════════════════════ */
+const STORE_KEY = 'aqualock_admin_v2';
 
-/* ════════════════════════════════════════════
-   AUTH
-════════════════════════════════════════════ */
-function doLogin() {
-  if (document.getElementById('pwInput').value === ADMIN_PASSWORD) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminShell').style.display  = 'block';
-    loadGhSettingsToForm();
-    updateGhStatusBar();
-    renderJobs();
-  } else {
-    document.getElementById('loginError').classList.add('show');
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
-  }
-}
-function doLogout() {
-  document.getElementById('adminShell').style.display  = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('pwInput').value = '';
-  document.getElementById('loginError').classList.remove('show');
-}
-
-/* ════════════════════════════════════════════
-   STORAGE — JOBS
-════════════════════════════════════════════ */
-function loadJobs() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch { return []; }
-}
-function saveJobs(jobs) { localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs)); }
-
-/* ════════════════════════════════════════════
-   STORAGE — GITHUB SETTINGS
-════════════════════════════════════════════ */
-function loadGhSettings() {
-  try { return JSON.parse(localStorage.getItem(GH_SETTINGS_KEY)) || {}; }
-  catch { return {}; }
-}
-function saveGhSettings() {
-  const s = {
-    username : document.getElementById('ghUsername').value.trim(),
-    repo     : document.getElementById('ghRepo').value.trim(),
-    filePath : document.getElementById('ghFilePath').value.trim() || 'portfolio.html',
-    branch   : document.getElementById('ghBranch').value.trim()   || 'main',
-    token    : document.getElementById('ghToken').value.trim(),
-  };
-  if (!s.username || !s.repo || !s.token) {
-    showToast('Please fill in username, repo, and token.', 'error'); return;
-  }
-  localStorage.setItem(GH_SETTINGS_KEY, JSON.stringify(s));
-  updateGhStatusBar();
-  showToast('GitHub settings saved!', 'success');
-}
-function loadGhSettingsToForm() {
-  const s = loadGhSettings();
-  document.getElementById('ghUsername').value = s.username || '';
-  document.getElementById('ghRepo').value     = s.repo     || '';
-  document.getElementById('ghFilePath').value = s.filePath || 'portfolio.html';
-  document.getElementById('ghBranch').value   = s.branch   || 'main';
-  document.getElementById('ghToken').value    = s.token    || '';
-}
-function isGhConfigured() {
-  const s = loadGhSettings();
-  return !!(s.username && s.repo && s.token);
-}
-function updateGhStatusBar() {
-  const dot  = document.getElementById('ghDot');
-  const text = document.getElementById('ghStatusText');
-  if (isGhConfigured()) {
-    const s = loadGhSettings();
-    dot.className  = 'gh-dot connected';
-    text.textContent = s.username + '/' + s.repo;
-  } else {
-    dot.className  = 'gh-dot';
-    text.textContent = 'GitHub not configured';
-  }
-}
-
-/* ════════════════════════════════════════════
-   GITHUB API — TEST CONNECTION
-════════════════════════════════════════════ */
-async function testGhConnection() {
-  const s = loadGhSettings();
-  if (!s.username || !s.repo || !s.token) {
-    showTestResult('Please save your settings first.', false); return;
-  }
-  showTestResult('Testing connection...', null);
+function loadSettings() {
   try {
-    const res = await fetch(
-      `https://api.github.com/repos/${s.username}/${s.repo}/contents/${s.filePath}?ref=${s.branch}`,
-      { headers: { Authorization: `Bearer ${s.token}`, Accept: 'application/vnd.github+json' } }
-    );
-    if (res.ok) {
-      showTestResult('✅ Connected! Found ' + s.filePath + ' in your repo. Auto-save is ready.', true);
-      const dot = document.getElementById('ghDot');
-      dot.className = 'gh-dot connected';
-    } else {
-      const err = await res.json();
-      showTestResult('❌ Error ' + res.status + ': ' + (err.message || 'Unknown error'), false);
-      document.getElementById('ghDot').className = 'gh-dot error';
-    }
-  } catch (e) {
-    showTestResult('❌ Network error: ' + e.message, false);
-  }
-}
-function showTestResult(msg, ok) {
-  const el = document.getElementById('ghTestResult');
-  el.textContent = msg;
-  el.className   = 'gh-test-result ' + (ok === true ? 'ok' : ok === false ? 'err' : '');
+    const s = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    if (s.token)  el('cfgToken').value  = s.token;
+    if (s.repo)   el('cfgRepo').value   = s.repo;
+    if (s.file)   el('cfgFile').value   = s.file;
+    if (s.imgDir) el('cfgImgDir').value = s.imgDir;
+  } catch(_) {}
 }
 
-/* ════════════════════════════════════════════
-   GITHUB API — READ & WRITE portfolio.html
-════════════════════════════════════════════ */
-async function fetchPortfolioFile() {
-  const s = loadGhSettings();
-  const res = await fetch(
-    `https://api.github.com/repos/${s.username}/${s.repo}/contents/${s.filePath}?ref=${s.branch}`,
-    { headers: { Authorization: `Bearer ${s.token}`, Accept: 'application/vnd.github+json' } }
-  );
-  if (!res.ok) throw new Error('Could not read ' + s.filePath + ' (HTTP ' + res.status + ')');
-  const data = await res.json();
-  const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
-  return { content, sha: data.sha };
+function saveSettings() {
+  const cfg = getCfg();
+  if (!cfg.token) { toast('bad', 'Token required', 'Paste your GitHub Personal Access Token.'); return; }
+  if (!cfg.repo)  { toast('bad', 'Repo required',  'Enter the owner/repo path.'); return; }
+  localStorage.setItem(STORE_KEY, JSON.stringify(cfg));
+  toast('ok', 'Settings Saved', 'Stored in this browser. Now connecting…');
+  fetchJobs(false);
 }
 
-async function pushPortfolioFile(content, sha, commitMsg) {
-  const s = loadGhSettings();
-  const encoded = btoa(unescape(encodeURIComponent(content)));
-  const res = await fetch(
-    `https://api.github.com/repos/${s.username}/${s.repo}/contents/${s.filePath}`,
-    {
-      method: 'PUT',
-      headers: { Authorization: `Bearer ${s.token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: commitMsg, content: encoded, sha, branch: s.branch })
-    }
-  );
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || 'Push failed (HTTP ' + res.status + ')');
-  }
-  return res.json();
+function getCfg() {
+  try {
+    const s = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    // Merge with current field values (fields may be filled but not yet saved)
+    return {
+      token:  el('cfgToken').value.trim()  || s.token  || '',
+      repo:   el('cfgRepo').value.trim()   || s.repo   || '',
+      file:   el('cfgFile').value.trim()   || s.file   || 'portfolio.html',
+      imgDir: el('cfgImgDir').value.trim() || s.imgDir || 'images/portfolio',
+    };
+  } catch(_) { return { token:'', repo:'', file:'portfolio.html', imgDir:'images/portfolio' }; }
 }
 
-/* Inject a new job object into the jobs array in the file content string */
-function injectJobIntoContent(fileContent, jobObj) {
-  const jobCode = jobObjToCode(jobObj);
+/* ════════════════════════════════════════
+   UTILS
+════════════════════════════════════════ */
+const el = id => document.getElementById(id);
 
-  // Normalise line endings so the search works regardless of CRLF vs LF
-  fileContent = fileContent.replace(/\r\n/g, '\n').replace(/^\uFEFF/, '');
-
-  // Find the jobs array — use regex to handle any whitespace variations
-  const markerRegex = /const\s+jobs\s*=\s*\[/;
-  const markerMatch = markerRegex.exec(fileContent);
-  if (!markerMatch) throw new Error('Could not find "const jobs = [" in portfolio.html. Make sure that exact text exists in the file.');
-  const idx = markerMatch.index;
-  const markerEnd = idx + markerMatch[0].length;
-
-
-  // Find the closing ] of the jobs array.
-  // Track both array and object depth, and skip string contents,
-  // so that ] characters inside photo URL arrays don't confuse the scanner.
-  const arrayOpenIdx = markerEnd - 1; // position of the opening [
-  let arrDepth = 0, objDepth = 0, closeIdx = -1;
-  let inStr = false, strChar = '';
-  for (let i = arrayOpenIdx; i < fileContent.length; i++) {
-    const ch = fileContent[i];
-    if (!inStr && (ch === '"' || ch === "'" || ch === '`')) { inStr = true; strChar = ch; continue; }
-    if (inStr) {
-      if (ch === '\\') { i++; continue; }
-      if (ch === strChar) inStr = false;
-      continue;
-    }
-    if (ch === '[') arrDepth++;
-    else if (ch === ']') { arrDepth--; if (arrDepth === 0 && objDepth === 0) { closeIdx = i; break; } }
-    else if (ch === '{') objDepth++;
-    else if (ch === '}') objDepth--;
-  }
-  if (closeIdx === -1) throw new Error('Could not find closing ] of jobs array in portfolio.html.');
-
-  // Check if there are existing entries (need a comma before new entry)
-  const arrayContent = fileContent.slice(markerEnd, closeIdx).trim();
-  const needsComma   = arrayContent.length > 0 && !arrayContent.endsWith(',');
-
-  const insertion = (needsComma ? ',\n' : '\n') + jobCode + '\n';
-  return fileContent.slice(0, closeIdx) + insertion + fileContent.slice(closeIdx);
+function setStatus(state, label) {
+  el('statusDot').className = 'status-dot ' + (state === 'ok' ? 'ok' : state === 'err' ? 'err' : '');
+  el('statusTxt').textContent = label;
 }
 
-/* Update an existing job in the file */
-function updateJobInContent(fileContent, jobObj) {
-  // Remove old entry and inject updated one
-  const removed = removeJobFromContent(fileContent, jobObj.id);
-  return injectJobIntoContent(removed, jobObj);
+function toast(type, title, msg, dur = 5000) {
+  const icons = { ok:'✅', bad:'❌', tip:'ℹ️' };
+  const shelf = el('toastShelf');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<div class="toast-ico">${icons[type]||'ℹ️'}</div>
+    <div><div class="toast-t">${title}</div>${msg?`<div class="toast-m">${msg}</div>`:''}</div>`;
+  shelf.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, dur);
 }
 
-/* Remove a job by id from the file (best-effort) */
-function removeJobFromContent(fileContent, jobId) {
-  // Find the id: N pattern inside the jobs array
-  const idPattern = new RegExp(`id:\\s*${jobId}[^}]*`, 's');
-  // We'll find the object boundaries by scanning for { id: jobId
-  const marker    = 'const jobs = [';
-  const arrStart  = fileContent.indexOf(marker);
-  if (arrStart === -1) return fileContent;
+/* ════════════════════════════════════════
+   IMAGE DRAG & DROP
+════════════════════════════════════════ */
+let imageFiles = []; // { file, dataUrl, name }
 
-  const searchStr = `id: ${jobId},`;
-  const altStr    = `id: ${jobId} `;
-  let pos = fileContent.indexOf(searchStr, arrStart);
-  if (pos === -1) pos = fileContent.indexOf(altStr, arrStart);
-  if (pos === -1) return fileContent; // not found, leave unchanged
+const dropZone = el('dropZone');
+const fileInput = el('fileInput');
 
-  // Walk back to find opening {
-  let objStart = pos;
-  while (objStart > arrStart && fileContent[objStart] !== '{') objStart--;
-
-  // Walk forward to find matching closing }
-  let depth = 0, objEnd = objStart;
-  for (let i = objStart; i < fileContent.length; i++) {
-    if (fileContent[i] === '{') depth++;
-    else if (fileContent[i] === '}') { depth--; if (depth === 0) { objEnd = i; break; } }
-  }
-
-  // Remove the object and any surrounding comma/whitespace
-  let before = fileContent.slice(0, objStart);
-  let after  = fileContent.slice(objEnd + 1);
-
-  // Clean up trailing comma before this entry or leading comma after
-  before = before.replace(/,\s*$/, '');
-  after  = after.replace(/^\s*,/, '');
-
-  return before + after;
-}
-
-function jobObjToCode(job) {
-  const photosStr = job.photos.map(p => `    '${p.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}'`).join(',\n');
-  return `  {\n    id: ${job.id},\n    title: '${job.title.replace(/'/g,"\\'")}',\n    description: '${job.description.replace(/'/g,"\\'")}',\n    photos: [\n${photosStr}\n    ]\n  }`;
-}
-
-/* ════════════════════════════════════════════
-   TAB SWITCHING
-════════════════════════════════════════════ */
-function switchTab(tab) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const name = tab.charAt(0).toUpperCase() + tab.slice(1);
-  document.getElementById('tab' + name).classList.add('active');
-  document.getElementById('nav' + name).classList.add('active');
-}
-
-/* ════════════════════════════════════════════
-   RENDER JOBS
-════════════════════════════════════════════ */
-function renderJobs() {
-  const jobs = loadJobs();
-  document.getElementById('countJobs').textContent = jobs.length;
-  const banner = document.getElementById('jobsBanner');
-
-  if (isGhConfigured()) {
-    banner.innerHTML = `<div class="info-banner success-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      GitHub connected — jobs will be saved automatically to your live site when you click <strong>Save &amp; Publish</strong>.
-    </div>`;
-  } else {
-    banner.innerHTML = `<div class="info-banner warn-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      GitHub not configured — jobs save to your browser only. Set up GitHub in the <strong>GitHub Settings</strong> tab to auto-publish.
-    </div>`;
-  }
-
-  const grid = document.getElementById('jobsGrid');
-  if (jobs.length === 0) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">🌿</div><h3>No jobs yet</h3><p>Click "Add New Job" to create your first portfolio entry.</p></div>`;
-    return;
-  }
-
-  grid.innerHTML = jobs.map(job => {
-    const thumb = job.photos && job.photos[0]
-      ? `<img class="card-thumb" src="${escHtml(job.photos[0])}" alt="${escHtml(job.title)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-         <div class="card-thumb-placeholder" style="display:none">🖼️</div>`
-      : `<div class="card-thumb-placeholder">🖼️</div>`;
-    const n = job.photos ? job.photos.length : 0;
-    return `<div class="job-card">${thumb}
-      <div class="card-body">
-        <div class="card-title">${escHtml(job.title)}</div>
-        <div class="card-desc">${escHtml(job.description)}</div>
-        <div class="card-photo-count">📷 ${n} photo${n !== 1 ? 's' : ''}</div>
-        <div class="card-actions">
-          <button class="btn-edit" onclick="openForm(${job.id})">✏️ Edit</button>
-          <button class="btn-edit" style="background:#e8f5e9;color:#2e7d32" onclick="copyJobCode(${job.id})">📋 Copy Code</button>
-          <button class="btn-delete" onclick="askDelete(${job.id})">🗑</button>
-        </div>
-      </div></div>`;
-  }).join('');
-}
-
-/* ════════════════════════════════════════════
-   FORM — OPEN / CLOSE
-════════════════════════════════════════════ */
-function openForm(id) {
-  const jobs = loadJobs();
-  const job  = id ? jobs.find(j => j.id === id) : null;
-  document.getElementById('modalTitle').textContent     = job ? 'Edit Job' : 'Add New Job';
-  document.getElementById('editId').value               = job ? job.id : '';
-  document.getElementById('fieldTitle').value           = job ? job.title : '';
-  document.getElementById('fieldDesc').value            = job ? job.description : '';
-  document.getElementById('publishStatus').textContent  = '';
-  document.getElementById('publishStatus').className    = 'publish-status';
-  document.getElementById('btnSave').disabled           = false;
-
-  const photoList = document.getElementById('photoList');
-  photoList.innerHTML = '';
-  const photos = job && job.photos && job.photos.length > 0 ? job.photos : [];
-  if (photos.length > 0) {
-    photos.forEach(url => addPhotoRow(url, url.startsWith('data:')));
-  } else {
-    addPhotoRow('', false);
-  }
-
-  document.getElementById('modalBackdrop').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => { document.getElementById('fieldTitle').focus(); initDropZone(); }, 300);
-}
-function closeForm() {
-  document.getElementById('modalBackdrop').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function closeFormBackdrop(e) {
-  if (e.target === document.getElementById('modalBackdrop')) closeForm();
-}
-
-/* ════════════════════════════════════════════
-   PHOTO ROWS
-════════════════════════════════════════════ */
-function addPhotoRow(url = '', isBase64 = false) {
-  const row = document.createElement('div');
-  row.className    = 'photo-row';
-  row.draggable    = true;
-  row.dataset.src  = url;
-  const isLong     = url.startsWith('data:');
-  const displayVal = isLong ? '' : url;
-
-  row.innerHTML = `
-    <div class="drag-handle" title="Drag to reorder">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="5" r="1" fill="currentColor"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="9" cy="19" r="1" fill="currentColor"/><circle cx="15" cy="5" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="19" r="1" fill="currentColor"/></svg>
-    </div>
-    <img class="photo-preview${url ? ' loaded' : ''}" src="${url ? escHtml(url) : ''}" alt="" onerror="this.classList.remove('loaded')"/>
-    <input class="form-input photo-url-input" type="${isLong ? 'text' : 'url'}"
-      placeholder="${isLong ? '(uploaded from file)' : 'https://example.com/photo.jpg'}"
-      value="${escHtml(displayVal)}"
-      ${isLong ? 'readonly style="color:var(--gray);font-size:0.78rem;background:#f8f8f8"' : ''}/>
-    <button class="btn-remove-photo" onclick="removePhotoRow(this)" title="Remove">×</button>`;
-
-  if (!isLong) {
-    const input = row.querySelector('input');
-    const prev  = row.querySelector('.photo-preview');
-    input.addEventListener('input', () => {
-      row.dataset.src = input.value;
-      prev.src = input.value;
-      prev.onload  = () => prev.classList.add('loaded');
-      prev.onerror = () => prev.classList.remove('loaded');
-    });
-  }
-  row.addEventListener('dragstart', onRowDragStart);
-  row.addEventListener('dragover',  onRowDragOver);
-  row.addEventListener('dragleave', onRowDragLeave);
-  row.addEventListener('drop',      onRowDrop);
-  row.addEventListener('dragend',   onRowDragEnd);
-  document.getElementById('photoList').appendChild(row);
-}
-
-function removePhotoRow(btn) {
-  const list = document.getElementById('photoList');
-  if (list.children.length > 1) {
-    btn.closest('.photo-row').remove();
-  } else {
-    const row = btn.closest('.photo-row');
-    row.querySelector('input').value = '';
-    row.dataset.src = '';
-    const p = row.querySelector('.photo-preview');
-    p.src = ''; p.classList.remove('loaded');
-    showToast('Photo cleared.', 'info');
-  }
-}
-
-/* ════════════════════════════════════════════
-   FILE DROP ZONE
-════════════════════════════════════════════ */
-function initDropZone() {
-  const zone  = document.getElementById('dropZone');
-  const input = document.getElementById('fileInput');
-  if (!zone || !input) return;
-  // Re-attach cleanly
-  const newInput = input.cloneNode(true);
-  input.replaceWith(newInput);
-  newInput.addEventListener('change', () => handleFiles(newInput.files));
-  zone.addEventListener('dragenter', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-  zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag-over'); });
-  zone.addEventListener('dragleave', e => { if (!zone.contains(e.relatedTarget)) zone.classList.remove('drag-over'); });
-  zone.addEventListener('drop', e => {
-    e.preventDefault(); zone.classList.remove('drag-over');
-    if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
-  });
-}
+dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('dragover');
+  handleFiles([...e.dataTransfer.files].filter(f => f.type.startsWith('image/')));
+});
+fileInput.addEventListener('change', e => { handleFiles([...e.target.files]); fileInput.value = ''; });
 
 function handleFiles(files) {
-  const list = document.getElementById('photoList');
-  Array.from(list.querySelectorAll('.photo-row')).forEach(r => { if (!r.dataset.src || !r.dataset.src.trim()) r.remove(); });
-  Array.from(files).forEach(file => {
-    if (!file.type.startsWith('image/')) return;
-    const progressRow = document.createElement('div');
-    progressRow.className = 'upload-progress';
-    progressRow.innerHTML = `<span>📤 ${escHtml(file.name)}</span><div class="progress-bar-wrap"><div class="progress-bar" style="width:0%"></div></div>`;
-    list.appendChild(progressRow);
-    const bar    = progressRow.querySelector('.progress-bar');
+  files.forEach(file => {
+    if (file.size > 10 * 1024 * 1024) { toast('bad', 'File too large', `${file.name} exceeds 10 MB.`); return; }
     const reader = new FileReader();
-    reader.onprogress = e => { if (e.lengthComputable) bar.style.width = Math.round(e.loaded / e.total * 100) + '%'; };
-    reader.onload = () => { bar.style.width = '100%'; setTimeout(() => { progressRow.remove(); addPhotoRow(reader.result, true); }, 300); };
+    reader.onload = ev => {
+      imageFiles.push({ file, dataUrl: ev.target.result, name: sanitise(file.name) });
+      renderGrid();
+    };
     reader.readAsDataURL(file);
   });
 }
 
-/* ════════════════════════════════════════════
-   ROW DRAG — REORDER
-════════════════════════════════════════════ */
-let dragSrcRow = null;
-function onRowDragStart(e) { dragSrcRow = this; this.classList.add('dragging-row'); e.dataTransfer.effectAllowed = 'move'; }
-function onRowDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (this !== dragSrcRow) this.classList.add('drag-over-row'); }
-function onRowDragLeave() { this.classList.remove('drag-over-row'); }
-function onRowDrop(e) {
-  e.preventDefault(); this.classList.remove('drag-over-row');
-  if (this === dragSrcRow) return;
-  const list = document.getElementById('photoList');
-  const rows = Array.from(list.querySelectorAll('.photo-row'));
-  if (rows.indexOf(dragSrcRow) < rows.indexOf(this)) list.insertBefore(dragSrcRow, this.nextSibling);
-  else list.insertBefore(dragSrcRow, this);
-}
-function onRowDragEnd() { this.classList.remove('dragging-row'); document.querySelectorAll('.photo-row').forEach(r => r.classList.remove('drag-over-row')); dragSrcRow = null; }
-
-/* ════════════════════════════════════════════
-   SAVE JOB — LOCAL + GITHUB PUSH
-════════════════════════════════════════════ */
-async function saveJob() {
-  const title  = document.getElementById('fieldTitle').value.trim();
-  const desc   = document.getElementById('fieldDesc').value.trim();
-  const photos = Array.from(document.querySelectorAll('#photoList .photo-row'))
-    .map(row => (row.dataset.src && row.dataset.src.trim()) || (row.querySelector('.photo-url-input') ? row.querySelector('.photo-url-input').value.trim() : ''))
-    .filter(u => u.length > 0);
-
-  if (!title)         { showToast('Please enter a job title.', 'error'); return; }
-  if (!desc)          { showToast('Please enter a description.', 'error'); return; }
-  if (!photos.length) { showToast('Please add at least one photo.', 'error'); return; }
-
-  const jobs   = loadJobs();
-  const editId = document.getElementById('editId').value;
-  let job;
-
-  if (editId) {
-    const idx = jobs.findIndex(j => j.id === parseInt(editId));
-    if (idx !== -1) { jobs[idx] = { ...jobs[idx], title, description: desc, photos }; job = jobs[idx]; }
-  } else {
-    const newId = jobs.length > 0 ? Math.max(...jobs.map(j => j.id)) + 1 : 1;
-    job = { id: newId, title, description: desc, photos };
-    jobs.push(job);
-  }
-
-  // Save to localStorage immediately
-  saveJobs(jobs);
-  renderJobs();
-
-  // If GitHub is configured — push to repo
-  if (isGhConfigured()) {
-    const btn    = document.getElementById('btnSave');
-    const status = document.getElementById('publishStatus');
-    btn.disabled = true;
-    setPublishStatus('pushing', '⏳ Publishing to GitHub...');
-    try {
-      const { content, sha } = await fetchPortfolioFile();
-      let updated;
-      if (editId) {
-        updated = updateJobInContent(content, job);
-      } else {
-        updated = injectJobIntoContent(content, job);
-      }
-      await pushPortfolioFile(updated, sha, `Admin: ${editId ? 'update' : 'add'} job "${title}"`);
-      setPublishStatus('success', '✅ Published! Your site will update in ~30 seconds.');
-      showToast('Job published to GitHub successfully!', 'success');
-      setTimeout(closeForm, 2200);
-    } catch (err) {
-      setPublishStatus('error', '❌ GitHub error: ' + err.message);
-      showToast('Saved locally but GitHub push failed. Check Settings.', 'error');
-      btn.disabled = false;
-    }
-  } else {
-    showToast((editId ? 'Job updated' : 'Job added') + ' locally. Set up GitHub to auto-publish.', 'info');
-    closeForm();
-  }
+function sanitise(name) {
+  return name.toLowerCase().replace(/[^a-z0-9.]/g, '-').replace(/-+/g, '-');
 }
 
-function setPublishStatus(type, msg) {
-  const el = document.getElementById('publishStatus');
-  el.textContent = msg;
-  el.className   = 'publish-status ' + type;
+function removeImage(i) { imageFiles.splice(i, 1); renderGrid(); }
+
+function renderGrid() {
+  const grid = el('imageGrid');
+  const hint = el('dragHint');
+  if (!imageFiles.length) { grid.innerHTML = ''; hint.style.display = 'none'; return; }
+  hint.style.display = 'flex';
+  grid.innerHTML = imageFiles.map((img, i) => `
+    <div class="img-thumb-wrap" draggable="true"
+         ondragstart="gds(event,${i})" ondragover="gdo(event)"
+         ondrop="gdrop(event,${i})" ondragleave="gdl(event)">
+      <img src="${img.dataUrl}" alt=""/>
+      <button class="img-remove" onclick="removeImage(${i})" title="Remove">×</button>
+    </div>`).join('');
 }
 
-/* ════════════════════════════════════════════
-   COPY CODE (fallback)
-════════════════════════════════════════════ */
-function copyJobCode(id) {
-  const job = loadJobs().find(j => j.id === id);
-  if (!job) return;
-  const code = jobObjToCode(job);
-  navigator.clipboard.writeText(code).then(() => {
-    showToast('Code copied! Paste it into the jobs array in portfolio.html', 'success');
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast('Code copied!', 'success');
+/* thumb reorder */
+let _dragSrc = null;
+function gds(e, i)   { _dragSrc = i; e.dataTransfer.effectAllowed = 'move'; }
+function gdo(e)      { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function gdl(e)      { e.currentTarget.classList.remove('drag-over'); }
+function gdrop(e, i) {
+  e.preventDefault(); e.currentTarget.classList.remove('drag-over');
+  if (_dragSrc === null || _dragSrc === i) return;
+  const moved = imageFiles.splice(_dragSrc, 1)[0];
+  imageFiles.splice(i, 0, moved);
+  _dragSrc = null; renderGrid();
+}
+
+/* ════════════════════════════════════════
+   GITHUB API
+════════════════════════════════════════ */
+async function ghRequest(method, path, body) {
+  const { token, repo } = getCfg();
+  if (!token || !repo) throw new Error('Token and repository are required. Save settings first.');
+  const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+    method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+      'X-GitHub-Api-Version': '2022-11-28',
+    },
+    body: body ? JSON.stringify(body) : undefined,
   });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.message || `GitHub API error ${res.status}`);
+  return data;
 }
 
-/* ════════════════════════════════════════════
-   DELETE
-════════════════════════════════════════════ */
-let deleteTargetId = null;
-function askDelete(id) { deleteTargetId = id; document.getElementById('confirmBackdrop').classList.add('open'); }
-function closeConfirm() { deleteTargetId = null; document.getElementById('confirmBackdrop').classList.remove('open'); }
-function confirmDelete() {
-  if (!deleteTargetId) return;
-  saveJobs(loadJobs().filter(j => j.id !== deleteTargetId));
-  renderJobs(); closeConfirm();
-  showToast('Job deleted from browser. Remove it from portfolio.html on GitHub to take it off the live site.', 'info');
+async function getFileSha(path) {
+  const { token, repo } = getCfg();
+  const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
+  });
+  if (res.status === 404) return null;
+  const d = await res.json().catch(() => ({}));
+  return d.sha || null;
 }
 
-/* ════════════════════════════════════════════
-   TOAST
-════════════════════════════════════════════ */
-let toastTimer;
-function showToast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = `toast ${type} show`;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 4500);
+async function uploadImage(imgObj, folder) {
+  const base64  = imgObj.dataUrl.split(',')[1];
+  const ts      = Date.now();
+  const path    = `${folder}/${ts}-${imgObj.name}`;
+  const existing = await getFileSha(path);
+  const body    = { message: `Add portfolio image: ${imgObj.name}`, content: base64 };
+  if (existing) body.sha = existing;
+  await ghRequest('PUT', path, body);
+  const { repo } = getCfg();
+  const [owner, repoName] = repo.split('/');
+  return `https://raw.githubusercontent.com/${owner}/${repoName}/main/${path}`;
 }
 
-/* ════════════════════════════════════════════
-   UTILS
-════════════════════════════════════════════ */
-function escHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+/* ════════════════════════════════════════
+   FETCH EXISTING JOBS
+════════════════════════════════════════ */
+let _fileSha = null;
+let _nextId  = 1;
+
+async function fetchJobs(showToast = true) {
+  const cfg = getCfg();
+  if (!cfg.token || !cfg.repo) {
+    setStatus('err', 'Configure settings first');
+    if (showToast) toast('tip', 'Settings needed', 'Fill in and save your GitHub configuration.');
+    return;
+  }
+
+  const btn = el('fetchBtn');
+  btn.disabled = true;
+  btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Loading…`;
+  setStatus('', 'Connecting…');
+
+  try {
+    const data = await ghRequest('GET', cfg.file);
+    const html = atob(data.content.replace(/\n/g, ''));
+    _fileSha = data.sha;
+
+    const match = html.match(/const jobs\s*=\s*(\[[\s\S]*?\]);/);
+    if (!match) throw new Error('"const jobs = [...]" not found in the file.');
+
+    let jobs = [];
+    try {
+      jobs = JSON.parse(match[1]
+        .replace(/\/\/[^\n]*/g, '')
+        .replace(/,(\s*[}\]])/g, '$1'));
+    } catch(_) {}
+
+    _nextId = jobs.length + 1;
+    el('jobCountNum').textContent = jobs.length;
+
+    const list = el('miniJobList');
+    list.innerHTML = jobs.slice().reverse().slice(0, 7).map((j, idx) => `
+      <div class="mini-job">
+        <div class="mini-job-num">${j.id ?? (jobs.length - idx)}</div>
+        <div class="mini-job-name">${j.title || 'Untitled'}</div>
+      </div>`).join('');
+
+    setStatus('ok', `${jobs.length} job${jobs.length !== 1 ? 's' : ''} · next ID ${_nextId}`);
+    if (showToast) toast('ok', 'Connected', `${jobs.length} existing job${jobs.length !== 1 ? 's' : ''} loaded.`);
+
+  } catch(err) {
+    setStatus('err', err.message.slice(0, 40));
+    if (showToast) toast('bad', 'Connection failed', err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.03"/></svg> Reload`;
+  }
 }
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeForm(); closeConfirm(); }
-  if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') doLogin();
-});
+/* ════════════════════════════════════════
+   PUBLISH
+════════════════════════════════════════ */
+async function publish() {
+  const cfg   = getCfg();
+  const title = el('fTitle').value.trim();
+  const desc  = el('fDesc').value.trim();
+
+  if (!cfg.token) { toast('bad', 'No Token',        'Save your GitHub token in Settings.'); return; }
+  if (!cfg.repo)  { toast('bad', 'No Repository',   'Save your repository path in Settings.'); return; }
+  if (!title)     { toast('bad', 'Title Required',   'Please enter a project title.'); return; }
+  if (!desc)      { toast('bad', 'Description Required', 'Please add a description.'); return; }
+  if (!imageFiles.length) { toast('bad', 'No Photos', 'Drop at least one photo onto the upload zone.'); return; }
+  if (!_fileSha)  { toast('tip', 'Load first', 'Click "Load from GitHub" before publishing.'); return; }
+
+  const btn = el('publishBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+
+  const progWrap = el('uploadProgress');
+  const progBar  = el('progBar');
+  const progLbl  = el('uploadLabel');
+  progWrap.style.display = 'flex';
+
+  try {
+    /* ── 1. Upload images ── */
+    const folder    = (cfg.imgDir || 'images/portfolio').replace(/\/$/, '');
+    const photoUrls = [];
+
+    for (let i = 0; i < imageFiles.length; i++) {
+      progLbl.textContent = `Uploading photo ${i + 1} of ${imageFiles.length}…`;
+      progBar.style.width = `${(i / imageFiles.length) * 68}%`;
+      const url = await uploadImage(imageFiles[i], folder);
+      photoUrls.push(url);
+    }
+
+    progBar.style.width = '72%';
+    progLbl.textContent = 'Updating portfolio.html…';
+
+    /* ── 2. Re-fetch latest HTML ── */
+    const fileData = await ghRequest('GET', cfg.file);
+    const html     = atob(fileData.content.replace(/\n/g, ''));
+    const sha      = fileData.sha;
+
+    /* ── 3. Build + inject ── */
+    const job = {
+      id: _nextId,
+      title,
+      category: 'Project',
+      location: 'Western Cape',
+      year: new Date().getFullYear().toString(),
+      tags: [],
+      description: desc,
+      stats: [],
+      photos: photoUrls,
+    };
+
+    const newHtml = injectJob(html, buildLiteral(job));
+    if (!newHtml) throw new Error('Could not locate the jobs array in portfolio.html.');
+
+    progBar.style.width = '88%';
+    progLbl.textContent = 'Committing to GitHub…';
+
+    /* ── 4. Commit ── */
+    const encoded = btoa(unescape(encodeURIComponent(newHtml)));
+    await ghRequest('PUT', cfg.file, {
+      message: `Add portfolio job: ${title}`,
+      content: encoded,
+      sha,
+    });
+
+    progBar.style.width = '100%';
+    toast('ok', 'Published! 🎉', `"${title}" is now live on your portfolio.`, 7000);
+
+    /* ── Reset form ── */
+    el('fTitle').value = '';
+    el('fDesc').value  = '';
+    imageFiles = [];
+    renderGrid();
+    setTimeout(() => fetchJobs(false), 600);
+
+  } catch(err) {
+    toast('bad', 'Publish Failed', err.message, 8000);
+    console.error(err);
+  } finally {
+    btn.classList.remove('loading'); btn.disabled = false;
+    setTimeout(() => { progWrap.style.display = 'none'; progBar.style.width = '0%'; }, 1800);
+  }
+}
+
+/* ════════════════════════════════════════
+   BUILD JOB LITERAL
+════════════════════════════════════════ */
+function buildLiteral(job) {
+  const esc = s => String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
+  const photos = job.photos.map(p => `      '${esc(p)}'`).join(',\n');
+  return `
+  {
+    id: ${job.id}, title: '${esc(job.title)}', category: '${esc(job.category)}',
+    location: '${esc(job.location)}', year: '${esc(job.year)}',
+    tags: [],
+    description: '${esc(job.description)}',
+    stats: [],
+    photos: [
+${photos},
+    ]
+  }`;
+}
+
+/* ════════════════════════════════════════
+   INJECT INTO HTML
+════════════════════════════════════════ */
+function injectJob(html, literal) {
+  const rx = /const jobs\s*=\s*\[/;
+  const sm = rx.exec(html);
+  if (!sm) return null;
+  const start = sm.index + sm[0].length;
+  let depth = 1, i = start;
+  while (i < html.length && depth > 0) {
+    if (html[i] === '[') depth++;
+    else if (html[i] === ']') depth--;
+    i++;
+  }
+  const close  = i - 1;
+  const before = html.slice(start, close).trimEnd();
+  const comma  = before.length > 0 ? ',' : '';
+  return html.slice(0, close) + comma + literal + '\n' + html.slice(close);
+}
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+loadSettings();
+const _initCfg = getCfg();
+if (_initCfg.token && _initCfg.repo) fetchJobs(false);
 </script>
 </body>
 </html>
