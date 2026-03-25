@@ -892,7 +892,11 @@ async function publish() {
     jobs.push(newJob);
 
     const newHtml = html.replace(/const jobs\s*=\s*\[[\s\S]*?\];/, `const jobs = ${JSON.stringify(jobs,null,2)};`);
-    await ghRequest('PUT', cfg.file, { message: `Add project: ${title}`, content: btoa(newHtml), sha: data.sha });
+    await ghRequest('PUT', cfg.file, {
+  message: `Add project: ${title}`,
+  content: btoa(unescape(encodeURIComponent(newHtml))),
+  sha: data.sha
+});
 
     toast('ok','Published',`Project "${title}" added successfully.`);
     el('fTitle').value = '';
