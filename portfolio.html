@@ -331,9 +331,51 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 </head>
 <body>
 
-<!-- NAV, HERO, and FOOTER remain exactly as you had them -->
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="images/aqualock_logo_transparent.png" alt="Aqualock Africa Logo"/>
+    <div class="nav-logo-name"><strong>Aqualock Africa</strong><span>Turf &amp; Landscape Specialists</span></div>
+  </a>
+  <div class="nav-centre">
+    <div class="nav-divider"></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="portfolio.html" class="active">Previous Jobs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      <a href="#" aria-label="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </div>
+    <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="services.html">Services</a>
+  <a href="products.html">Products</a><a href="portfolio.html" class="active">Previous Jobs</a>
+  <a href="contact.html">Contact</a>
+</div>
 
-<!-- ── HONEYCOMB SECTION ── -->
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-fade"></div>
+  <div class="page-hero-content">
+    <div class="page-eyebrow">Our Portfolio</div>
+    <h1 class="page-hero-title">Previous <em>Jobs &amp;</em><br>Completed Work</h1>
+    <p class="page-hero-sub">Click any hexagon to open the full job profile with photos, description, and project details.</p>
+  </div>
+</section>
+
+<!-- ── HONEYCOMB ── -->
 <section class="honeycomb-section">
   <div class="honeycomb-hdr reveal">
     <div class="s-label">Project Gallery</div>
@@ -343,72 +385,71 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   <div class="honeycomb-container" id="honeycombContainer"></div>
 </section>
 
-<!-- JOB PANEL and PHOTO VIEWER (unchanged) -->
+<!-- ── JOB PANEL (slide-in) ── -->
+<div class="job-panel-backdrop" id="jobPanelBackdrop" onclick="closePanelBackdrop(event)">
+  <div class="job-panel" id="jobPanel">
+    <button class="panel-close" onclick="closePanel()" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <!-- Title + description -->
+    <div class="panel-header">
+      <h2 class="panel-title" id="panelTitle"></h2>
+      <p class="panel-desc" id="panelDesc"></p>
+    </div>
+    <!-- Photo grid — any number of photos -->
+    <div class="panel-photo-grid" id="panelPhotoGrid"></div>
+  </div>
+</div>
+
+<!-- ── FULLSCREEN PHOTO VIEWER ── -->
+<div class="photo-viewer" id="photoViewer" onclick="closeViewer()">
+  <img id="viewerImg" src="" alt=""/>
+  <button class="photo-viewer-close" onclick="closeViewer()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <span class="foot-logo-text">Aqua<span>lock</span> Africa</span>
+      <p class="footer-tagline">Premium turf grass, lawn, and field specialists serving the Western Cape and beyond.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-links-label">Quick Links</div>
+      <a href="index.html">Home</a><a href="services.html">Services</a>
+      <a href="products.html">Products</a><a href="portfolio.html">Previous Jobs</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-social">
+      <div class="footer-social-label">Follow Us</div>
+      <div class="footer-social-icons">
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Twitter / X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="foot-copy">© 2025 Aqualock Africa. All rights reserved.</div>
+    <div class="foot-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+  </div>
+</footer>
 
 <script>
 /* ══════════════════════════════════════════════
-   JOB DATA — Populated with realistic examples
+   JOB DATA — each job has multiple photos for the collage
 ══════════════════════════════════════════════ */
-const jobs = [
-  {
-    id: "job-001",
-    title: "Stellenbosch Private Estate",
-    description: "Complete transformation of a 2.5-hectare estate including kikuyu lawn installation, automatic irrigation system, and feature landscaping with indigenous plants.",
-    photos: [
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85",
-      "https://images.unsplash.com/photo-1585325702163-6f8d9c8e8e8e?w=1200&q=85",
-      "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&q=85",
-      "https://images.unsplash.com/photo-1598902105285-2f5f3b4b5b5b?w=1200&q=85",
-      "https://images.unsplash.com/photo-1622389470-5b0c0f0f0f0f?w=1200&q=85"
-    ]
-  },
-  {
-    id: "job-002",
-    title: "Cape Town Sports Field Renovation",
-    description: "Full resurfacing and reseeding of a municipal sports field using premium sports-grade turf. Included drainage upgrades and goalpost area reinforcement.",
-    photos: [
-      "https://images.unsplash.com/photo-1521894155153-8f1c5f7b2f8b?w=1200&q=85",
-      "https://images.unsplash.com/photo-1551632811-561732d1e306?w=1200&q=85",
-      "https://images.unsplash.com/photo-1583417319070-4a13d4a8f1e0?w=1200&q=85"
-    ]
-  },
-  {
-    id: "job-003",
-    title: "Constantia Luxury Garden",
-    description: "Bespoke landscape design for a high-end residential property featuring rolling lawns, water features, and extensive hardscaping.",
-    photos: [
-      "https://images.unsplash.com/photo-1587502537745-84b86da1204f?w=1200&q=85",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a9c?w=1200&q=85",
-      "https://images.unsplash.com/photo-1600047509807-ba8ba6b3c9b8?w=1200&q=85",
-      "https://images.unsplash.com/photo-1598902105285-2f5f3b4b5b5b?w=1200&q=85"
-    ]
-  },
-  {
-    id: "job-004",
-    title: "School Playground Turfing",
-    description: "Safe, durable turf installation for a primary school playground. UV-stabilized artificial turf combined with natural grass buffer zones.",
-    photos: [
-      "https://images.unsplash.com/photo-1544620347-c4fd70a2e7d1?w=1200&q=85",
-      "https://images.unsplash.com/photo-1585325702163-6f8d9c8e8e8e?w=1200&q=85",
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=85"
-    ]
-  },
-  {
-    id: "job-005",
-    title: "Vineyard Estate Golf Course",
-    description: "Maintenance and renovation of a private 9-hole golf course including fairway and green upgrades using premium bentgrass.",
-    photos: [
-      "https://images.unsplash.com/photo-1587502537745-84b86da1204f?w=1200&q=85",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a9c?w=1200&q=85"
-    ]
-  }
-];
-
-/* The rest of your JavaScript (buildHoneycomb, openPanel, etc.) remains the same */
+const jobs = [];
 
 /* ══════════════════════════════════════════════
-   HONEYCOMB BUILDER (your original function - unchanged)
+   HONEYCOMB BUILDER
+   Pointy-top hexagons, 3-2-3-2 pattern, seamless.
+   W = flat-to-flat width, H = W * 2/√3 (tip-to-tip)
+   Vertical step = H * 0.75, odd rows offset W/2
 ══════════════════════════════════════════════ */
 function buildHoneycomb() {
   const container = document.getElementById('honeycombContainer');
@@ -419,10 +460,11 @@ function buildHoneycomb() {
   let W = Math.floor(maxW / 3);
   W = Math.max(W, 80);
 
-  const H      = W * (2 / Math.sqrt(3));
-  const stepY  = H * 0.75;
+  const H      = W * (2 / Math.sqrt(3));  // tip-to-tip height
+  const stepY  = H * 0.75;                // vertical center-to-center
   const pattern = [3, 2];
 
+  // Count rows needed for all jobs
   let totalRows = 0, counted = 0;
   while (counted < jobs.length) { counted += pattern[totalRows % 2]; totalRows++; }
 
@@ -435,6 +477,7 @@ function buildHoneycomb() {
   for (let row = 0; row < totalRows && ji < jobs.length; row++) {
     const cols     = pattern[row % 2];
     const isOffset = row % 2 === 1;
+    // x center of first cell: 3-col → W/2, 2-col (offset) → W
     const x0 = isOffset ? W : W / 2;
     const cy = H / 2 + row * stepY;
 
@@ -445,14 +488,18 @@ function buildHoneycomb() {
       const top  = cy - H / 2;
       const delay = (row * 0.09 + col * 0.055).toFixed(2);
 
+      // Circle diameter = W (inscribed in pointy-top hex, touching both flat sides)
+      // Centre it: left = (W - W) / 2 = 0, top = (H - W) / 2
       const circleDiam = W;
-      const circleLeft = 0;
-      const circleTop  = (H - circleDiam) / 2;
+      const circleLeft = 0;                    // (W - W)/2 = 0, fills full width
+      const circleTop  = (H - circleDiam) / 2; // vertically centred in the hex
 
+      // Ring is 6px larger, offset by 3px each side
       const ringSize = circleDiam + 6;
       const ringLeft = circleLeft - 3;
       const ringTop  = circleTop  - 3;
 
+      // 4-quadrant collage photos
       const circleHTML = job.photos.slice(0, 4).map((src, i) =>
         `<img class="hex-circle-photo" src="${src}" alt="" loading="lazy"
               style="grid-area:${i < 2 ? 1 : 2}/${i % 2 + 1}/${i < 2 ? 2 : 3}/${i % 2 + 2}"/>`
@@ -479,6 +526,7 @@ function buildHoneycomb() {
     }
   }
 
+  // Scroll-triggered entrance
   const cells = container.querySelectorAll('.hex-cell');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
@@ -488,19 +536,20 @@ function buildHoneycomb() {
 
 buildHoneycomb();
 let rTimer;
-window.addEventListener('resize', () => { 
-  clearTimeout(rTimer); 
-  rTimer = setTimeout(buildHoneycomb, 250); 
-});
+window.addEventListener('resize', () => { clearTimeout(rTimer); rTimer = setTimeout(buildHoneycomb, 200); });
 
-/* PANEL & VIEWER FUNCTIONS (unchanged from your code) */
+/* ══════════════════════════════════════════════
+   PANEL OPEN / CLOSE
+══════════════════════════════════════════════ */
 function openPanel(id) {
   const job = jobs.find(j => j.id === id);
   if (!job) return;
 
+  // Title + description
   document.getElementById('panelTitle').textContent = job.title;
   document.getElementById('panelDesc').textContent  = job.description;
 
+  // Build photo grid — all photos, first one spans full width
   const grid = document.getElementById('panelPhotoGrid');
   grid.innerHTML = job.photos.map((src, i) =>
     `<div class="grid-photo${i === 0 ? ' first' : ''}" onclick="openViewer('${src}')">
@@ -520,6 +569,7 @@ function closePanelBackdrop(e) {
   if (e.target === document.getElementById('jobPanelBackdrop')) closePanel();
 }
 
+/* ── FULLSCREEN VIEWER ── */
 function openViewer(src) {
   document.getElementById('viewerImg').src = src;
   document.getElementById('photoViewer').classList.add('open');
@@ -528,24 +578,20 @@ function closeViewer() {
   document.getElementById('photoViewer').classList.remove('open');
 }
 
+/* ── KEYBOARD ── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closePanel(); closeViewer(); }
 });
 
-/* SCROLL REVEAL & MOBILE MENU (unchanged) */
+/* ── SCROLL REVEAL ── */
 const revObs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
+/* ── NAV ── */
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => { 
-  hamburger.classList.toggle('open'); 
-  mobileMenu.classList.toggle('open'); 
-});
-mobileMenu.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', () => { 
-  hamburger.classList.remove('open'); 
-  mobileMenu.classList.remove('open'); 
-}));
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+mobileMenu.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }));
 </script>
 </body>
 </html>
