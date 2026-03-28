@@ -396,23 +396,33 @@ textarea.form-input { resize: vertical; min-height: 120px; line-height: 1.7; }
             </div>
           </div>
           <div class="form-group" style="margin-bottom:0.6rem">
-            <label class="form-label" for="ghOwner">GitHub Username / Org</label>
-            <input class="form-input" type="text" id="ghOwner" placeholder="your-username"/>
+            <label class="form-label" for="ghOwner">GitHub Username <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">(just the username, e.g. frwebbirth)</span></label>
+            <input class="form-input" type="text" id="ghOwner" placeholder="frwebbirth"/>
+          </div>
+          <div class="form-group" style="margin-bottom:0.6rem">
+            <label class="form-label" for="ghRepo">Repository Name <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">(just the repo, e.g. Aqualock-Africa)</span></label>
+            <input class="form-input" type="text" id="ghRepo" placeholder="Aqualock-Africa"/>
+          </div>
+          <div class="form-group" style="margin-bottom:0.6rem">
+            <label class="form-label" for="ghFilePath">File Path in Repo <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">(e.g. portfolio.html or public/portfolio.html)</span></label>
+            <input class="form-input" type="text" id="ghFilePath" placeholder="portfolio.html"/>
+          </div>
+          <div class="form-group" style="margin-bottom:0.6rem">
+            <label class="form-label" for="ghBranch">Branch</label>
+            <input class="form-input" type="text" id="ghBranch" placeholder="main"/>
+          </div>
+          <!-- Live preview of the API URL -->
+          <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);background:var(--bg);border-radius:6px;padding:0.6rem 0.8rem;margin-bottom:0.9rem;word-break:break-all;line-height:1.6">
+            <span style="color:rgba(255,255,255,0.2)">API URL: </span><span id="apiUrlPreview">—</span>
           </div>
           <button class="btn-save-token" onclick="saveConfig()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:5px;display:inline-block;vertical-align:middle"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
             Save Configuration
           </button>
-        </div>
-      </div>
-
-      <!-- Repo info -->
-      <div>
-        <div class="section-title">Repository</div>
-        <div class="repo-info">
-          <div class="repo-row"><span class="repo-label">Repo</span><span class="repo-val">frwebbirth-sys</span></div>
-          <div class="repo-row"><span class="repo-label">File</span><span class="repo-val">portfolio.html</span></div>
-          <div class="repo-row"><span class="repo-label">Branch</span><span class="repo-val">main</span></div>
+          <button class="btn-save-token" style="margin-top:0.5rem;background:rgba(144,202,249,0.08);border-color:rgba(144,202,249,0.3);color:#90CAF9" onclick="testConnection()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:5px;display:inline-block;vertical-align:middle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Test Connection
+          </button>
         </div>
       </div>
 
@@ -479,9 +489,6 @@ textarea.form-input { resize: vertical; min-height: 120px; line-height: 1.7; }
 <script>
 /* ═══════════════════════ CONFIG ═══════════════════════ */
 const ADMIN_PASS = 'aqualock2025'; // Change this password!
-const REPO_NAME  = 'frwebbirth-sys';
-const FILE_PATH  = 'portfolio.html';
-const BRANCH     = 'main';
 
 /* ═══════════════════════ SESSION ═══════════════════════ */
 function attemptLogin() {
@@ -520,30 +527,68 @@ if (sessionStorage.getItem('al_admin')) {
 
 /* ═══════════════════════ CONFIG SAVE / LOAD ═══════════════════════ */
 function saveConfig() {
-  const token = document.getElementById('ghToken').value.trim();
-  const owner = document.getElementById('ghOwner').value.trim();
-  if (!token || !owner) { toast('Please enter both token and username.', 'error'); return; }
-  localStorage.setItem('al_gh_token', token);
-  localStorage.setItem('al_gh_owner', owner);
+  const token    = document.getElementById('ghToken').value.trim();
+  const owner    = document.getElementById('ghOwner').value.trim();
+  const repo     = document.getElementById('ghRepo').value.trim();
+  const filePath = document.getElementById('ghFilePath').value.trim() || 'portfolio.html';
+  const branch   = document.getElementById('ghBranch').value.trim()   || 'main';
+
+  // Strip any accidental full URLs — keep just the bare username and repo name
+  const cleanOwner = owner.replace(/^https?:\/\/github\.com\//i,'').split('/')[0].trim();
+  const cleanRepo  = repo.split('/').pop().trim();
+
+  if (!token)      { toast('Please enter your Personal Access Token.', 'error'); return; }
+  if (!cleanOwner) { toast('Please enter your GitHub username.', 'error'); return; }
+  if (!cleanRepo)  { toast('Please enter the repository name.', 'error'); return; }
+
+  localStorage.setItem('al_gh_token',    token);
+  localStorage.setItem('al_gh_owner',    cleanOwner);
+  localStorage.setItem('al_gh_repo',     cleanRepo);
+  localStorage.setItem('al_gh_filepath', filePath);
+  localStorage.setItem('al_gh_branch',   branch);
+
+  document.getElementById('ghOwner').value    = cleanOwner;
+  document.getElementById('ghRepo').value     = cleanRepo;
+  document.getElementById('ghFilePath').value = filePath;
+  document.getElementById('ghBranch').value   = branch;
+
   updateTokenStatus(true);
-  toast('Configuration saved locally.', 'success');
+  updateApiPreview();
+  toast('Configuration saved.', 'success');
 }
+
 function loadConfig() {
-  const t = localStorage.getItem('al_gh_token');
-  const o = localStorage.getItem('al_gh_owner');
-  if (t) { document.getElementById('ghToken').value = t; updateTokenStatus(true); }
-  if (o) document.getElementById('ghOwner').value = o;
+  const t  = localStorage.getItem('al_gh_token');
+  const o  = localStorage.getItem('al_gh_owner');
+  const r  = localStorage.getItem('al_gh_repo');
+  const fp = localStorage.getItem('al_gh_filepath');
+  const b  = localStorage.getItem('al_gh_branch');
+  if (t)  { document.getElementById('ghToken').value    = t; updateTokenStatus(true); }
+  if (o)  document.getElementById('ghOwner').value    = o;
+  if (r)  document.getElementById('ghRepo').value     = r;
+  if (fp) document.getElementById('ghFilePath').value = fp;
+  if (b)  document.getElementById('ghBranch').value   = b;
+  updateApiPreview();
+  ['ghOwner','ghRepo','ghFilePath','ghBranch'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateApiPreview);
+  });
 }
+
+function updateApiPreview() {
+  const o  = (document.getElementById('ghOwner').value    || '').trim() || '{username}';
+  const r  = (document.getElementById('ghRepo').value     || '').trim() || '{repo}';
+  const fp = (document.getElementById('ghFilePath').value || '').trim() || 'portfolio.html';
+  const b  = (document.getElementById('ghBranch').value   || '').trim() || 'main';
+  const el = document.getElementById('apiUrlPreview');
+  if (el) el.textContent = `api.github.com/repos/${o}/${r}/contents/${fp}?ref=${b}`;
+}
+
 function updateTokenStatus(saved) {
-  const el = document.getElementById('tokenStatus');
+  const el  = document.getElementById('tokenStatus');
   const txt = document.getElementById('tokenStatusText');
-  if (saved) {
-    el.className = 'token-status saved';
-    txt.textContent = 'Token saved';
-  } else {
-    el.className = 'token-status none';
-    txt.textContent = 'No token saved';
-  }
+  if (saved) { el.className = 'token-status saved'; txt.textContent = 'Token saved'; }
+  else       { el.className = 'token-status none';  txt.textContent = 'No token saved'; }
 }
 function toggleTokenVis() {
   const inp = document.getElementById('ghToken');
@@ -616,9 +661,13 @@ function toast(msg, type = 'info') {
 
 /* ═══════════════════════ GITHUB HELPERS ═══════════════════════ */
 function getCredentials() {
-  const token = localStorage.getItem('al_gh_token');
-  const owner = localStorage.getItem('al_gh_owner');
-  return { token, owner };
+  return {
+    token:    localStorage.getItem('al_gh_token')    || '',
+    owner:    localStorage.getItem('al_gh_owner')    || '',
+    repo:     localStorage.getItem('al_gh_repo')     || '',
+    filePath: localStorage.getItem('al_gh_filepath') || 'portfolio.html',
+    branch:   localStorage.getItem('al_gh_branch')   || 'main'
+  };
 }
 
 async function ghFetch(path, opts = {}) {
@@ -634,31 +683,55 @@ async function ghFetch(path, opts = {}) {
   });
 }
 
-/* Fetch the current portfolio.html from GitHub */
+async function testConnection() {
+  const { token, owner, repo, filePath, branch } = getCredentials();
+  if (!token || !owner || !repo) { toast('Fill in and save your config first.', 'error'); return; }
+  toast('Testing connection…', 'info');
+  log(`Testing: GET /repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`);
+  try {
+    const res = await ghFetch(`/repos/${owner}/${repo}/contents/${encodeURIComponent(filePath)}?ref=${encodeURIComponent(branch)}`);
+    if (res.ok) {
+      const d = await res.json();
+      toast(`Connected! File found (${Math.round(d.size/1024*10)/10} KB)`, 'success');
+      log(`File found: ${d.name}, size: ${d.size} bytes`, 'ok');
+    } else {
+      const err = await res.json().catch(()=>({}));
+      toast(`Failed: ${res.status} — ${err.message || res.statusText}`, 'error');
+      log(`${res.status}: ${err.message || res.statusText}`, 'err');
+      if (res.status === 404) log('404: double-check username, repo name, file path, and branch.', 'err');
+      if (res.status === 401) log('401: token is invalid or expired. Regenerate with "repo" scope.', 'err');
+    }
+  } catch (e) {
+    toast('Network error: ' + e.message, 'error');
+    log(e.message, 'err');
+  }
+}
+
+/* Fetch the current file from GitHub */
 async function fetchPortfolioFile() {
-  const { owner } = getCredentials();
-  log(`Fetching ${FILE_PATH} from ${owner}/${REPO_NAME}…`);
-  const res = await ghFetch(`/repos/${owner}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}`);
-  if (!res.ok) throw new Error(`GitHub ${res.status}: ${res.statusText}`);
+  const { owner, repo, filePath, branch } = getCredentials();
+  log(`Fetching ${filePath} from ${owner}/${repo} (branch: ${branch})…`);
+  const res = await ghFetch(`/repos/${owner}/${repo}/contents/${encodeURIComponent(filePath)}?ref=${encodeURIComponent(branch)}`);
+  if (!res.ok) {
+    const err = await res.json().catch(()=>({}));
+    throw new Error(`GitHub ${res.status}: ${err.message || res.statusText}`);
+  }
   const data = await res.json();
-  const content = atob(data.content.replace(/\n/g, ''));
+  // GitHub returns base64 with newlines — strip them before decoding
+  const content = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
   log('File fetched successfully.', 'ok');
   return { content, sha: data.sha };
 }
 
 /* Commit updated content back to GitHub */
 async function pushPortfolioFile(content, sha, commitMsg) {
-  const { owner } = getCredentials();
-  log(`Pushing changes to ${owner}/${REPO_NAME}…`);
+  const { owner, repo, filePath, branch } = getCredentials();
+  log(`Pushing changes to ${owner}/${repo}…`);
+  // Encode UTF-8 safely
   const encoded = btoa(unescape(encodeURIComponent(content)));
-  const res = await ghFetch(`/repos/${owner}/${REPO_NAME}/contents/${FILE_PATH}`, {
+  const res = await ghFetch(`/repos/${owner}/${repo}/contents/${encodeURIComponent(filePath)}`, {
     method: 'PUT',
-    body: JSON.stringify({
-      message: commitMsg,
-      content: encoded,
-      sha,
-      branch: BRANCH
-    })
+    body: JSON.stringify({ message: commitMsg, content: encoded, sha, branch })
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
@@ -668,25 +741,21 @@ async function pushPortfolioFile(content, sha, commitMsg) {
   return res;
 }
 
-/* Parse existing jobs array from portfolio.html */
+/* Parse existing jobs array from the HTML source */
 function parseJobs(html) {
   const match = html.match(/const\s+jobs\s*=\s*\[([\s\S]*?)\];/);
   if (!match) return [];
   try {
-    // Replace JS object literals with JSON-safe version
     const raw = `[${match[1]}]`;
-    // Use Function to eval the JS array safely
     const jobs = Function('"use strict"; return (' + raw + ')')();
     return Array.isArray(jobs) ? jobs : [];
-  } catch {
-    return [];
-  }
+  } catch { return []; }
 }
 
-/* Serialize jobs array back into the JS snippet */
+/* Serialize jobs array back into JS */
 function serializeJobs(jobs) {
   return jobs.map(j => {
-    const photos = j.photos.map(p => `'${p.replace(/'/g, "\\'")}'`).join(', ');
+    const photos = j.photos.map(p => `'${p.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}'`).join(', ');
     return `  { id: ${JSON.stringify(j.id)}, title: ${JSON.stringify(j.title)}, description: ${JSON.stringify(j.description)}, photos: [${photos}] }`;
   }).join(',\n');
 }
@@ -701,8 +770,8 @@ function injectJobs(html, jobs) {
 
 /* ═══════════════════════ LOAD CURRENT JOBS ═══════════════════════ */
 async function loadCurrentJobs() {
-  const { token, owner } = getCredentials();
-  if (!token || !owner) { toast('Save your GitHub config first.', 'error'); return; }
+  const { token, owner, repo } = getCredentials();
+  if (!token || !owner || !repo) { toast('Save your GitHub config first.', 'error'); return; }
   try {
     const { content } = await fetchPortfolioFile();
     const jobs = parseJobs(content);
@@ -738,8 +807,8 @@ function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replac
 /* ═══════════════════════ DELETE JOB ═══════════════════════ */
 async function deleteJob(id) {
   if (!confirm('Remove this job from the portfolio? This cannot be undone.')) return;
-  const { token, owner } = getCredentials();
-  if (!token || !owner) { toast('Save your GitHub config first.', 'error'); return; }
+  const { token, owner, repo } = getCredentials();
+  if (!token || !owner || !repo) { toast('Save your GitHub config first.', 'error'); return; }
   try {
     const { content, sha } = await fetchPortfolioFile();
     let jobs = parseJobs(content);
@@ -758,15 +827,15 @@ async function deleteJob(id) {
 
 /* ═══════════════════════ PUBLISH NEW JOB ═══════════════════════ */
 async function publishJob() {
-  const { token, owner } = getCredentials();
-  if (!token || !owner) { toast('Save your GitHub token & username first.', 'error'); return; }
+  const { token, owner, repo } = getCredentials();
+  if (!token || !owner || !repo) { toast('Save your GitHub config first.', 'error'); return; }
 
   const title  = document.getElementById('jobTitle').value.trim();
   const desc   = document.getElementById('jobDesc').value.trim();
   const photos = getImageUrls();
 
-  if (!title)          { toast('Please enter a job title.', 'error'); return; }
-  if (!desc)           { toast('Please enter a description.', 'error'); return; }
+  if (!title)            { toast('Please enter a job title.', 'error'); return; }
+  if (!desc)             { toast('Please enter a description.', 'error'); return; }
   if (photos.length < 1) { toast('Add at least one image URL.', 'error'); return; }
 
   const btn = document.getElementById('publishBtn');
@@ -776,22 +845,18 @@ async function publishJob() {
   try {
     log('Starting publish workflow…');
     const { content, sha } = await fetchPortfolioFile();
-
     const jobs = parseJobs(content);
     log(`Found ${jobs.length} existing job(s).`);
 
-    // Generate unique ID
     const id = 'job_' + Date.now();
-    const newJob = { id, title, description: desc, photos };
-    jobs.push(newJob);
-
+    jobs.push({ id, title, description: desc, photos });
     log(`Adding "${title}" (${photos.length} photo${photos.length !== 1 ? 's' : ''})…`);
-    const updated = injectJobs(content, jobs);
 
+    const updated = injectJobs(content, jobs);
     await pushPortfolioFile(updated, sha, `feat: add portfolio job "${title}"`);
 
     renderJobsList(jobs);
-    toast(`"${title}" published successfully! 🎉`, 'success');
+    toast(`"${title}" published! 🎉`, 'success');
     log('Done! Job is now live on your site.', 'ok');
     resetForm();
   } catch (e) {
