@@ -1005,31 +1005,41 @@ async function pushPortfolioFile(content, sha, commitMsg) {
   return res;
 }
 
-/* Parse existing jobs array from the HTML source */
+/* Parse existing jobs array — uses sentinel comments for reliable extraction */
 function parseJobs(html) {
-  const match = html.match(/const\s+jobs\s*=\s*\[([\s\S]*?)\];/);
+  const match = html.match(/\/\*JOBS_START\*\/([\s\S]*?)\/\*JOBS_END\*\//);
   if (!match) return [];
   try {
-    const raw = `[${match[1]}]`;
-    const jobs = Function('"use strict"; return (' + raw + ')')();
-    return Array.isArray(jobs) ? jobs : [];
-  } catch { return []; }
+    const raw = match[1].trim();
+    // raw is a JSON array string
+    return JSON.parse(raw);
+  } catch(e) {
+    console.warn('parseJobs failed:', e);
+    return [];
+  }
 }
 
-/* Serialize jobs array back into JS */
+/* Serialize jobs array as clean JSON */
 function serializeJobs(jobs) {
-  return jobs.map(j => {
-    const photos = j.photos.map(p => `'${p.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}'`).join(', ');
-    return `  { id: ${JSON.stringify(j.id)}, title: ${JSON.stringify(j.title)}, description: ${JSON.stringify(j.description)}, photos: [${photos}] }`;
-  }).join(',\n');
+  return JSON.stringify(jobs, null, 2);
 }
 
-/* Inject jobs array back into the HTML */
+/* Inject jobs array back into the HTML using sentinel comments */
 function injectJobs(html, jobs) {
-  return html.replace(
-    /const\s+jobs\s*=\s*\[[\s\S]*?\];/,
-    `const jobs = [\n${serializeJobs(jobs)}\n];`
+  const jsonStr = serializeJobs(jobs);
+  // Replace between sentinel comments
+  const result = html.replace(
+    /\/\*JOBS_START\*\/[\s\S]*?\/\*JOBS_END\*\//,
+    `/*JOBS_START*/${jsonStr}/*JOBS_END*/`
   );
+  // If sentinels not found (first time — portfolio.html has plain `const jobs = [];`)
+  if (result === html) {
+    return html.replace(
+      /const\s+jobs\s*=\s*\[\s*\];/,
+      `const jobs = /*JOBS_START*/${jsonStr}/*JOBS_END*/;`
+    );
+  }
+  return result;
 }
 
 /* ═══════════════════════ LOAD CURRENT JOBS ═══════════════════════ */
