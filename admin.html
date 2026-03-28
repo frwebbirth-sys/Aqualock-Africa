@@ -554,9 +554,14 @@ textarea.form-input { resize: vertical; min-height: 120px; line-height: 1.7; }
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </div>
             <div class="drop-title">Drop images here or click to browse</div>
-            <div class="drop-sub">PNG, JPG, WEBP supported &nbsp;·&nbsp; <span>multiple files OK</span></div>
+            <div class="drop-sub">PNG, JPG, WEBP &nbsp;·&nbsp; <span>multiple files OK</span> &nbsp;·&nbsp; saved to images/portfolio/</div>
           </div>
 
+          <!-- Info note -->
+          <div style="font-size:0.75rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span>Images are uploaded to your repo's <code style="font-family:'DM Mono',monospace;background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:4px;font-size:0.72rem">images/portfolio/</code> folder when you click <strong style="color:var(--text)">Publish</strong></span>
+          </div>
           <!-- Upload progress -->
           <div class="upload-progress" id="uploadProgress">
             <div class="upload-progress-bar" id="uploadProgressBar"></div>
@@ -737,15 +742,21 @@ fileInput.addEventListener('change', () => {
   fileInput.value = '';
 });
 
-// ── Process dropped/selected files ──
+// ── Process dropped/selected files — store for preview, upload on publish ──
 async function processFiles(files) {
   const prog = document.getElementById('uploadProgress');
   const bar  = document.getElementById('uploadProgressBar');
   prog.classList.add('show'); bar.style.width = '0%';
 
   for (let i = 0; i < files.length; i++) {
-    const src = await readFileAsDataURL(files[i]);
-    imageItems.push({ src, file: files[i], name: files[i].name });
+    const file = files[i];
+    // Generate a safe filename: timestamp + sanitised original name
+    const safeName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    // Read as data URL just for the local preview thumbnail
+    const previewSrc = await readFileAsDataURL(file);
+    // Also read as ArrayBuffer so we can base64-encode for GitHub API upload
+    const arrayBuf   = await readFileAsArrayBuffer(file);
+    imageItems.push({ previewSrc, arrayBuf, name: safeName, file, uploaded: false, repoPath: null });
     bar.style.width = ((i + 1) / files.length * 100) + '%';
   }
 
@@ -761,6 +772,25 @@ function readFileAsDataURL(file) {
   });
 }
 
+function readFileAsArrayBuffer(file) {
+  return new Promise(res => {
+    const r = new FileReader();
+    r.onload = e => res(e.target.result);
+    r.readAsArrayBuffer(file);
+  });
+}
+
+// Convert ArrayBuffer → base64 string (chunked to avoid stack overflow on large images)
+function arrayBufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const chunk = 8192;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
+}
+
 // ── Render the thumbnail grid ──
 function renderImageGrid() {
   const area = document.getElementById('imagesArea');
@@ -771,7 +801,7 @@ function renderImageGrid() {
     card.draggable = true;
     card.dataset.index = i;
     card.innerHTML = `
-      <img src="${item.src}" alt="${item.name}"/>
+      <img src="${item.previewSrc || item.repoPath}" alt="${item.name}"/>
       <button class="image-card-remove" onclick="removeImageItem(${i})" title="Remove">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -840,9 +870,11 @@ function removeUrlRow(btn) {
   btn.closest('.url-row').remove();
 }
 
-// ── Collect all image sources (uploaded + URL) ──
+// ── Collect final image paths (GitHub repo paths + manual URLs) ──
 function getImageUrls() {
-  const uploaded = imageItems.map(item => item.src);
+  const uploaded = imageItems
+    .filter(item => item.repoPath)
+    .map(item => item.repoPath);
   const urlInputs = [...document.getElementById('urlRowsArea').querySelectorAll('input[type=url]')]
     .map(i => i.value.trim()).filter(Boolean);
   return [...uploaded, ...urlInputs];
@@ -1057,40 +1089,105 @@ async function deleteJob(id) {
   }
 }
 
+/* ═══════════════════════ UPLOAD IMAGE TO GITHUB REPO ═══════════════════════ */
+async function uploadImageToRepo(item) {
+  const { owner, repo, branch } = getCredentials();
+  const repoPath = 'images/portfolio/' + item.name;
+
+  // Check if file already exists (get its SHA so we can overwrite)
+  let existingSha = null;
+  try {
+    const check = await ghFetch(`/repos/${owner}/${repo}/contents/${repoPath}?ref=${encodeURIComponent(branch)}`);
+    if (check.ok) { const d = await check.json(); existingSha = d.sha; }
+  } catch {}
+
+  const b64 = arrayBufferToBase64(item.arrayBuf);
+  const body = { message: `upload portfolio image: ${item.name}`, content: b64, branch };
+  if (existingSha) body.sha = existingSha;
+
+  const res = await ghFetch(`/repos/${owner}/${repo}/contents/${repoPath}`, {
+    method: 'PUT',
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(`Image upload failed (${item.name}): ${err.message || res.status}`);
+  }
+
+  // Return the public GitHub Pages URL for this image
+  const { owner: o, repo: r } = getCredentials();
+  // GitHub Pages URL: https://{owner}.github.io/{repo}/images/portfolio/{name}
+  return `images/portfolio/${item.name}`;
+}
+
 /* ═══════════════════════ PUBLISH NEW JOB ═══════════════════════ */
 async function publishJob() {
   const { token, owner, repo } = getCredentials();
   if (!token || !owner || !repo) { toast('Save your GitHub config first.', 'error'); return; }
 
-  const title  = document.getElementById('jobTitle').value.trim();
-  const desc   = document.getElementById('jobDesc').value.trim();
-  const photos = getImageUrls();
+  const title = document.getElementById('jobTitle').value.trim();
+  const desc  = document.getElementById('jobDesc').value.trim();
 
-  if (!title)            { toast('Please enter a job title.', 'error'); return; }
-  if (!desc)             { toast('Please enter a description.', 'error'); return; }
-  if (photos.length < 1) { toast('Add at least one image URL.', 'error'); return; }
+  if (!title) { toast('Please enter a job title.', 'error'); return; }
+  if (!desc)  { toast('Please enter a description.', 'error'); return; }
+
+  // Check we have at least one image (uploaded or URL)
+  const urlInputs = [...document.getElementById('urlRowsArea').querySelectorAll('input[type=url]')]
+    .map(i => i.value.trim()).filter(Boolean);
+  const pendingUploads = imageItems.filter(item => !item.repoPath);
+  if (imageItems.length === 0 && urlInputs.length === 0) {
+    toast('Add at least one photo.', 'error'); return;
+  }
 
   const btn = document.getElementById('publishBtn');
   btn.disabled = true;
   btn.classList.add('loading');
 
   try {
-    log('Starting publish workflow…');
+    // ── Step 1: Upload any new image files to images/portfolio/ ──
+    if (pendingUploads.length > 0) {
+      log(`Uploading ${pendingUploads.length} image(s) to images/portfolio/…`);
+      const prog = document.getElementById('uploadProgress');
+      const bar  = document.getElementById('uploadProgressBar');
+      prog.classList.add('show'); bar.style.width = '0%';
+
+      for (let i = 0; i < imageItems.length; i++) {
+        const item = imageItems[i];
+        if (item.repoPath) continue; // already uploaded
+        log(`Uploading ${item.name}…`);
+        const repoPath = await uploadImageToRepo(item);
+        item.repoPath = repoPath;
+        item.uploaded = true;
+        bar.style.width = ((i + 1) / imageItems.length * 100) + '%';
+        log(`✓ ${item.name} → ${repoPath}`, 'ok');
+      }
+
+      setTimeout(() => { prog.classList.remove('show'); bar.style.width = '0%'; }, 500);
+    }
+
+    // ── Step 2: Collect all photo paths ──
+    const photos = getImageUrls();
+    if (photos.length === 0) { toast('No valid photos — check your images.', 'error'); return; }
+
+    // ── Step 3: Update portfolio.html ──
+    log('Updating portfolio.html…');
     const { content, sha } = await fetchPortfolioFile();
     const jobs = parseJobs(content);
     log(`Found ${jobs.length} existing job(s).`);
 
     const id = 'job_' + Date.now();
     jobs.push({ id, title, description: desc, photos });
-    log(`Adding "${title}" (${photos.length} photo${photos.length !== 1 ? 's' : ''})…`);
+    log(`Adding job "${title}" with ${photos.length} photo(s)…`);
 
     const updated = injectJobs(content, jobs);
     await pushPortfolioFile(updated, sha, `feat: add portfolio job "${title}"`);
 
     renderJobsList(jobs);
     toast(`"${title}" published! 🎉`, 'success');
-    log('Done! Job is now live on your site.', 'ok');
+    log('Done! Job and images are live on your site.', 'ok');
     resetForm();
+
   } catch (e) {
     toast('Publish failed: ' + e.message, 'error');
     log(e.message, 'err');
