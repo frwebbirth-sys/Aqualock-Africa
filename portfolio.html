@@ -70,55 +70,194 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; height: 80px; di
 .honeycomb-hdr p { font-size: 0.97rem; line-height: 1.8; color: rgba(255,255,255,0.48); }
 
 /* ── HONEYCOMB GRID ── */
-.honeycomb-container { position: relative; margin: 0 auto; }
+.honeycomb-container { position: relative; margin: 0 auto; min-height: 200px; }
+
+/* Loading state */
+.loading-jobs { text-align: center; padding: 4rem 2rem; color: rgba(255,255,255,0.6); }
+.loading-jobs .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── HEX CELL ── */
-.hex-cell { position: absolute; cursor: pointer; transition: opacity 0.5s ease, transform 0.52s cubic-bezier(0.34,1.45,0.64,1); opacity: 0; transform: scale(0.7); z-index: 1; }
+.hex-cell {
+  position: absolute;
+  cursor: pointer;
+  transition: opacity 0.5s ease, transform 0.52s cubic-bezier(0.34,1.45,0.64,1);
+  opacity: 0;
+  transform: scale(0.7);
+  z-index: 1;
+}
 .hex-cell.visible { opacity: 1; transform: scale(1); }
 .hex-cell:hover { z-index: 5; }
-.hex-shape { width: 100%; height: 100%; position: relative; transition: transform 0.35s cubic-bezier(0.34,1.5,0.64,1), filter 0.35s ease; }
-.hex-cell:hover .hex-shape { transform: scale(1.1) translateY(-5px); filter: drop-shadow(0 14px 28px rgba(21,101,192,0.55)); }
-.hex-inner { position: absolute; inset: 0; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); overflow: hidden; }
-.hex-bg { position: absolute; inset: 0; background: #1e4d8c; }
-.hex-outline { position: absolute; inset: -3px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); background: #7ab3e8; z-index: 0; transition: background 0.3s ease; }
+
+.hex-shape {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.34,1.5,0.64,1), filter 0.35s ease;
+}
+.hex-cell:hover .hex-shape {
+  transform: scale(1.1) translateY(-5px);
+  filter: drop-shadow(0 14px 28px rgba(21,101,192,0.55));
+}
+
+.hex-inner {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  overflow: hidden;
+}
+
+.hex-bg {
+  position: absolute;
+  inset: 0;
+  background: #1e4d8c;
+}
+
+.hex-outline {
+  position: absolute;
+  inset: -3px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: #7ab3e8;
+  z-index: 0;
+  transition: background 0.3s ease;
+}
 .hex-cell:hover .hex-outline { background: var(--gold); }
-.hex-circle { position: absolute; border-radius: 50%; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-.hex-circle-photo { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+
+.hex-circle {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.hex-circle-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
 .hex-cell:hover .hex-circle-photo { transform: scale(1.06); }
-.hex-circle-ring { position: absolute; border-radius: 50%; border: 2.5px solid rgba(201,168,76,0); transition: border-color 0.3s ease; pointer-events: none; }
+
+.hex-circle-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid rgba(201,168,76,0);
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+}
 .hex-cell:hover .hex-circle-ring { border-color: var(--gold); }
 
 /* ── JOB PANEL ── */
-.job-panel-backdrop { position: fixed; inset: 0; background: rgba(6,14,28,0.72); backdrop-filter: blur(6px); z-index: 400; opacity: 0; pointer-events: none; transition: opacity 0.38s ease; }
+.job-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,14,28,0.72);
+  backdrop-filter: blur(6px);
+  z-index: 400;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s ease;
+}
 .job-panel-backdrop.open { opacity: 1; pointer-events: all; }
-.job-panel { position: fixed; top: 0; right: 0; bottom: 0; width: min(680px, 100vw); background: var(--dark); z-index: 401; transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); overflow-y: auto; display: flex; flex-direction: column; }
+
+.job-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(680px, 100vw);
+  background: var(--dark);
+  z-index: 401;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
 .job-panel-backdrop.open .job-panel { transform: translateX(0); }
-.panel-close { position: absolute; top: 1.4rem; left: 1.4rem; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,0.7); transition: background 0.2s, transform 0.25s, color 0.2s; z-index: 10; }
+
+.panel-close {
+  position: absolute;
+  top: 1.4rem; left: 1.4rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  transition: background 0.2s, transform 0.25s, color 0.2s;
+  z-index: 10;
+}
 .panel-close:hover { background: rgba(255,255,255,0.14); color: #fff; transform: rotate(90deg); }
-.panel-header { padding: 2.2rem 2.2rem 1.4rem; padding-top: 4.5rem; }
-.panel-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700; color: #fff; line-height: 1.12; margin-bottom: 0.85rem; }
-.panel-desc { font-size: 0.93rem; line-height: 1.85; color: rgba(255,255,255,0.58); max-width: 560px; }
 
-/* ── PHOTO GRID ── */
-.panel-photo-grid { padding: 0 2.2rem 2.8rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
-.panel-photo-grid .grid-photo.first { grid-column: 1 / -1; height: 300px; }
-.grid-photo { overflow: hidden; height: 200px; cursor: pointer; position: relative; }
-.grid-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-.grid-photo:hover img { transform: scale(1.05); }
-
-@media (max-width: 520px) {
-  .panel-photo-grid { grid-template-columns: 1fr; padding: 0 1.2rem 2rem; }
-  .panel-photo-grid .grid-photo:first-child { height: 220px; }
-  .grid-photo { height: 160px; }
-  .panel-header { padding: 1.6rem 1.2rem 1.2rem; padding-top: 4rem; }
+.panel-header {
+  padding: 2.2rem 2.2rem 1.4rem;
+  padding-top: 4.5rem;
 }
 
-/* ── FULLSCREEN VIEWER ── */
-.photo-viewer { position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.panel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700; color: #fff;
+  line-height: 1.12; margin-bottom: 0.85rem;
+}
+
+.panel-desc {
+  font-size: 0.93rem; line-height: 1.85;
+  color: rgba(255,255,255,0.58);
+  max-width: 560px;
+}
+
+.panel-photo-grid {
+  padding: 0 2.2rem 2.8rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+.panel-photo-grid .grid-photo.first {
+  grid-column: 1 / -1;
+  height: 300px;
+}
+.grid-photo {
+  overflow: hidden;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+.grid-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.grid-photo:hover img { transform: scale(1.05); }
+
+/* ── FULLSCREEN PHOTO VIEWER ── */
+.photo-viewer {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.95);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 .photo-viewer.open { opacity: 1; pointer-events: all; }
-.photo-viewer img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px; transform: scale(0.9); transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1); }
+.photo-viewer img {
+  max-width: 90vw; max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  transform: scale(0.9);
+  transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1);
+}
 .photo-viewer.open img { transform: scale(1); }
-.photo-viewer-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.1); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; transition: background 0.2s; }
+.photo-viewer-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff;
+  transition: background 0.2s;
+}
 .photo-viewer-close:hover { background: rgba(255,255,255,0.2); }
 
 /* ── FOOTER ── */
@@ -157,15 +296,17 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   .page-hero { margin-top: 70px; height: 340px; }
   .page-hero-content { padding: 0 2rem; }
   .honeycomb-section { padding: 3rem 0.5rem 5rem; }
+  .panel-photo-grid { padding: 0 1.2rem 2rem; }
+  .panel-photo-grid .grid-photo:first-child { height: 220px; }
+  .grid-photo { height: 160px; }
+  .panel-header { padding: 1.6rem 1.2rem 1.2rem; padding-top: 4rem; }
   footer { padding: 3rem 1.5rem 2rem; }
   .footer-main { flex-direction: column; align-items: center; text-align: center; }
   .footer-social { align-items: center; }
   .footer-bottom { flex-direction: column; align-items: center; }
 }
-@media (max-width: 600px) {
-  .page-hero { height: 280px; }
-  .page-hero-title { font-size: clamp(2rem, 8vw, 2.8rem); }
-  .footer-social-icons { flex-wrap: wrap; justify-content: center; }
+@media (max-width: 520px) {
+  .panel-photo-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -222,7 +363,12 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
     <h2>Every Project,<br>A Transformation</h2>
     <p>Each hexagon holds a photo collage of the job. Click to explore.</p>
   </div>
-  <div class="honeycomb-container" id="honeycombContainer"></div>
+  <div class="honeycomb-container" id="honeycombContainer">
+    <div class="loading-jobs">
+      <div class="spinner"></div>
+      <p>Loading projects...</p>
+    </div>
+  </div>
 </section>
 
 <!-- ── JOB PANEL ── -->
@@ -239,7 +385,7 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
   </div>
 </div>
 
-<!-- ── FULLSCREEN VIEWER ── -->
+<!-- ── FULLSCREEN PHOTO VIEWER ── -->
 <div class="photo-viewer" id="photoViewer" onclick="closeViewer()">
   <img id="viewerImg" src="" alt=""/>
   <button class="photo-viewer-close" onclick="closeViewer()">
@@ -279,21 +425,49 @@ footer { background: var(--blue-deep); padding: 3.5rem 5rem 2.5rem; }
 
 <script>
 /* ══════════════════════════════════════════════
-   JOB DATA
-   — managed by admin panel, do not edit manually —
-   The /*JOBS_START*/ and /*JOBS_END*/ comments are
-   sentinels used by the admin to reliably find and
-   replace this data. Keep them intact.
+   CONFIGURATION - Change these to your repo
 ══════════════════════════════════════════════ */
-const jobs = /*JOBS_START*/[]/*JOBS_END*/;
+const GITHUB_REPO = 'YOUR_USERNAME/aqualock-africa';  // Change this!
+const JOBS_FILE_PATH = 'data/jobs.json';
+
+/* ══════════════════════════════════════════════
+   LOAD JOBS FROM GITHUB
+══════════════════════════════════════════════ */
+async function loadJobs() {
+  try {
+    // Fetch jobs.json from GitHub raw content
+    const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/${JOBS_FILE_PATH}?t=${Date.now()}`);
+    
+    if (!response.ok) {
+      if (response.status === 404) {
+        // No jobs file yet, show empty state
+        buildHoneycomb([]);
+        return;
+      }
+      throw new Error('Failed to load jobs');
+    }
+    
+    const jobs = await response.json();
+    buildHoneycomb(jobs);
+    
+  } catch (error) {
+    console.error('Error loading jobs:', error);
+    document.getElementById('honeycombContainer').innerHTML = 
+      '<div class="loading-jobs"><p>Unable to load projects. Please try again later.</p></div>';
+  }
+}
 
 /* ══════════════════════════════════════════════
    HONEYCOMB BUILDER
 ══════════════════════════════════════════════ */
-function buildHoneycomb() {
+function buildHoneycomb(jobs) {
   const container = document.getElementById('honeycombContainer');
   container.innerHTML = '';
-  if (!jobs.length) return;
+  
+  if (jobs.length === 0) {
+    container.innerHTML = '<div class="loading-jobs"><p>No projects yet. Check back soon!</p></div>';
+    return;
+  }
 
   const vw = window.innerWidth;
   const maxW = Math.min(vw - 32, 860);
@@ -333,10 +507,13 @@ function buildHoneycomb() {
       const ringLeft = circleLeft - 3;
       const ringTop  = circleTop  - 3;
 
-      const circleHTML = job.photos.slice(0, 4).map((src, i) =>
-        `<img class="hex-circle-photo" src="${src}" alt="" loading="lazy"
-              style="grid-area:${i < 2 ? 1 : 2}/${i % 2 + 1}/${i < 2 ? 2 : 3}/${i % 2 + 2}"/>`
-      ).join('');
+      // Use placeholder if photo missing
+      const photos = job.photos || [];
+      const circleHTML = [0, 1, 2, 3].map(i => {
+        const src = photos[i] || 'https://via.placeholder.com/300x300/1e4d8c/7ab3e8?text=No+Image';
+        return `<img class="hex-circle-photo" src="${src}" alt="" loading="lazy"
+              style="grid-area:${i < 2 ? 1 : 2}/${i % 2 + 1}/${i < 2 ? 2 : 3}/${i % 2 + 2}"/>`;
+      }).join('');
 
       const cell = document.createElement('div');
       cell.className = 'hex-cell';
@@ -353,39 +530,44 @@ function buildHoneycomb() {
             <div class="hex-circle-ring" style="width:${ringSize}px;height:${ringSize}px;top:${ringTop}px;left:${ringLeft}px;"></div>
           </div>
         </div>`;
-      cell.addEventListener('click', () => openPanel(job.id));
+      cell.addEventListener('click', () => openPanel(job));
       container.appendChild(cell);
       ji++;
     }
   }
 
+  // Scroll-triggered entrance
   const cells = container.querySelectorAll('.hex-cell');
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    entries.forEach(e => { 
+      if (e.isIntersecting) { 
+        e.target.classList.add('visible'); 
+        obs.unobserve(e.target); 
+      } 
+    });
   }, { threshold: 0.04 });
   cells.forEach(c => obs.observe(c));
 }
 
-buildHoneycomb();
-let rTimer;
-window.addEventListener('resize', () => { clearTimeout(rTimer); rTimer = setTimeout(buildHoneycomb, 200); });
-
 /* ══════════════════════════════════════════════
    PANEL OPEN / CLOSE
 ══════════════════════════════════════════════ */
-function openPanel(id) {
-  const job = jobs.find(j => j.id === id);
-  if (!job) return;
-
+function openPanel(job) {
   document.getElementById('panelTitle').textContent = job.title;
-  document.getElementById('panelDesc').textContent  = job.description;
+  document.getElementById('panelDesc').textContent  = job.description || 'No description available.';
 
   const grid = document.getElementById('panelPhotoGrid');
-  grid.innerHTML = job.photos.map((src, i) =>
-    `<div class="grid-photo${i === 0 ? ' first' : ''}" onclick="openViewer('${src.replace(/'/g,"\\'")}')">
-       <img src="${src}" alt="${job.title} photo ${i + 1}" loading="lazy"/>
-     </div>`
-  ).join('');
+  const photos = job.photos || [];
+  
+  if (photos.length === 0) {
+    grid.innerHTML = '<p style="color:rgba(255,255,255,0.5);padding:2rem;">No photos available.</p>';
+  } else {
+    grid.innerHTML = photos.map((src, i) =>
+      `<div class="grid-photo${i === 0 ? ' first' : ''}" onclick="openViewer('${src}')">
+         <img src="${src}" alt="${job.title} photo ${i + 1}" loading="lazy"/>
+       </div>`
+    ).join('');
+  }
 
   document.getElementById('jobPanelBackdrop').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -395,29 +577,53 @@ function closePanel() {
   document.getElementById('jobPanelBackdrop').classList.remove('open');
   document.body.style.overflow = '';
 }
+
 function closePanelBackdrop(e) {
   if (e.target === document.getElementById('jobPanelBackdrop')) closePanel();
 }
 
+/* ── FULLSCREEN VIEWER ── */
 function openViewer(src) {
   document.getElementById('viewerImg').src = src;
   document.getElementById('photoViewer').classList.add('open');
 }
+
 function closeViewer() {
   document.getElementById('photoViewer').classList.remove('open');
 }
 
+/* ── KEYBOARD ── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closePanel(); closeViewer(); }
 });
 
-const revObs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.12 });
+/* ── SCROLL REVEAL ── */
+const revObs = new IntersectionObserver(e => e.forEach(x => { 
+  if (x.isIntersecting) x.target.classList.add('in'); 
+}), { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
+/* ── NAV ── */
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
-mobileMenu.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }));
+hamburger.addEventListener('click', () => { 
+  hamburger.classList.toggle('open'); 
+  mobileMenu.classList.toggle('open'); 
+});
+mobileMenu.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', () => { 
+  hamburger.classList.remove('open'); 
+  mobileMenu.classList.remove('open'); 
+}));
+
+/* ── INITIALIZE ── */
+loadJobs();
+
+// Rebuild on resize
+let rTimer;
+window.addEventListener('resize', () => { 
+  clearTimeout(rTimer); 
+  rTimer = setTimeout(loadJobs, 200); 
+});
 </script>
 </body>
 </html>
