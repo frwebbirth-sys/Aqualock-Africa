@@ -19,6 +19,14 @@
     input, textarea { width: 100%; padding: 0.875rem 1rem; border: 2px solid #e0e6ed; border-radius: 8px; font-family: inherit; font-size: 0.95rem; transition: border-color 0.2s; }
     input:focus, textarea:focus { outline: none; border-color: var(--blue); }
     
+    /* Debug Panel */
+    .debug-panel { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-family: monospace; font-size: 0.85rem; display: none; }
+    .debug-panel.active { display: block; }
+    .debug-panel h4 { color: #94a3b8; margin-bottom: 0.5rem; font-size: 0.8rem; text-transform: uppercase; }
+    .debug-content { max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+    .btn-debug { background: #475569; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin-bottom: 1rem; }
+    .btn-debug:hover { background: #64748b; }
+    
     /* Tabs */
     .tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 2px solid #e0e6ed; padding-bottom: 0; }
     .tab { padding: 0.75rem 1.5rem; background: none; border: none; font-family: inherit; font-size: 0.95rem; font-weight: 500; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
@@ -32,7 +40,18 @@
     .job-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
     .job-title { font-weight: 600; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.25rem; }
     .job-date { font-size: 0.8rem; color: #94a3b8; }
-    .job-desc { color: #64748b; font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .job-desc {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* Standard property for compatibility */
+  -webkit-box-orient: vertical;
+  box-orient: vertical; /* Standard property for compatibility */
+  overflow: hidden;
+}
     .job-images { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
     .job-thumb { width: 60px; height: 60px; border-radius: 6px; object-fit: cover; border: 2px solid #e0e6ed; }
     .job-actions { display: flex; gap: 0.5rem; }
@@ -123,6 +142,9 @@
     
     .loading-jobs { text-align: center; padding: 2rem; color: #64748b; }
     .loading-jobs .spinner { margin: 0 auto 1rem; width: 40px; height: 40px; border-width: 3px; }
+    
+    .error-details { background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; padding: 1rem; border-radius: 6px; margin-top: 1rem; font-size: 0.85rem; }
+    .error-details h4 { margin-bottom: 0.5rem; font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -133,6 +155,13 @@
     </div>
     
     <div class="form">
+      <!-- Debug Panel -->
+      <button class="btn-debug" onclick="toggleDebug()">🔍 Toggle Debug Info</button>
+      <div class="debug-panel" id="debugPanel">
+        <h4>Debug Log</h4>
+        <div class="debug-content" id="debugContent">Debug panel ready...</div>
+      </div>
+
       <!-- GitHub Configuration -->
       <div class="config-section">
         <h3>🔐 GitHub Configuration</h3>
@@ -231,6 +260,7 @@
     let existingJobs = [];
     let currentFileSha = null;
     let editingJobId = null;
+    let debugMode = false;
 
     // DOM Elements
     const dropZone = document.getElementById('dropZone');
@@ -239,8 +269,33 @@
     const imageCount = document.getElementById('imageCount');
     const imageCountNum = document.getElementById('imageCountNum');
 
+    // Debug logging
+    function log(message, data) {
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = `[${timestamp}] ${message}`;
+      console.log(logEntry, data || '');
+      
+      if (debugMode) {
+        const debugContent = document.getElementById('debugContent');
+        debugContent.textContent += '\n' + logEntry;
+        if (data) {
+          debugContent.textContent += '\n' + JSON.stringify(data, null, 2);
+        }
+        debugContent.scrollTop = debugContent.scrollHeight;
+      }
+    }
+
+    function toggleDebug() {
+      debugMode = !debugMode;
+      document.getElementById('debugPanel').classList.toggle('active');
+      log('Debug mode ' + (debugMode ? 'enabled' : 'disabled'));
+    }
+
     // Load saved settings on page load
-    document.addEventListener('DOMContentLoaded', loadSettings);
+    document.addEventListener('DOMContentLoaded', () => {
+      log('Page loaded');
+      loadSettings();
+    });
 
     // Prevent default drag behaviors
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -263,7 +318,7 @@
       } else {
         document.getElementById('section-existing').style.display = 'none';
         document.getElementById('section-new').style.display = 'block';
-        cancelEdit(); // Reset form when switching to new job
+        cancelEdit();
       }
     }
 
@@ -285,6 +340,7 @@
         const savedRepo = localStorage.getItem('aqualock_repo');
         if (savedRepo) {
           document.getElementById('repoName').value = savedRepo;
+          log('Loaded repo from localStorage', savedRepo);
         }
 
         const savedToken = localStorage.getItem('aqualock_token');
@@ -293,9 +349,10 @@
         if (savedToken && rememberToken) {
           document.getElementById('githubToken').value = savedToken;
           document.getElementById('rememberToken').checked = true;
+          log('Loaded token from localStorage (masked)');
         }
       } catch (error) {
-        console.error('Error loading settings:', error);
+        log('Error loading settings', error.message);
       }
     }
 
@@ -332,12 +389,14 @@
           hint.style.display = 'none';
         }, 2000);
 
+        log('Settings saved');
+
       } catch (error) {
         showStatus('Failed to save settings: ' + error.message, 'error');
       }
     }
 
-    // Load existing jobs from GitHub
+    // Load existing jobs from GitHub with better error handling
     async function loadExistingJobs() {
       const token = document.getElementById('githubToken').value.trim();
       const repo = document.getElementById('repoName').value.trim();
@@ -346,6 +405,8 @@
         showStatus('Please fill in GitHub token and repository first', 'error');
         return;
       }
+
+      log('Loading jobs from GitHub...', { repo: repo, tokenPresent: !!token });
 
       const btn = document.getElementById('loadJobsBtn');
       btn.disabled = true;
@@ -358,6 +419,8 @@
         const filePath = 'data/jobs.json';
         const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
         
+        log('Fetching URL', apiUrl);
+
         const response = await fetch(apiUrl, {
           headers: {
             'Authorization': `token ${token}`,
@@ -365,24 +428,104 @@
           }
         });
 
+        log('Response status', response.status);
+        log('Response headers', Object.fromEntries([...response.headers.entries()]));
+
+        // Check if response is OK
         if (!response.ok) {
+          // Try to get error details
+          let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+          
+          try {
+            const errorData = await response.json();
+            log('Error response JSON', errorData);
+            errorMessage = errorData.message || errorMessage;
+          } catch (jsonError) {
+            // If JSON parsing fails, get text
+            const errorText = await response.text();
+            log('Error response text', errorText.substring(0, 500));
+            if (errorText) {
+              errorMessage += ' - ' + errorText.substring(0, 200);
+            }
+          }
+
           if (response.status === 404) {
             container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No jobs found. Create your first job!</p></div>';
             existingJobs = [];
+            log('File not found (404) - no jobs yet');
             return;
           }
-          throw new Error('Failed to fetch jobs');
+          
+          if (response.status === 401) {
+            throw new Error('Unauthorized: Invalid or expired token. Please check your Personal Access Token.');
+          }
+          
+          if (response.status === 403) {
+            throw new Error('Forbidden: Token may lack permissions or rate limit exceeded.');
+          }
+
+          throw new Error(errorMessage);
+        }
+
+        // Check content type
+        const contentType = response.headers.get('content-type');
+        log('Content-Type', contentType);
+
+        if (!contentType || !contentType.includes('application/json')) {
+          const text = await response.text();
+          log('Non-JSON response', text.substring(0, 500));
+          throw new Error('Received non-JSON response from GitHub. Possible CORS or network issue.');
         }
 
         const data = await response.json();
+        log('Response data received', { 
+          sha: data.sha, 
+          size: data.size, 
+          encoding: data.encoding,
+          contentLength: data.content ? data.content.length : 0
+        });
+
+        if (!data.content) {
+          throw new Error('Response missing content field');
+        }
+
         currentFileSha = data.sha;
-        const decoded = atob(data.content);
-        existingJobs = JSON.parse(decoded);
+        
+        // Decode base64 content
+        let decoded;
+        try {
+          decoded = atob(data.content);
+          log('Base64 decoded successfully', { length: decoded.length });
+        } catch (decodeError) {
+          throw new Error('Failed to decode base64 content: ' + decodeError.message);
+        }
+
+        // Parse JSON
+        try {
+          existingJobs = JSON.parse(decoded);
+          log('JSON parsed successfully', { jobCount: existingJobs.length });
+        } catch (jsonError) {
+          log('JSON parse error', { error: jsonError.message, contentPreview: decoded.substring(0, 200) });
+          throw new Error('Failed to parse jobs.json: ' + jsonError.message);
+        }
 
         renderJobsList();
 
       } catch (error) {
-        container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">❌</div><p>Error: ${error.message}</p></div>`;
+        log('Error loading jobs', error.message);
+        container.innerHTML = `
+          <div class="error-details">
+            <h4>❌ Error Loading Jobs</h4>
+            <p><strong>${escapeHtml(error.message)}</strong></p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+              Common fixes:<br>
+              • Check your token is valid and not expired<br>
+              • Verify repo format: "owner/repo-name"<br>
+              • Ensure token has "repo" scope permissions<br>
+              • Check browser console for CORS errors
+            </p>
+          </div>
+        `;
         showStatus('Error loading jobs: ' + error.message, 'error');
       } finally {
         btn.disabled = false;
@@ -403,12 +546,12 @@
           <div class="job-header">
             <div>
               <div class="job-title">${escapeHtml(job.title)}</div>
-              <div class="job-date">${new Date(job.createdAt).toLocaleDateString()}</div>
+              <div class="job-date">${job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Unknown date'}</div>
             </div>
           </div>
-          <div class="job-desc">${escapeHtml(job.description)}</div>
+          <div class="job-desc">${escapeHtml(job.description || '')}</div>
           <div class="job-images">
-            ${(job.photos || []).slice(0, 4).map(photo => `<img src="${photo}" class="job-thumb" alt="">`).join('')}
+            ${(job.photos || []).slice(0, 4).map(photo => `<img src="${photo}" class="job-thumb" alt="" onerror="this.style.display='none'">`).join('')}
             ${(job.photos || []).length > 4 ? `<div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;background:#e0e6ed;border-radius:6px;font-size:0.8rem;color:#64748b;">+${job.photos.length - 4}</div>` : ''}
           </div>
           <div class="job-actions">
@@ -420,6 +563,7 @@
     }
 
     function escapeHtml(text) {
+      if (!text) return '';
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
@@ -428,29 +572,27 @@
     // Edit functionality
     function startEdit(jobId) {
       const job = existingJobs.find(j => j.id === jobId);
-      if (!job) return;
+      if (!job) {
+        log('Job not found for editing', jobId);
+        return;
+      }
 
+      log('Starting edit for job', jobId);
       editingJobId = jobId;
       
-      // Fill form
       document.getElementById('editJobId').value = jobId;
       document.getElementById('jobTitle').value = job.title;
-      document.getElementById('jobDesc').value = job.description;
+      document.getElementById('jobDesc').value = job.description || '';
       
-      // Load images
       uploadedImages = [...(job.photos || [])];
       renderPreviews();
       updateUI();
 
-      // Show edit section
       document.getElementById('editSection').classList.add('active');
       document.getElementById('submitBtn').style.display = 'none';
       document.getElementById('updateBtn').style.display = 'block';
 
-      // Switch to new job tab (which now shows edit form)
       switchTab('new');
-      
-      // Scroll to form
       document.getElementById('jobTitle').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -466,6 +608,7 @@
       document.getElementById('editSection').classList.remove('active');
       document.getElementById('submitBtn').style.display = 'block';
       document.getElementById('updateBtn').style.display = 'none';
+      log('Edit cancelled');
     }
 
     async function updateJob() {
@@ -487,11 +630,11 @@
       const updateBtn = document.getElementById('updateBtn');
       updateBtn.disabled = true;
       showStatus('Updating job on GitHub...', 'loading');
+      log('Updating job', { id: editingJobId, title: title });
 
       try {
-        // Update the job in the array
         const jobIndex = existingJobs.findIndex(j => j.id === editingJobId);
-        if (jobIndex === -1) throw new Error('Job not found');
+        if (jobIndex === -1) throw new Error('Job not found in local array');
 
         existingJobs[jobIndex] = {
           ...existingJobs[jobIndex],
@@ -501,7 +644,6 @@
           updatedAt: new Date().toISOString()
         };
 
-        // Commit to GitHub
         const filePath = 'data/jobs.json';
         const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
         
@@ -513,6 +655,7 @@
           throw new Error('Failed to encode data. Images may be too large.');
         }
 
+        log('Committing update to GitHub');
         const commitResponse = await fetch(apiUrl, {
           method: 'PUT',
           headers: {
@@ -527,24 +670,23 @@
           })
         });
 
-        if (commitResponse.ok) {
-          const data = await commitResponse.json();
-          currentFileSha = data.content.sha;
-          showStatus('✅ Job updated successfully!', 'success');
-          
-          // Update the jobs list if visible
-          renderJobsList();
-          
-          // Reset form
-          cancelEdit();
-        } else {
-          const error = await commitResponse.json();
-          throw new Error(error.message || 'Failed to update');
+        if (!commitResponse.ok) {
+          const errorText = await commitResponse.text();
+          log('Update failed', { status: commitResponse.status, text: errorText.substring(0, 200) });
+          throw new Error(`GitHub API error: ${commitResponse.status}`);
         }
 
+        const data = await commitResponse.json();
+        currentFileSha = data.content.sha;
+        log('Update successful', { newSha: currentFileSha });
+        
+        showStatus('✅ Job updated successfully!', 'success');
+        renderJobsList();
+        cancelEdit();
+
       } catch (error) {
+        log('Update error', error.message);
         showStatus('❌ Error: ' + error.message, 'error');
-        console.error(error);
       } finally {
         updateBtn.disabled = false;
       }
@@ -568,17 +710,16 @@
       }
 
       showStatus('Deleting job from GitHub...', 'loading');
+      log('Deleting job', { id: jobId, title: job.title });
 
       try {
-        // Remove job from array
         existingJobs = existingJobs.filter(j => j.id !== jobId);
 
-        // Commit to GitHub
         const filePath = 'data/jobs.json';
         const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
         
         if (existingJobs.length === 0) {
-          // Delete the file if no jobs left
+          log('Deleting entire file (no jobs left)');
           const deleteResponse = await fetch(apiUrl, {
             method: 'DELETE',
             headers: {
@@ -593,13 +734,15 @@
           });
 
           if (!deleteResponse.ok) {
-            const error = await deleteResponse.json();
-            throw new Error(error.message || 'Failed to delete file');
+            const errorText = await deleteResponse.text();
+            log('Delete failed', { status: deleteResponse.status, text: errorText.substring(0, 200) });
+            throw new Error(`Delete failed: ${deleteResponse.status}`);
           }
           
           currentFileSha = null;
+          log('File deleted successfully');
         } else {
-          // Update file with remaining jobs
+          log('Updating file with remaining jobs', { remainingCount: existingJobs.length });
           const jsonString = JSON.stringify(existingJobs, null, 2);
           let content;
           try {
@@ -623,20 +766,22 @@
           });
 
           if (!commitResponse.ok) {
-            const error = await commitResponse.json();
-            throw new Error(error.message || 'Failed to update');
+            const errorText = await commitResponse.text();
+            log('Update after delete failed', { status: commitResponse.status, text: errorText.substring(0, 200) });
+            throw new Error(`Update failed: ${commitResponse.status}`);
           }
           
           const data = await commitResponse.json();
           currentFileSha = data.content.sha;
+          log('File updated successfully', { newSha: currentFileSha });
         }
 
         showStatus('✅ Job deleted successfully!', 'success');
         renderJobsList();
 
       } catch (error) {
+        log('Delete error', error.message);
         showStatus('❌ Error: ' + error.message, 'error');
-        console.error(error);
       }
     }
 
@@ -729,7 +874,7 @@
       }
     }
 
-    // Save new job (original functionality)
+    // Save new job
     async function saveJob() {
       const token = document.getElementById('githubToken').value.trim();
       const repo = document.getElementById('repoName').value.trim();
@@ -749,6 +894,7 @@
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       showStatus('Fetching current data from GitHub...', 'loading');
+      log('Saving new job', { title: title });
 
       try {
         const filePath = 'data/jobs.json';
@@ -758,6 +904,7 @@
         let sha = null;
         
         try {
+          log('Checking for existing file');
           const response = await fetch(apiUrl, {
             headers: {
               'Authorization': `token ${token}`,
@@ -770,9 +917,15 @@
             sha = data.sha;
             const decoded = atob(data.content);
             currentContent = JSON.parse(decoded);
+            log('Loaded existing jobs', { count: currentContent.length, sha: sha });
+          } else if (response.status === 404) {
+            log('No existing file, creating new');
+          } else {
+            throw new Error(`Failed to check existing file: ${response.status}`);
           }
         } catch (e) {
-          console.log('Creating new file');
+          if (e.message.includes('Failed to check')) throw e;
+          log('Error reading existing (will create new)', e.message);
         }
 
         const newJob = {
@@ -784,6 +937,7 @@
         };
         
         currentContent.push(newJob);
+        log('Added new job to array', { totalJobs: currentContent.length });
 
         showStatus(`Committing changes to GitHub (${uploadedImages.length} images)...`, 'loading');
         
@@ -795,6 +949,8 @@
         } catch (encodeError) {
           throw new Error('Failed to encode data. Images may be too large.');
         }
+        
+        log('Sending to GitHub', { sha: sha, contentLength: content.length });
         
         const commitResponse = await fetch(apiUrl, {
           method: 'PUT',
@@ -810,20 +966,26 @@
           })
         });
 
-        if (commitResponse.ok) {
-          showStatus(`✅ Success! Job added with ${uploadedImages.length} images embedded.`, 'success');
-          
-          document.getElementById('jobTitle').value = '';
-          document.getElementById('jobDesc').value = '';
-          uploadedImages = [];
-          renderPreviews();
-          updateUI();
-        } else {
-          const error = await commitResponse.json();
-          throw new Error(error.message || 'Failed to commit');
+        if (!commitResponse.ok) {
+          const errorText = await commitResponse.text();
+          log('Save failed', { status: commitResponse.status, text: errorText.substring(0, 200) });
+          throw new Error(`GitHub API error: ${commitResponse.status}`);
         }
 
+        const responseData = await commitResponse.json();
+        currentFileSha = responseData.content.sha;
+        log('Save successful', { newSha: currentFileSha });
+
+        showStatus(`✅ Success! Job added with ${uploadedImages.length} images embedded.`, 'success');
+        
+        document.getElementById('jobTitle').value = '';
+        document.getElementById('jobDesc').value = '';
+        uploadedImages = [];
+        renderPreviews();
+        updateUI();
+
       } catch (error) {
+        log('Save error', error.message);
         showStatus('❌ Error: ' + error.message, 'error');
         console.error(error);
       } finally {
