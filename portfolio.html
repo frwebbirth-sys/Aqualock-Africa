@@ -433,10 +433,13 @@ const JOBS_FILE_PATH = 'data/jobs.json';
 /* ══════════════════════════════════════════════
    LOAD JOBS FROM GITHUB
 ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   LOAD JOBS FROM LOCAL FILE
+══════════════════════════════════════════════ */
 async function loadJobs() {
   try {
-    // Fetch jobs.json from GitHub raw content
-    const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/${JOBS_FILE_PATH}?t=${Date.now()}`);
+    // Fetch jobs.json from local data folder
+    const response = await fetch(`data/jobs.json?t=${Date.now()}`);
     
     if (!response.ok) {
       if (response.status === 404) {
