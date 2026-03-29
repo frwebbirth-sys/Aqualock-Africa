@@ -294,6 +294,19 @@
       e.stopPropagation();
     }
 
+    // Safe base64 encoding for large content
+    function safeBase64Encode(str) {
+      // Use TextEncoder and Uint8Array approach to handle large strings
+      const encoder = new TextEncoder();
+      const data = encoder.encode(str);
+      let binary = '';
+      const len = data.byteLength;
+      for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(data[i]);
+      }
+      return btoa(binary);
+    }
+
     // Settings Management
     function loadSettings() {
       try {
@@ -508,11 +521,19 @@
         
         currentContent.push(newJob);
 
-        // 3. Commit to GitHub
+        // 3. Commit to GitHub with safe encoding
         showStatus(`Committing changes to GitHub (${uploadedImages.length} images)...`, 'loading');
         
         const commitMessage = `Add new job: ${title}`;
-        const content = btoa(JSON.stringify(currentContent, null, 2));
+        
+        // Use safe base64 encoding for large content
+        const jsonString = JSON.stringify(currentContent, null, 2);
+        let content;
+        try {
+          content = safeBase64Encode(jsonString);
+        } catch (encodeError) {
+          throw new Error('Failed to encode data. Images may be too large. Try using fewer or smaller images.');
+        }
         
         const commitResponse = await fetch(apiUrl, {
           method: 'PUT',
