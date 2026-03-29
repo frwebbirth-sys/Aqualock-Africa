@@ -124,6 +124,14 @@
       font-weight: 600;
     }
     
+    .image-count {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+    
     .btn-submit { width: 100%; background: var(--blue); color: white; border: none; padding: 1rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 1rem; }
     .btn-submit:hover { background: var(--blue-deep); }
     .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
@@ -134,18 +142,57 @@
     .spinner { width: 16px; height: 16px; border: 2px solid #0d47a1; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .config-section { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #e0e6ed; }
-    .config-section h3 { font-size: 0.9rem; color: var(--dark); margin-bottom: 1rem; }
+    .config-section h3 { font-size: 0.9rem; color: var(--dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
     .config-section input { background: white; }
     .hint { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
     
-    .max-images-warning {
-      background: #fef3c7;
-      border: 1px solid #f59e0b;
-      color: #92400e;
-      padding: 0.75rem;
-      border-radius: 6px;
+    /* Save Settings Styles */
+    .save-settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e0e6ed;
+    }
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
       font-size: 0.9rem;
+      color: var(--dark);
+    }
+    .remember-me input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      cursor: pointer;
+    }
+    .btn-save-settings {
+      background: var(--gold);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-save-settings:hover {
+      background: #b8963f;
+      transform: translateY(-1px);
+    }
+    .btn-save-settings.saved {
+      background: #22c55e;
+    }
+    .settings-saved-hint {
+      font-size: 0.8rem;
+      color: #22c55e;
+      margin-top: 0.5rem;
       display: none;
     }
   </style>
@@ -160,7 +207,7 @@
     <div class="form">
       <!-- GitHub Configuration -->
       <div class="config-section">
-        <h3>GitHub Configuration</h3>
+        <h3>🔐 GitHub Configuration</h3>
         <div class="form-group">
           <label>Personal Access Token</label>
           <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
@@ -168,8 +215,19 @@
         </div>
         <div class="form-group">
           <label>Repository (format: owner/repo)</label>
-          <input type="text" id="repoName" placeholder="username/aqualock-africa" value="username/aqualock-africa">
+          <input type="text" id="repoName" placeholder="username/aqualock-africa" value="">
         </div>
+        
+        <div class="save-settings-row">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberToken">
+            <span>Remember token (saved locally)</span>
+          </label>
+          <button type="button" class="btn-save-settings" id="saveSettingsBtn" onclick="saveSettings()">
+            💾 Save Settings
+          </button>
+        </div>
+        <div class="settings-saved-hint" id="settingsSavedHint">✓ Settings saved successfully!</div>
       </div>
 
       <div class="form-group">
@@ -191,12 +249,13 @@
           <div class="drop-zone-text">
             <strong>Drop images here</strong> or click to browse
           </div>
-          <div class="drop-zone-hint">Supports: JPG, PNG, GIF, WebP (Max 4 images)</div>
+          <div class="drop-zone-hint">Supports: JPG, PNG, GIF, WebP (No limit)</div>
           <input type="file" class="drop-zone-input" id="fileInput" accept="image/*" multiple>
         </div>
         
-        <div class="max-images-warning" id="maxImagesWarning">
-          Maximum 4 images allowed. Remove an image to add more.
+        <!-- Image Count Display -->
+        <div class="image-count" id="imageCount" style="display: none;">
+          <span id="imageCountNum">0</span> image(s) added
         </div>
         
         <!-- Image Preview Grid -->
@@ -214,13 +273,16 @@
   <script>
     // Store uploaded images as base64 data URLs
     let uploadedImages = [];
-    const MAX_IMAGES = 4;
 
     // DOM Elements
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const imagePreviewGrid = document.getElementById('imagePreviewGrid');
-    const maxImagesWarning = document.getElementById('maxImagesWarning');
+    const imageCount = document.getElementById('imageCount');
+    const imageCountNum = document.getElementById('imageCountNum');
+
+    // Load saved settings on page load
+    document.addEventListener('DOMContentLoaded', loadSettings);
 
     // Prevent default drag behaviors on document
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -230,6 +292,69 @@
     function preventDefaults(e) {
       e.preventDefault();
       e.stopPropagation();
+    }
+
+    // Settings Management
+    function loadSettings() {
+      try {
+        // Load repository name
+        const savedRepo = localStorage.getItem('aqualock_repo');
+        if (savedRepo) {
+          document.getElementById('repoName').value = savedRepo;
+        }
+
+        // Load token if it was saved
+        const savedToken = localStorage.getItem('aqualock_token');
+        const rememberToken = localStorage.getItem('aqualock_remember_token') === 'true';
+        
+        if (savedToken && rememberToken) {
+          document.getElementById('githubToken').value = savedToken;
+          document.getElementById('rememberToken').checked = true;
+        }
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
+    }
+
+    function saveSettings() {
+      const token = document.getElementById('githubToken').value.trim();
+      const repo = document.getElementById('repoName').value.trim();
+      const rememberToken = document.getElementById('rememberToken').checked;
+
+      try {
+        // Always save repository name
+        if (repo) {
+          localStorage.setItem('aqualock_repo', repo);
+        } else {
+          localStorage.removeItem('aqualock_repo');
+        }
+
+        // Save or remove token based on checkbox
+        if (rememberToken && token) {
+          localStorage.setItem('aqualock_token', token);
+          localStorage.setItem('aqualock_remember_token', 'true');
+        } else {
+          localStorage.removeItem('aqualock_token');
+          localStorage.setItem('aqualock_remember_token', 'false');
+        }
+
+        // Show success feedback
+        const btn = document.getElementById('saveSettingsBtn');
+        const hint = document.getElementById('settingsSavedHint');
+        
+        btn.classList.add('saved');
+        btn.innerHTML = '✓ Saved!';
+        hint.style.display = 'block';
+        
+        setTimeout(() => {
+          btn.classList.remove('saved');
+          btn.innerHTML = '💾 Save Settings';
+          hint.style.display = 'none';
+        }, 2000);
+
+      } catch (error) {
+        showStatus('Failed to save settings: ' + error.message, 'error');
+      }
     }
 
     // Drag and Drop Events
@@ -255,15 +380,7 @@
         return;
       }
 
-      // Check if adding these would exceed max
-      if (uploadedImages.length + imageFiles.length > MAX_IMAGES) {
-        showStatus(`Maximum ${MAX_IMAGES} images allowed. You can add ${MAX_IMAGES - uploadedImages.length} more.`, 'error');
-        return;
-      }
-
       imageFiles.forEach(file => {
-        if (uploadedImages.length >= MAX_IMAGES) return;
-        
         const reader = new FileReader();
         reader.onload = (e) => {
           const base64Data = e.target.result;
@@ -308,16 +425,12 @@
     }
 
     function updateUI() {
-      // Show/hide warning
-      maxImagesWarning.style.display = uploadedImages.length >= MAX_IMAGES ? 'block' : 'none';
-      
-      // Disable/enable drop zone
-      if (uploadedImages.length >= MAX_IMAGES) {
-        dropZone.style.opacity = '0.5';
-        dropZone.style.pointerEvents = 'none';
+      // Update image count display
+      if (uploadedImages.length > 0) {
+        imageCount.style.display = 'block';
+        imageCountNum.textContent = uploadedImages.length;
       } else {
-        dropZone.style.opacity = '1';
-        dropZone.style.pointerEvents = 'auto';
+        imageCount.style.display = 'none';
       }
     }
 
@@ -396,7 +509,7 @@
         currentContent.push(newJob);
 
         // 3. Commit to GitHub
-        showStatus('Committing changes to GitHub...', 'loading');
+        showStatus(`Committing changes to GitHub (${uploadedImages.length} images)...`, 'loading');
         
         const commitMessage = `Add new job: ${title}`;
         const content = btoa(JSON.stringify(currentContent, null, 2));
@@ -416,7 +529,7 @@
         });
 
         if (commitResponse.ok) {
-          showStatus('✅ Success! Job added with images embedded.', 'success');
+          showStatus(`✅ Success! Job added with ${uploadedImages.length} images embedded.`, 'success');
           
           // Reset form
           document.getElementById('jobTitle').value = '';
