@@ -18,11 +18,112 @@
     label { display: block; font-weight: 600; color: var(--dark); margin-bottom: 0.5rem; font-size: 0.9rem; }
     input, textarea { width: 100%; padding: 0.875rem 1rem; border: 2px solid #e0e6ed; border-radius: 8px; font-family: inherit; font-size: 0.95rem; transition: border-color 0.2s; }
     input:focus, textarea:focus { outline: none; border-color: var(--blue); }
-    .photo-inputs { display: flex; flex-direction: column; gap: 0.75rem; }
-    .photo-row { display: flex; gap: 0.5rem; align-items: center; }
-    .photo-row input { flex: 1; }
-    .btn-remove { background: #fee; color: #c33; border: none; padding: 0.5rem 0.75rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
-    .btn-add { background: var(--gold); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 500; margin-top: 0.5rem; }
+    
+    /* Drag and Drop Zone Styles */
+    .drop-zone {
+      border: 3px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      background: #f8fafc;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--blue);
+      background: #e3f2fd;
+      transform: translateY(-2px);
+    }
+    .drop-zone.dragover {
+      border-style: solid;
+      background: #bbdefb;
+    }
+    .drop-zone-icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.4;
+    }
+    .drop-zone-text {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+    .drop-zone-text strong {
+      color: var(--blue);
+    }
+    .drop-zone-hint {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+    .drop-zone-input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    
+    /* Image Preview Grid */
+    .image-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .preview-item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .preview-item .remove-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(220, 38, 38, 0.9);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: transform 0.2s, background 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .preview-item .remove-btn:hover {
+      transform: scale(1.1);
+      background: rgba(185, 28, 28, 1);
+    }
+    .preview-item .image-order {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
     .btn-submit { width: 100%; background: var(--blue); color: white; border: none; padding: 1rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 1rem; }
     .btn-submit:hover { background: var(--blue-deep); }
     .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
@@ -36,17 +137,28 @@
     .config-section h3 { font-size: 0.9rem; color: var(--dark); margin-bottom: 1rem; }
     .config-section input { background: white; }
     .hint { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+    
+    .max-images-warning {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <h1>Add New Job</h1>
-      <p>Add a project to the portfolio. It will be committed directly to your GitHub repository.</p>
+      <p>Add a project to the portfolio. Drag and drop images directly—no external hosting needed.</p>
     </div>
     
     <div class="form">
-      <!-- GitHub Configuration (normally you'd hide this or pre-fill it) -->
+      <!-- GitHub Configuration -->
       <div class="config-section">
         <h3>GitHub Configuration</h3>
         <div class="form-group">
@@ -71,14 +183,26 @@
       </div>
 
       <div class="form-group">
-        <label>Photo URLs *</label>
-        <div class="photo-inputs" id="photoInputs">
-          <div class="photo-row">
-            <input type="url" class="photo-url" placeholder="https://example.com/photo1.jpg" required>
+        <label>Photos * (Drag & Drop or Click)</label>
+        
+        <!-- Drag and Drop Zone -->
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-zone-icon">📁</div>
+          <div class="drop-zone-text">
+            <strong>Drop images here</strong> or click to browse
           </div>
+          <div class="drop-zone-hint">Supports: JPG, PNG, GIF, WebP (Max 4 images)</div>
+          <input type="file" class="drop-zone-input" id="fileInput" accept="image/*" multiple>
         </div>
-        <button type="button" class="btn-add" onclick="addPhotoField()">+ Add Photo</button>
-        <p class="hint">Add up to 4 photo URLs. First photo will be featured.</p>
+        
+        <div class="max-images-warning" id="maxImagesWarning">
+          Maximum 4 images allowed. Remove an image to add more.
+        </div>
+        
+        <!-- Image Preview Grid -->
+        <div class="image-preview-grid" id="imagePreviewGrid"></div>
+        
+        <p class="hint">Images are stored as base64 data directly in the JSON file. First image will be featured.</p>
       </div>
 
       <button type="submit" class="btn-submit" id="submitBtn" onclick="saveJob()">Save Job to Website</button>
@@ -88,20 +212,113 @@
   </div>
 
   <script>
-    // Add photo input field
-    function addPhotoField() {
-      const container = document.getElementById('photoInputs');
-      if (container.children.length >= 4) {
-        alert('Maximum 4 photos allowed');
+    // Store uploaded images as base64 data URLs
+    let uploadedImages = [];
+    const MAX_IMAGES = 4;
+
+    // DOM Elements
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const imagePreviewGrid = document.getElementById('imagePreviewGrid');
+    const maxImagesWarning = document.getElementById('maxImagesWarning');
+
+    // Prevent default drag behaviors on document
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    // Drag and Drop Events
+    dropZone.addEventListener('dragenter', () => dropZone.classList.add('dragover'));
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', handleDrop);
+    dropZone.addEventListener('click', () => fileInput.click());
+    
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function handleDrop(e) {
+      dropZone.classList.remove('dragover');
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      handleFiles(files);
+    }
+
+    function handleFiles(files) {
+      const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+      
+      if (imageFiles.length === 0) {
+        showStatus('Please upload image files only (JPG, PNG, GIF, WebP)', 'error');
         return;
       }
-      const row = document.createElement('div');
-      row.className = 'photo-row';
-      row.innerHTML = `
-        <input type="url" class="photo-url" placeholder="https://example.com/photo${container.children.length + 1}.jpg">
-        <button type="button" class="btn-remove" onclick="this.parentElement.remove()">Remove</button>
+
+      // Check if adding these would exceed max
+      if (uploadedImages.length + imageFiles.length > MAX_IMAGES) {
+        showStatus(`Maximum ${MAX_IMAGES} images allowed. You can add ${MAX_IMAGES - uploadedImages.length} more.`, 'error');
+        return;
+      }
+
+      imageFiles.forEach(file => {
+        if (uploadedImages.length >= MAX_IMAGES) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64Data = e.target.result;
+          addImageToPreview(base64Data, file.name);
+          uploadedImages.push(base64Data);
+          updateUI();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function addImageToPreview(base64Data, filename) {
+      const index = uploadedImages.length;
+      const previewItem = document.createElement('div');
+      previewItem.className = 'preview-item';
+      previewItem.innerHTML = `
+        <img src="${base64Data}" alt="${filename}">
+        <span class="image-order">#${index + 1}</span>
+        <button type="button" class="remove-btn" onclick="removeImage(${index})" title="Remove image">×</button>
       `;
-      container.appendChild(row);
+      imagePreviewGrid.appendChild(previewItem);
+    }
+
+    function removeImage(index) {
+      uploadedImages.splice(index, 1);
+      renderPreviews();
+      updateUI();
+    }
+
+    function renderPreviews() {
+      imagePreviewGrid.innerHTML = '';
+      uploadedImages.forEach((base64Data, index) => {
+        const previewItem = document.createElement('div');
+        previewItem.className = 'preview-item';
+        previewItem.innerHTML = `
+          <img src="${base64Data}" alt="Preview ${index + 1}">
+          <span class="image-order">#${index + 1}</span>
+          <button type="button" class="remove-btn" onclick="removeImage(${index})" title="Remove image">×</button>
+        `;
+        imagePreviewGrid.appendChild(previewItem);
+      });
+    }
+
+    function updateUI() {
+      // Show/hide warning
+      maxImagesWarning.style.display = uploadedImages.length >= MAX_IMAGES ? 'block' : 'none';
+      
+      // Disable/enable drop zone
+      if (uploadedImages.length >= MAX_IMAGES) {
+        dropZone.style.opacity = '0.5';
+        dropZone.style.pointerEvents = 'none';
+      } else {
+        dropZone.style.opacity = '1';
+        dropZone.style.pointerEvents = 'auto';
+      }
     }
 
     // Show status message
@@ -110,6 +327,12 @@
       status.className = 'status ' + type;
       status.innerHTML = type === 'loading' ? `<div class="spinner"></div>${message}` : message;
       status.style.display = 'block';
+      
+      if (type !== 'loading' && type !== 'error') {
+        setTimeout(() => {
+          status.style.display = 'none';
+        }, 5000);
+      }
     }
 
     // Main save function
@@ -118,15 +341,15 @@
       const repo = document.getElementById('repoName').value.trim();
       const title = document.getElementById('jobTitle').value.trim();
       const description = document.getElementById('jobDesc').value.trim();
-      
-      // Collect photos
-      const photos = Array.from(document.querySelectorAll('.photo-url'))
-        .map(input => input.value.trim())
-        .filter(url => url);
 
       // Validation
-      if (!token || !repo || !title || !description || photos.length === 0) {
+      if (!token || !repo || !title || !description) {
         showStatus('Please fill in all required fields', 'error');
+        return;
+      }
+
+      if (uploadedImages.length === 0) {
+        showStatus('Please add at least one image', 'error');
         return;
       }
 
@@ -161,12 +384,12 @@
           console.log('Creating new file');
         }
 
-        // 2. Add new job
+        // 2. Add new job with base64 images embedded
         const newJob = {
           id: 'job_' + Date.now(),
           title: title,
           description: description,
-          photos: photos,
+          photos: uploadedImages, // Base64 data URLs stored directly
           createdAt: new Date().toISOString()
         };
         
@@ -188,19 +411,19 @@
           body: JSON.stringify({
             message: commitMessage,
             content: content,
-            sha: sha // null if creating new file
+            sha: sha
           })
         });
 
         if (commitResponse.ok) {
-          showStatus('✅ Success! Job added. It will appear on the website in 1-2 minutes.', 'success');
+          showStatus('✅ Success! Job added with images embedded.', 'success');
+          
+          // Reset form
           document.getElementById('jobTitle').value = '';
           document.getElementById('jobDesc').value = '';
-          document.getElementById('photoInputs').innerHTML = `
-            <div class="photo-row">
-              <input type="url" class="photo-url" placeholder="https://example.com/photo1.jpg" required>
-            </div>
-          `;
+          uploadedImages = [];
+          renderPreviews();
+          updateUI();
         } else {
           const error = await commitResponse.json();
           throw new Error(error.message || 'Failed to commit');
